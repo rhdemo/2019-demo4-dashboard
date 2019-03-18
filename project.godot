@@ -16,16 +16,14 @@ _global_script_class_icons={
 [application]
 
 config/name="RHSummitDemo4"
-run/main_scene="res://factory.tscn"
+run/main_scene="res://matt_factory.tscn"
+boot_splash/image="res://fedora.png"
 config/icon="res://fedora.png"
 
 [display]
 
-window/size/width=1440
-window/size/height=810
-window/vsync/use_vsync=false
-window/stretch/mode="viewport"
-window/stretch/aspect="keep"
+window/size/width=1920
+window/size/height=1080
 
 [rendering]
 
