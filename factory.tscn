@@ -46,15 +46,9 @@ texture = ExtResource( 16 )
 default_color = Color( 0.8, 0, 0, 1 )
 
 [node name="Fedora" type="Sprite" parent="."]
-<<<<<<< HEAD
-position = Vector2( 575.131, 443.528 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 17 )
-=======
 position = Vector2( 574.875, 443.528 )
 scale = Vector2( 0.762195, 0.762195 )
 texture = ExtResource( 4 )
->>>>>>> a892d0550eb382690b5420a89cb92001a465782f
 
 [node name="WebSocket" type="Node" parent="."]
 script = ExtResource( 5 )
