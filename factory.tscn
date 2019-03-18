@@ -1,30 +1,10 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://factory.gd" type="Script" id=1]
 [ext_resource path="res://factory_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://sprites/0001.png" type="Texture" id=3]
-[ext_resource path="res://sprites/0005.png" type="Texture" id=4]
-[ext_resource path="res://sprites/0009.png" type="Texture" id=5]
-[ext_resource path="res://sprites/0013.png" type="Texture" id=6]
-[ext_resource path="res://sprites/0017.png" type="Texture" id=7]
-[ext_resource path="res://sprites/0021.png" type="Texture" id=8]
-[ext_resource path="res://sprites/0024.png" type="Texture" id=9]
-[ext_resource path="res://sprites/0020.png" type="Texture" id=10]
-[ext_resource path="res://sprites/0016.png" type="Texture" id=11]
-[ext_resource path="res://sprites/0012.png" type="Texture" id=12]
-[ext_resource path="res://sprites/0008.png" type="Texture" id=13]
-[ext_resource path="res://sprites/0004.png" type="Texture" id=14]
-[ext_resource path="res://AnimatedSprite.gd" type="Script" id=15]
-[ext_resource path="res://factory_tiles/tank.png" type="Texture" id=16]
-[ext_resource path="res://fedora.png" type="Texture" id=17]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 6.0
-} ]
+[ext_resource path="res://factory_tiles/tank.png" type="Texture" id=3]
+[ext_resource path="res://fedora.png" type="Texture" id=4]
+[ext_resource path="res://WebSocket.gd" type="Script" id=5]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -35,6 +15,7 @@ script = ExtResource( 1 )
 mode = 1
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 128, 64 )
+cell_clip_uv = true
 format = 1
 tile_data = PoolIntArray( -327672, 3, 0, -327671, 5, 0, -327670, 4, 0, -327669, 2, 0, -262140, 3, 0, -262139, 5, 0, -262138, 5, 0, -262137, 5, 0, -262136, 0, 0, -262133, 6, 0, -196604, 6, 0, -196597, 6, 0, -131068, 6, 0, -131066, 3, 0, -131065, 2, 0, -131061, 6, 0, -131058, 3, 0, -131057, 2, 0, -65532, 6, 0, -65530, 6, 0, -65529, 6, 0, -65525, 6, 0, -65523, 3, 0, -65522, 0, 0, -65521, 6, 0, 4, 6, 0, 6, 6, 0, 7, 6, 0, 9, 3, 0, 10, 5, 0, 11, 7, 0, 12, 5, 0, 13, 0, 0, 15, 6, 0, 65540, 4, 0, 65542, 6, 0, 65543, 6, 0, 65545, 6, 0, 65547, 6, 0, 65551, 1, 0, 65552, 5, 0, 65553, 2, 0, 131076, 1, 0, 131077, 5, 0, 131078, 0, 0, 131079, 1, 0, 131080, 5, 0, 131081, 12, 0, 131083, 1, 0, 131084, 5, 0, 131085, 2, 0, 131089, 6, 0, 196617, 6, 0, 196621, 6, 0, 196625, 4, 0, 262153, 6, 0, 262155, 3, 0, 262156, 5, 0, 262157, 0, 0, 262161, 6, 0, 327689, 6, 0, 327691, 6, 0, 327697, 6, 0, 393225, 6, 0, 393227, 6, 0, 393230, 3, 0, 393231, 5, 0, 393232, 5, 0, 393233, 0, 0, 458761, 6, 0, 458763, 6, 0, 458766, 6, 0, 524297, 1, 0, 524298, 5, 0, 524299, 11, 0, 524300, 4, 0, 524301, 5, 0, 524302, 0, 0 )
 
@@ -65,7 +46,19 @@ texture = ExtResource( 16 )
 default_color = Color( 0.8, 0, 0, 1 )
 
 [node name="Fedora" type="Sprite" parent="."]
+<<<<<<< HEAD
 position = Vector2( 575.131, 443.528 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 17 )
+=======
+position = Vector2( 574.875, 443.528 )
+scale = Vector2( 0.762195, 0.762195 )
+texture = ExtResource( 4 )
+>>>>>>> a892d0550eb382690b5420a89cb92001a465782f
 
+[node name="WebSocket" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[connection signal="mechanic_arrived" from="." to="." method="_on_Node2D_mechanic_arrived"]
+[connection signal="mechanic_arrived" from="." to="WebSocket" method="_on_Node2D_mechanic_arrived"]
+[connection signal="mechanic_embark" from="." to="." method="_on_Node2D_mechanic_embark"]
