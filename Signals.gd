@@ -14,7 +14,7 @@ func _test_signal():
 	emit_signal("test_signal")
 
 func emit(name):
-	emit_signal(name, 
+	emit_signal(name)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

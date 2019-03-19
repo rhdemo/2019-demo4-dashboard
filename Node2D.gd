@@ -6,6 +6,9 @@ var path : PoolVector2Array
 var goal : Vector2
 export var speed := 250
 
+signal mechanic_embark
+signal mechanic_arrived
+
 func _input(event: InputEvent):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
@@ -13,10 +16,18 @@ func _input(event: InputEvent):
 			path = nav.get_simple_path($Fedora.position, goal)
 			$Line2D.points = path
 			$Line2D.show()
-			
+			emit_signal("mechanic_embark", {
+				"mechanic_id": 0,
+				"machine_id": 0,
+				"pos_start": $Fedora.position,
+				"pos_end": path[-1],
+				"pos_target": event.position,
+				"path": path
+			})
+
 func _process(delta: float) -> void:
 	if !path:
-		$Line2D.hide()
+		emit_signal("no path")
 		return
 	if path.size() > 0:
 		var d: float = $Fedora.position.distance_to(path[0])
@@ -24,6 +35,12 @@ func _process(delta: float) -> void:
 			$Fedora.position = $Fedora.position.linear_interpolate(path[0], (speed * delta)/d)
 		else:
 			path.remove(0)
+	if path.size() == 0:
+		emit_signal("mechanic_arrived", {
+			"mechanic_id": 0,
+			"machine_id": 0
+		})
+
 
 #extends Node2D
 #
@@ -43,3 +60,12 @@ func _process(delta: float) -> void:
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 ##func _process(delta):
 ##	pass
+
+
+func _on_Node2D_mechanic_embark(data):
+	print("mechanic_embark: %s" % data)
+
+
+func _on_Node2D_mechanic_arrived(data):
+	print("mechanic_arrived: %s" % data)
+	$Line2D.hide()

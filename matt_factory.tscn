@@ -2,19 +2,19 @@
 
 [ext_resource path="res://Node2D.gd" type="Script" id=1]
 [ext_resource path="res://matt_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://sprites/0001.png" type="Texture" id=3]
-[ext_resource path="res://sprites/0004.png" type="Texture" id=4]
-[ext_resource path="res://sprites/0008.png" type="Texture" id=5]
-[ext_resource path="res://sprites/0012.png" type="Texture" id=6]
-[ext_resource path="res://sprites/0016.png" type="Texture" id=7]
-[ext_resource path="res://sprites/0020.png" type="Texture" id=8]
-[ext_resource path="res://sprites/0024.png" type="Texture" id=9]
-[ext_resource path="res://sprites/0021.png" type="Texture" id=10]
-[ext_resource path="res://sprites/0017.png" type="Texture" id=11]
-[ext_resource path="res://sprites/0013.png" type="Texture" id=12]
-[ext_resource path="res://sprites/0009.png" type="Texture" id=13]
-[ext_resource path="res://sprites/0005.png" type="Texture" id=14]
-[ext_resource path="res://sprites/0002.png" type="Texture" id=15]
+[ext_resource path="res://sprites/robot-arm/0001.png" type="Texture" id=3]
+[ext_resource path="res://sprites/robot-arm/0004.png" type="Texture" id=4]
+[ext_resource path="res://sprites/robot-arm/0008.png" type="Texture" id=5]
+[ext_resource path="res://sprites/robot-arm/0012.png" type="Texture" id=6]
+[ext_resource path="res://sprites/robot-arm/0016.png" type="Texture" id=7]
+[ext_resource path="res://sprites/robot-arm/0020.png" type="Texture" id=8]
+[ext_resource path="res://sprites/robot-arm/0024.png" type="Texture" id=9]
+[ext_resource path="res://sprites/robot-arm/0021.png" type="Texture" id=10]
+[ext_resource path="res://sprites/robot-arm/0017.png" type="Texture" id=11]
+[ext_resource path="res://sprites/robot-arm/0013.png" type="Texture" id=12]
+[ext_resource path="res://sprites/robot-arm/0009.png" type="Texture" id=13]
+[ext_resource path="res://sprites/robot-arm/0005.png" type="Texture" id=14]
+[ext_resource path="res://sprites/robot-arm/0002.png" type="Texture" id=15]
 [ext_resource path="res://AnimatedSprite.gd" type="Script" id=16]
 [ext_resource path="res://factory_tiles/tank.png" type="Texture" id=17]
 [ext_resource path="res://WebSocket.gd" type="Script" id=18]
@@ -99,3 +99,4 @@ texture_mode = 244145408
 position = Vector2( 41.5287, 253.251 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 19 )
+
