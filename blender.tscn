@@ -13,11 +13,6 @@
 [ext_resource path="res://sprites/fedora.png" type="Texture" id=11]
 [ext_resource path="res://scripts/WebSocket.gd" type="Script" id=12]
 
-
-
-
-
-
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -89,6 +84,7 @@ texture = ExtResource( 10 )
 
 [node name="Line2D" type="Line2D" parent="."]
 default_color = Color( 0.8, 0, 0, 1 )
+texture_mode = 244145408
 
 [node name="Fedora" type="Sprite" parent="."]
 position = Vector2( 574.875, 443.528 )

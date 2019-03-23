@@ -14,7 +14,6 @@
 [ext_resource path="res://blender_tiles/flat.png" type="Texture" id=12]
 [ext_resource path="res://blender_tiles/cross-up.png" type="Texture" id=13]
 
-
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 16, 24, 48, 8, 64, 16, 80, 8, 112, 24, 64, 48 )
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5 ) ]

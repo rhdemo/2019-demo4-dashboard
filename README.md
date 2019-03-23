@@ -9,7 +9,7 @@ Import the `project.godot` file into Godot and then run it.
 
 ## Server
 
-The server is written in nodejs.
+The server is written in nodejs. 
 
 Setup:
 
@@ -23,6 +23,8 @@ Run it:
 ```
 npm start
 ```
+
+
 
 
 ## Isometric Scene

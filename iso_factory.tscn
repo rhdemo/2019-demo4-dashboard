@@ -1,35 +1,36 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scripts/Node2D.gd" type="Script" id=1]
 [ext_resource path="res://iso_tiles/iso_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://sprites/robot-arm/0001.png" type="Texture" id=3]
-[ext_resource path="res://sprites/robot-arm/0004.png" type="Texture" id=4]
-[ext_resource path="res://sprites/robot-arm/0008.png" type="Texture" id=5]
-[ext_resource path="res://sprites/robot-arm/0012.png" type="Texture" id=6]
-[ext_resource path="res://sprites/robot-arm/0016.png" type="Texture" id=7]
-[ext_resource path="res://sprites/robot-arm/0020.png" type="Texture" id=8]
-[ext_resource path="res://sprites/robot-arm/0024.png" type="Texture" id=9]
-[ext_resource path="res://sprites/robot-arm/0021.png" type="Texture" id=10]
-[ext_resource path="res://sprites/robot-arm/0017.png" type="Texture" id=11]
-[ext_resource path="res://sprites/robot-arm/0013.png" type="Texture" id=12]
-[ext_resource path="res://sprites/robot-arm/0009.png" type="Texture" id=13]
-[ext_resource path="res://sprites/robot-arm/0005.png" type="Texture" id=14]
-[ext_resource path="res://sprites/robot-arm/0002.png" type="Texture" id=15]
-[ext_resource path="res://scripts/AnimatedSprite.gd" type="Script" id=16]
-[ext_resource path="res://sprites/machines/yellow-machine.png" type="Texture" id=17]
-[ext_resource path="res://sprites/machines/machine-f.png" type="Texture" id=18]
-[ext_resource path="res://sprites/machines/machine-b.png" type="Texture" id=19]
-[ext_resource path="res://sprites/machines/machine-c.png" type="Texture" id=20]
-[ext_resource path="res://sprites/machines/machine-d.png" type="Texture" id=21]
-[ext_resource path="res://blender_tiles/tank.png" type="Texture" id=22]
-[ext_resource path="res://sprites/machines/machine-g.png" type="Texture" id=23]
-[ext_resource path="res://sprites/machines/machine-e.png" type="Texture" id=24]
+[ext_resource path="res://machine.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sprites/machines/machine-1-w-belts.png" type="Texture" id=4]
+[ext_resource path="res://sprites/robot-arm/0001.png" type="Texture" id=5]
+[ext_resource path="res://sprites/robot-arm/0004.png" type="Texture" id=6]
+[ext_resource path="res://sprites/robot-arm/0008.png" type="Texture" id=7]
+[ext_resource path="res://sprites/robot-arm/0012.png" type="Texture" id=8]
+[ext_resource path="res://sprites/robot-arm/0016.png" type="Texture" id=9]
+[ext_resource path="res://sprites/robot-arm/0020.png" type="Texture" id=10]
+[ext_resource path="res://sprites/robot-arm/0024.png" type="Texture" id=11]
+[ext_resource path="res://sprites/robot-arm/0021.png" type="Texture" id=12]
+[ext_resource path="res://sprites/robot-arm/0017.png" type="Texture" id=13]
+[ext_resource path="res://sprites/robot-arm/0013.png" type="Texture" id=14]
+[ext_resource path="res://sprites/robot-arm/0009.png" type="Texture" id=15]
+[ext_resource path="res://sprites/robot-arm/0005.png" type="Texture" id=16]
+[ext_resource path="res://sprites/robot-arm/0002.png" type="Texture" id=17]
+[ext_resource path="res://scripts/AnimatedSprite.gd" type="Script" id=18]
+[ext_resource path="res://sprites/machines/machine-f.png" type="Texture" id=19]
+[ext_resource path="res://sprites/machines/machine-b.png" type="Texture" id=20]
+[ext_resource path="res://sprites/machines/machine-c.png" type="Texture" id=21]
+[ext_resource path="res://sprites/machines/machine-d.png" type="Texture" id=22]
+[ext_resource path="res://blender_tiles/tank.png" type="Texture" id=23]
+[ext_resource path="res://sprites/machines/machine-g.png" type="Texture" id=24]
 [ext_resource path="res://scripts/WebSocket.gd" type="Script" id=25]
-[ext_resource path="res://mechanic.tscn" type="PackedScene" id=26]
+[ext_resource path="res://sprites/machines/machine-e.png" type="Texture" id=26]
+[ext_resource path="res://sprites/fedora.png" type="Texture" id=27]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ],
 "loop": true,
 "name": "default",
 "speed": 6.0
@@ -48,70 +49,77 @@ cell_size = Vector2( 90, 52 )
 format = 1
 tile_data = PoolIntArray( -983022, 4, 0, -983021, 9, 0, -983020, 9, 0, -983019, 9, 0, -983018, 9, 0, -983017, 9, 0, -983016, 9, 0, -983015, 9, 0, -983014, 9, 0, -983013, 9, 0, -983012, 9, 0, -983011, 9, 0, -983010, 9, 0, -917486, 2, 0, -851950, 2, 0, -786414, 2, 0, -720878, 2, 0, -655342, 2, 0, -589806, 2, 0, -524270, 2, 0, -458734, 2, 0, -393198, 2, 0, -327662, 2, 0, -262126, 3, 0, -262125, 9, 0, -262124, 9, 0, -262123, 9, 0, -262122, 9, 0, -262121, 9, 0, -262120, 9, 0, -262119, 9, 0, -262118, 9, 0, -262117, 9, 0, -262116, 9, 0, -262115, 9, 0, -262114, 9, 0, -262113, 6, 0, -196590, 2, 0, -196577, 2, 0, -131054, 2, 0, -131041, 2, 0, -65518, 2, 0, -65505, 2, 0, 18, 2, 0, 31, 2, 0, 65554, 2, 0, 65567, 2, 0, 131090, 3, 0, 131091, 9, 0, 131092, 9, 0, 131093, 9, 0, 131094, 9, 0, 131095, 9, 0, 131096, 9, 0, 131097, 9, 0, 131098, 9, 0, 131099, 9, 0, 131100, 9, 0, 131101, 9, 0, 131102, 9, 0, 131103, 10, 0, 196626, 2, 0, 196639, 3, 0, 196640, 9, 0, 196641, 9, 0, 196642, 9, 0, 196643, 9, 0, 196644, 9, 0, 196645, 9, 0, 196646, 9, 0, 196647, 9, 0, 196648, 9, 0, 262146, 9, 0, 262147, 9, 0, 262148, 9, 0, 262149, 9, 0, 262150, 9, 0, 262151, 9, 0, 262152, 9, 0, 262153, 9, 0, 262154, 9, 0, 262155, 9, 0, 262156, 9, 0, 262157, 9, 0, 262158, 9, 0, 262159, 9, 0, 262160, 9, 0, 262161, 9, 0, 262162, 11, 0, 262175, 2, 0, 327711, 2, 0, 393247, 2, 0, 458783, 2, 0, 524319, 2, 0, 589831, 9, 0, 589832, 9, 0, 589833, 9, 0, 589834, 9, 0, 589835, 9, 0, 589836, 9, 0, 589837, 9, 0, 589838, 9, 0, 589839, 9, 0, 589840, 9, 0, 589841, 9, 0, 589842, 9, 0, 589843, 9, 0, 589844, 9, 0, 589845, 9, 0, 589846, 5, 0, 589847, 9, 0, 589848, 9, 0, 589849, 9, 0, 589850, 9, 0, 589851, 9, 0, 589852, 9, 0, 589853, 9, 0, 589854, 9, 0, 589855, 11, 0, 655382, 2, 0, 720918, 2, 0, 786454, 2, 0, 851990, 2, 0, 917526, 2, 0, 983062, 2, 0, 1048598, 2, 0, 1114134, 2, 0, 1179670, 2, 0, 1245206, 2, 0, 1310742, 2, 0, 1376278, 2, 0 )
 
+[node name="Machine1" parent="Navigation2D" instance=ExtResource( 3 )]
+position = Vector2( 36.3533, 93.1554 )
+texture = ExtResource( 4 )
+machine_name = "C"
+
 [node name="robotArm" type="AnimatedSprite" parent="Navigation2D"]
 position = Vector2( 628.167, 459.09 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 1 )
-script = ExtResource( 16 )
-
-[node name="tank1" type="Sprite" parent="Navigation2D"]
-position = Vector2( 261.467, 222.382 )
-z_index = 10
-texture = ExtResource( 17 )
+script = ExtResource( 18 )
 
 [node name="tank2" type="Sprite" parent="Navigation2D"]
 position = Vector2( 920.264, 260.714 )
 z_index = 10
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 
 [node name="tank7" type="Sprite" parent="Navigation2D"]
 position = Vector2( 1226.77, 94.5118 )
 z_index = 10
-texture = ExtResource( 19 )
+texture = ExtResource( 20 )
 
 [node name="tank3" type="Sprite" parent="Navigation2D"]
 position = Vector2( 1749.2, 95.3015 )
 z_index = 10
-texture = ExtResource( 20 )
+texture = ExtResource( 21 )
 
 [node name="tank4" type="Sprite" parent="Navigation2D"]
 position = Vector2( 1301.72, 398.279 )
 z_index = 10
-texture = ExtResource( 21 )
+texture = ExtResource( 22 )
 
 [node name="tank5" type="Sprite" parent="Navigation2D"]
 position = Vector2( 1587.27, 562.816 )
 z_index = 10
-texture = ExtResource( 21 )
+texture = ExtResource( 22 )
 
 [node name="tank8" type="Sprite" parent="Navigation2D"]
 position = Vector2( 1294.21, 703.766 )
 z_index = 10
-texture = ExtResource( 22 )
+texture = ExtResource( 23 )
 
 [node name="tank9" type="Sprite" parent="Navigation2D"]
 position = Vector2( 599.183, 682.182 )
 z_index = 10
-texture = ExtResource( 22 )
+texture = ExtResource( 23 )
 
 [node name="tank10" type="Sprite" parent="Navigation2D"]
 position = Vector2( 178.282, 421.007 )
-z_index = 10
-texture = ExtResource( 23 )
-
-[node name="tank11" type="Sprite" parent="Navigation2D"]
-position = Vector2( 182.598, 891.553 )
 z_index = 10
 texture = ExtResource( 24 )
 
 [node name="WebSocket" type="Node" parent="Navigation2D"]
 script = ExtResource( 25 )
 
+[node name="tank11" type="Sprite" parent="Navigation2D"]
+position = Vector2( 182.598, 891.553 )
+z_index = 10
+texture = ExtResource( 26 )
+
 [node name="Line2D" type="Line2D" parent="."]
 z_index = 5
 texture_mode = 244145408
 
-[node name="Mechanic" parent="." instance=ExtResource( 26 )]
-position = Vector2( 38.4675, 249.1 )
-z_index = 5
+[node name="Button" type="Button" parent="."]
+margin_left = 404.43
+margin_top = 36.3533
+margin_right = 627.43
+margin_bottom = 124.353
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color = Color( 0.564706, 0.180392, 0.180392, 1 )
+text = "Add Mechanic"
+icon = ExtResource( 27 )
+flat = true
 
