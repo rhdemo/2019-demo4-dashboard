@@ -1,0 +1,70 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>Websocket Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+</head>
+
+<body>
+<h1>test ws 1</h1>
+<ol id="messages">
+</ol>
+</body>
+<script>
+  // Create WebSocket connection.
+  try {
+
+    // let uri = "ws://admin-web-game-demo.192.168.42.81.nip.io/admin-socket";
+    let uri = "ws:" + "//" + window.location.host +"/dashboard-socket";
+    let socket = new WebSocket(uri);
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+      sendInit();
+      setInterval(sendPing, 5000);
+
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+      console.log('Message from server: ', event.data);
+      writeMsg(event.data);
+    });
+
+    socket.addEventListener('close', function (event) {
+      console.log('Disconnected from server, reconnecting', event.data);
+      writeMsg(event.data);
+      socket = new WebSocket(uri);
+    });
+
+    function sendInit() {
+      const init = {
+        type: 'init'
+      };
+
+      socket.send(JSON.stringify(init));
+    }
+
+    function sendPing() {
+      const ping = {
+        type: 'ping'
+      };
+
+      socket.send(JSON.stringify(ping));
+    }
+  }
+  catch (e) {
+    writeMsg(JSON.stringify(e));
+  }
+
+  function writeMsg(msg) {
+    const messages = document.getElementById('messages');
+    let newMessage = document.createElement('li');
+    newMessage.appendChild(document.createTextNode(msg));
+    messages.appendChild(newMessage);
+  }
+</script>
+</html>
