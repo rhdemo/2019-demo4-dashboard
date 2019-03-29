@@ -4,8 +4,8 @@ const env = require("env-var");
 const log = require("./utils/log")("datagrid");
 const {OUTGOING_MESSAGE_TYPES} = require("./message-types");
 
-const DATAGRID_HOST = env.get("DATAGRID_HOTROD_SERVICE_HOST").asString();
-const DATAGRID_PORT = env.get("DATAGRID_HOTROD_SERVICE_PORT").asIntPositive();
+const DATAGRID_HOST = env.get("DATAGRID_HOST").asString();
+const DATAGRID_PORT = env.get("DATAGRID_HOTROD_PORT").asIntPositive();
 
 const DATAGRID_KEYS = {
   GAME: "game",

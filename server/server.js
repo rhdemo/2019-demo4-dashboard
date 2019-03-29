@@ -2,6 +2,7 @@ const WebSocket = require("ws");
 const env = require("env-var");
 const log = require("./utils/log")("dashboard-server");
 const {OUTGOING_MESSAGE_TYPES} = require("./message-types");
+const broadcast = require("./utils/broadcast");
 const {processSocketMessage} = require("./socketHandlers");
 
 const PORT = env.get("PORT", "8080").asIntPositive();
@@ -23,15 +24,8 @@ global.dataClient = null;
 log.info(`Started Dashboard WS server on ${IP}:${PORT}`);
 
 setInterval(function () {
-  if (global.socketServer.clients) {
-    log.info(`sending heartbeats to connected clients`);
-    global.socketServer.clients.forEach(function each(client) {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify({type: OUTGOING_MESSAGE_TYPES.HEARTBEAT}));
-      }
-    });
-  }
-}, 10000);
+  broadcast(OUTGOING_MESSAGE_TYPES.HEARTBEAT);
+}, 5000);
 
 
 require("./datagrid").initData()

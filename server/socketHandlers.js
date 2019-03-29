@@ -11,7 +11,7 @@ function processSocketMessage(ws, messageStr) {
       break;
 
     default:
-      log.warn("Unhandled Admin Message: ", messageStr);
+      log.warn("Unhandled Message: ", messageStr);
       break;
   }
 }

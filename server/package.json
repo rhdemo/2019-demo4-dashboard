@@ -15,6 +15,7 @@
   "license": "ISC",
   "homepage": "https://github.com/rhdemo/2019-demo4-nodejs-server",
   "dependencies": {
+    "@gd-com/utils": "^4.0.0",
     "axios": "^0.18.0",
     "env-var": "~3.5.0",
     "infinispan": "^0.6.0",
