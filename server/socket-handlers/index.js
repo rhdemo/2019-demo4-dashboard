@@ -1,9 +1,10 @@
 const log = require("../utils/log")("socket-handlers");
 const {INCOMING_MESSAGE_TYPES} = require("../message-types");
+const parseMsg = require("../utils/parse-msg");
 
 
-function processSocketMessage(ws, messageStr) {
-    let messageObj = JSON.parse(messageStr);
+function processSocketMessage(ws, message) {
+    let messageObj = parseMsg(message);
 
     switch (messageObj.type) {
         case INCOMING_MESSAGE_TYPES.INIT:
@@ -15,7 +16,7 @@ function processSocketMessage(ws, messageStr) {
             break;
 
         default:
-            log.warn(`Unhandled Game Message of type "${messageStr}"`);
+            log.warn(`Unhandled Game Message of type "${message}"`);
             break;
     }
 }
