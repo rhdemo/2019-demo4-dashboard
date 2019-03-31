@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://scripts/factory.gd" type="Script" id=1]
+[ext_resource path="res://scripts/blender.gd" type="Script" id=1]
 [ext_resource path="res://blender_tiles/blender_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://sprites/machines/yellow-machine.png" type="Texture" id=3]
 [ext_resource path="res://sprites/machines/machine-f.png" type="Texture" id=4]
@@ -24,14 +24,18 @@ tile_set = ExtResource( 2 )
 cell_size = Vector2( 128, 64 )
 cell_clip_uv = true
 format = 1
-tile_data = PoolIntArray( -655347, 3, 0, -655346, 5, 0, -655345, 5, 0, -655344, 5, 0, -655343, 5, 0, -655342, 5, 0, -655341, 5, 0, -655340, 5, 0, -589811, 6, 0, -524275, 6, 0, -458739, 6, 0, -393203, 6, 0, -327667, 6, 0, -262131, 6, 0, -196595, 10, 0, -196594, 5, 0, -196593, 5, 0, -196592, 5, 0, -196591, 5, 0, -196590, 5, 0, -196589, 5, 0, -196588, 5, 0, -196587, 5, 0, -196586, 5, 0, -196585, 5, 0, -196584, 2, 0, -131059, 6, 0, -131048, 6, 0, -65523, 6, 0, -65512, 6, 0, 13, 6, 0, 24, 6, 0, 65549, 10, 0, 65550, 5, 0, 65551, 5, 0, 65552, 5, 0, 65553, 5, 0, 65554, 5, 0, 65555, 5, 0, 65556, 5, 0, 65557, 5, 0, 65558, 5, 0, 65559, 5, 0, 65560, 12, 0, 131074, 5, 0, 131075, 5, 0, 131076, 5, 0, 131077, 5, 0, 131078, 5, 0, 131079, 5, 0, 131080, 5, 0, 131081, 5, 0, 131082, 5, 0, 131083, 5, 0, 131084, 5, 0, 131085, 0, 0, 131096, 6, 0, 196632, 10, 0, 196633, 5, 0, 196634, 5, 0, 196635, 5, 0, 196636, 5, 0, 196637, 5, 0, 196638, 5, 0, 262168, 6, 0, 327704, 6, 0, 393240, 6, 0, 458776, 6, 0, 524296, 5, 0, 524297, 5, 0, 524298, 5, 0, 524299, 5, 0, 524300, 5, 0, 524301, 5, 0, 524302, 5, 0, 524303, 5, 0, 524304, 5, 0, 524305, 5, 0, 524306, 5, 0, 524307, 9, 0, 524308, 5, 0, 524309, 5, 0, 524310, 5, 0, 524311, 5, 0, 524312, 0, 0, 589843, 6, 0, 655379, 6, 0, 720915, 6, 0, 786451, 6, 0, 851987, 6, 0, 917523, 6, 0 )
+tile_data = PoolIntArray( -655347, 3, 0, -655346, 5, 0, -655345, 5, 0, -655344, 5, 0, -655343, 5, 0, -655342, 5, 0, -655341, 5, 0, -655340, 5, 0, -589811, 6, 0, -524275, 6, 0, -458739, 6, 0, -393203, 6, 0, -327667, 6, 0, -262131, 6, 0, -196595, 10, 0, -196594, 5, 0, -196593, 5, 0, -196592, 5, 0, -196591, 5, 0, -196590, 5, 0, -196589, 5, 0, -196588, 5, 0, -196587, 5, 0, -196586, 5, 0, -196585, 5, 0, -196584, 2, 0, -131059, 6, 0, -131048, 6, 0, -65523, 6, 0, -65512, 6, 0, 13, 6, 0, 24, 6, 0, 65549, 10, 0, 65550, 5, 0, 65551, 5, 0, 65552, 5, 0, 65553, 5, 0, 65554, 5, 0, 65555, 5, 0, 65556, 5, 0, 65557, 5, 0, 65558, 5, 0, 65559, 5, 0, 65560, 12, 0, 131074, 5, 0, 131075, 5, 0, 131076, 5, 0, 131077, 5, 0, 131078, 5, 0, 131079, 5, 0, 131080, 9, 0, 131081, 5, 0, 131082, 5, 0, 131083, 5, 0, 131084, 5, 0, 131085, 0, 0, 131096, 6, 0, 196616, 6, 0, 196632, 10, 0, 196633, 5, 0, 196634, 5, 0, 196635, 5, 0, 196636, 5, 0, 196637, 5, 0, 196638, 5, 0, 262152, 6, 0, 262168, 6, 0, 327688, 6, 0, 327704, 6, 0, 393224, 6, 0, 393240, 6, 0, 458760, 6, 0, 458776, 6, 0, 524296, 1, 0, 524297, 5, 0, 524298, 5, 0, 524299, 5, 0, 524300, 5, 0, 524301, 5, 0, 524302, 5, 0, 524303, 5, 0, 524304, 5, 0, 524305, 5, 0, 524306, 5, 0, 524307, 9, 0, 524308, 5, 0, 524309, 5, 0, 524310, 5, 0, 524311, 5, 0, 524312, 0, 0, 589843, 6, 0, 655376, 5, 0, 655377, 5, 0, 655378, 5, 0, 655379, 12, 0, 720915, 6, 0, 786451, 6, 0, 851987, 6, 0, 917523, 6, 0 )
 
 [node name="Sprite" type="Sprite" parent="Navigation2D"]
 position = Vector2( 439.906, 217.303 )
 texture = ExtResource( 3 )
 
+[node name="Sprite16" type="Sprite" parent="Navigation2D"]
+position = Vector2( 724.515, 744.778 )
+texture = ExtResource( 3 )
+
 [node name="Sprite3" type="Sprite" parent="Navigation2D"]
-position = Vector2( 956.664, 214.653 )
+position = Vector2( 918.716, 233.627 )
 texture = ExtResource( 4 )
 
 [node name="Sprite12" type="Sprite" parent="Navigation2D"]
@@ -66,12 +70,18 @@ texture = ExtResource( 6 )
 position = Vector2( 1759.63, 111.302 )
 texture = ExtResource( 7 )
 
+[node name="Sprite15" type="Sprite" parent="Navigation2D"]
+position = Vector2( 1471.23, 672.93 )
+z_index = 99
+texture = ExtResource( 7 )
+
 [node name="Sprite6" type="Sprite" parent="Navigation2D"]
 position = Vector2( 1404.52, 378.956 )
 texture = ExtResource( 8 )
 
 [node name="Sprite8" type="Sprite" parent="Navigation2D"]
 position = Vector2( 339.205, 908.963 )
+z_index = 99
 texture = ExtResource( 9 )
 
 [node name="Sprite7" type="Sprite" parent="Navigation2D"]
@@ -79,7 +89,8 @@ position = Vector2( 1746.38, 548.558 )
 texture = ExtResource( 8 )
 
 [node name="Sprite2" type="Sprite" parent="Navigation2D"]
-position = Vector2( 233.203, 482.307 )
+position = Vector2( 339.457, 527.844 )
+z_index = 99
 texture = ExtResource( 10 )
 
 [node name="Line2D" type="Line2D" parent="."]
@@ -87,13 +98,19 @@ default_color = Color( 0.8, 0, 0, 1 )
 texture_mode = 244145408
 
 [node name="Fedora" type="Sprite" parent="."]
-position = Vector2( 574.875, 443.528 )
+position = Vector2( 392.98, 859.785 )
 scale = Vector2( 0.762195, 0.762195 )
 texture = ExtResource( 11 )
 
 [node name="WebSocket" type="Node" parent="."]
 script = ExtResource( 12 )
 
+[node name="AddMechanic" type="TextureButton" parent="."]
+margin_left = 634.488
+margin_top = 71.7564
+margin_right = 753.488
+margin_bottom = 153.756
+texture_normal = ExtResource( 11 )
 [connection signal="mechanic_arrived" from="." to="." method="_on_Node2D_mechanic_arrived"]
 [connection signal="mechanic_arrived" from="." to="WebSocket" method="_on_Node2D_mechanic_arrived"]
 [connection signal="mechanic_embark" from="." to="." method="_on_Node2D_mechanic_embark"]
