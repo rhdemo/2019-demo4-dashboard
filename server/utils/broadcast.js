@@ -1,4 +1,4 @@
-const log = require("../utils/log")("utils/broadcast-message");
+const log = require("../utils/log")("utils/broadcast");
 const WebSocket = require("ws");
 
 const gdComUtils = require('@gd-com/utils');
