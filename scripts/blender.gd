@@ -12,17 +12,17 @@ var goal : Vector2
 export var speed := 250
 var mechanics = []
 var machines = {
-	"machine-a": { "coords": Vector2(8,4), "color": Color.yellow},
-	"machine-b": { "coords": Vector2(18,-5), "color": Color.green},
-	"machine-c": { "coords": Vector2(18, -11), "color": Color.purple },
-	"machine-d": { "coords": Vector2(21,-16), "color": Color.pink},
-	"machine-e": { "coords": Vector2(22,-5), "color": Color.black},
-	"machine-f": { "coords": Vector2(28,-5), "color": Color.maroon},
-	"machine-g": { "coords": Vector2(28,2), "color": Color.blue},
-	"machine-h": { "coords": Vector2(19,10), "color": Color.lightblue},
-	"machine-i": { "coords": Vector2(22,16), "color": Color.orange},
-	"machine-j": { "coords": Vector2(13,10), "color": Color.red},
-	"gate": { "coords": Vector2(2,4), "color": Color.white}
+	"machine-a": { "coords": Vector2(7,2), "color": Color.yellow},
+	"machine-b": { "coords": Vector2(13,-3), "color": Color.green},
+	"machine-c": { "coords": Vector2(13, -7), "color": Color.purple },
+	"machine-d": { "coords": Vector2(16,-10), "color": Color.pink},
+	"machine-e": { "coords": Vector2(17,-3), "color": Color.black},
+	"machine-f": { "coords": Vector2(23,-3), "color": Color.maroon},
+	"machine-g": { "coords": Vector2(23,1), "color": Color.blue},
+	"machine-h": { "coords": Vector2(18,8), "color": Color.lightblue},
+	"machine-i": { "coords": Vector2(18,8), "color": Color.orange},
+	"machine-j": { "coords": Vector2(11,8), "color": Color.red},
+	"gate": { "coords": Vector2(16,10), "color": Color.white}
 	}
 var distance_matrix = "";
 
@@ -50,10 +50,10 @@ func get_distance_matrix_output():
 	var headings = ["machine name", "x", "y", "machine-1", "machine-2", "machine-3", "machine-4", "machine-5", "machine-6", "machine-7", "machine-8", "machine-9", "machine-10", "gate"]
 	csv_array.append(headings)
 	for pt in machines:
-		var ptDist = [pt,map.map_to_world(machines[pt].coords).x, map.map_to_world(machines[pt].coords).y]
-		var start = machines[pt].coords #$TileMap.map_to_world(machines[pt]);
+		var ptDist = [pt,$Navigation2D/FactoryMap.map_to_world(machines[pt].coords).x, $Navigation2D/FactoryMap.map_to_world(machines[pt].coords).y]
+		var start = $Navigation2D/FactoryMap.map_to_world(machines[pt].coords) #$TileMap.map_to_world(machines[pt]);
 		for g in machines:
-			var goal = machines[g].coords #$TileMap.map_to_world(machines[g])
+			var goal = $Navigation2D/FactoryMap.map_to_world(machines[g].coords) #$TileMap.map_to_world(machines[g])
 			var pth = nav.get_simple_path(start, goal)
 			var dist = 0
 			if pth.size() > 0:
@@ -84,10 +84,10 @@ func get_distance_matrix_output():
 func add_mechanic():
 	for pt in machines:
 		var mechanic = mechanicNode.instance()
-		var map_pos = map.map_to_world(machines[pt].coords)
+		var map_pos = $Navigation2D/FactoryMap.map_to_world(machines[pt].coords)
 		map_pos.y += 26.5
 		mechanic.position = map_pos #$Navigation2D/TileMap.map_to_world(nav_points[nav_points.size()-1])
-		map.add_child(mechanic)
+		self.add_child(mechanic)
 		mechanics.append(mechanic)
 	get_distance_matrix_output()
 		
