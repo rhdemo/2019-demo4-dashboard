@@ -55,6 +55,7 @@ flat = true
 script = ExtResource( 4 )
 
 [node name="static_assets" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="pallet-barrel-2" type="Sprite" parent="static_assets"]
 position = Vector2( 984.749, 784.146 )
@@ -205,3 +206,4 @@ healthbar_location = Vector2( -50, -100 )
 light_location = Vector2( -58, -24 )
 machine_name = "J"
 tex = ExtResource( 21 )
+
