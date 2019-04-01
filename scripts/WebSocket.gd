@@ -3,7 +3,7 @@ extends Node
 var ws = null
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
 var retryTimeout = 1 # seconds
-const url = "ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
+const url = "ws://localhost:8088" #"ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
 
 func _ready():
 	self._connect()
