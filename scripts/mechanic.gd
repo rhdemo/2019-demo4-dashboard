@@ -12,8 +12,8 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func dispatch(dir):
-	pass
+#func dispatch(dir):
+#	pass
 	
 #if event is InputEventMouseButton:
 #		if event.button_index == BUTTON_LEFT and event.pressed:
