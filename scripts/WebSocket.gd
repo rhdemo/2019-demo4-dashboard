@@ -3,7 +3,11 @@ extends Node
 var ws = null
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
 var retryTimeout = 1 # seconds
-const url = "ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
+const url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket" #"ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
+
+# {"type":"machine","data":{"id":"machine-6","value":1000000000000000000}}
+# {"type":"optaplanner","data":{"key":"1","value":{"responseType":"DISPATCH_MECHANIC","mechanic":{"mechanicIndex":1,"originalMachineIndex":3,"focusMachineIndex":3,"focusTravelTimeMillis":8358000,"focusFixTimeMillis":8360000,"futureMachineIndexes":[3,2,1,0]}}}}
+
 
 func _ready():
 	self._connect()
