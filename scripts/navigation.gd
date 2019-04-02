@@ -12,19 +12,19 @@ var goal : Vector2
 export var speed := 250
 var mechanics = []
 var machines = {
-	"machine-a": { "coords": Vector2(5,2), "color": Color.yellow},
-	"machine-b": { "coords": Vector2(11,-4), "color": Color.green},
-	"machine-c": { "coords": Vector2(11, -7), "color": Color.purple},
-	"machine-d": { "coords": Vector2(14,-11), "color": Color.pink},
-	"machine-e": { "coords": Vector2(15,-4), "color": Color.black},
-	"machine-f": { "coords": Vector2(19,-4), "color": Color.maroon},
-	"machine-g": { "coords": Vector2(20,0), "color": Color.blue},
-	"machine-h": { "coords": Vector2(13,6), "color": Color.lightblue},
-	"machine-i": { "coords": Vector2(16,10), "color": Color.orange},
-	"machine-j": { "coords": Vector2(8,6), "color": Color.red},
-	"gate": { "coords": Vector2(14,9), "color": Color.white}
+	"machine-a": { "coords": Vector2(4,2), "color": Color.yellow},
+	"machine-b": { "coords": Vector2(11,-3), "color": Color.green},
+	"machine-c": { "coords": Vector2(11, -8), "color": Color.purple},
+	"machine-d": { "coords": Vector2(15,-11), "color": Color.pink},
+	"machine-e": { "coords": Vector2(15,-3), "color": Color.black},
+	"machine-f": { "coords": Vector2(19,-3), "color": Color.maroon},
+	"machine-g": { "coords": Vector2(19,1), "color": Color.blue},
+	"machine-h": { "coords": Vector2(13,7), "color": Color.lightblue},
+	"machine-i": { "coords": Vector2(16,11), "color": Color.orange},
+	"machine-j": { "coords": Vector2(8,7), "color": Color.red},
+	"gate": { "coords": Vector2(14,10), "color": Color.white}
 	}
-var distance_matrix = "";
+#var distance_matrix = "";
 
 signal mechanic_embark
 signal mechanic_arrived
@@ -86,7 +86,7 @@ func add_mechanic():
 	for pt in machines:
 		var mechanic = mechanicNode.instance()
 		var map_pos = map.map_to_world(machines[pt].coords)
-		map_pos.y += 384
+		#map_pos.y += 384
 		mechanic.position = map_pos #$Navigation2D/TileMap.map_to_world(nav_points[nav_points.size()-1])
 		self.add_child(mechanic)
 		mechanics.append(mechanic)

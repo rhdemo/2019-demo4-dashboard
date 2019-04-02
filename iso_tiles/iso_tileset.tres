@@ -4,7 +4,7 @@
 [ext_resource path="res://blender_tiles/straight-down-up.png" type="Texture" id=2]
 [ext_resource path="res://blender_tiles/straight-up-down.png" type="Texture" id=3]
 
-[sub_resource type="NavigationPolygon" id=4]
+[sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 128, 0, 0, 74, 128, 148, 256, 74 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
@@ -25,7 +25,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 25/tile_mode = 0
 25/occluder_offset = Vector2( 0, 0 )
 25/navigation_offset = Vector2( 0, 0 )
-25/navigation = SubResource( 4 )
+25/navigation = SubResource( 1 )
 25/shapes = [  ]
 25/z_index = 0
 26/name = "straight-down-up.png 26"
@@ -50,4 +50,3 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 27/navigation = SubResource( 3 )
 27/shapes = [  ]
 27/z_index = 0
-
