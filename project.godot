@@ -22,8 +22,8 @@ config/icon="res://sprites/fedora.png"
 
 [display]
 
-window/size/width=3840
-window/size/height=2160
+window/size/width=1920
+window/size/height=1080
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
