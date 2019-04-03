@@ -50,3 +50,4 @@ anims/healthy = SubResource( 2 )
 
 [node name="health" parent="." instance=ExtResource( 3 )]
 scale = Vector2( 12, 12 )
+[connection signal="machine_damaged" from="health" to="." method="_on_health_machine_damaged"]
