@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Sprite
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -6,13 +6,14 @@ extends KinematicBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	get_parent().connect('dispatch_mechanic', self, "dispatch_mechanic")  # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-#func dispatch(dir):
+func dispatch_mechanic(data):
+	print(data);
 #	pass
 	
 #if event is InputEventMouseButton:

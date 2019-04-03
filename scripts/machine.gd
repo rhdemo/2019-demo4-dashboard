@@ -9,12 +9,14 @@ export (String) var machine_name = "0";
 export (Texture) var tex;
 # var b = "text"
 
+signal dispatch_mechanic
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$health.connect("machine_damaged", self, "_on_health_machine_damaged")
+	#connect("machine_damaged", self, "_on_health_machine_damaged")
 	self.texture = tex
 
-	$health/icon/label.text = self.machine_name
+	$health/label.text = self.machine_name
 	if self.texture:
 		#$graphic.set_position()
 		$light.set_position(self.light_location)
@@ -25,9 +27,12 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	$health.health = self.health
+	#$light.set_position(self.light_location)
+	#$health.set_position(self.healthbar_location)
 	#print(machine_name, " HEALTH:", $health.health)
 
 func _on_health_machine_damaged(data):
+	emit_signal("dispatch_mechanic", machine_name)
 	print(machine_name," clicked:", self.health)
 	if $light/anim.current_animation == 'alert':
 		$light/anim.play("healthy")

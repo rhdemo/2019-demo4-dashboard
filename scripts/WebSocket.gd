@@ -7,7 +7,8 @@ const url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/d
 
 # {"type":"machine","data":{"id":"machine-6","value":1000000000000000000}}
 # {"type":"optaplanner","data":{"key":"1","value":{"responseType":"DISPATCH_MECHANIC","mechanic":{"mechanicIndex":1,"originalMachineIndex":3,"focusMachineIndex":3,"focusTravelTimeMillis":8358000,"focusFixTimeMillis":8360000,"futureMachineIndexes":[3,2,1,0]}}}}
-
+signal dispatch_mechanic
+signal add_mechanic
 
 func _ready():
 	self._connect()
@@ -47,7 +48,9 @@ func _process(delta):
 	if ws.get_peer(1).is_connected_to_host():
 		if ws.get_peer(1).get_available_packet_count() > 0 :
 			var packet = ws.get_peer(1).get_packet()
-			print(decode_data(packet))
+			var res = JSON.parse(decode_data(packet)).result
+			if res['type'] == "optaplanner":
+				print(res['data'])
 			#var test = ws.get_peer(1).get_var()
 			#print('receive %s' % JSON.parse(test))
 
