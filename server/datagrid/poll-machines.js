@@ -22,7 +22,7 @@ async function refreshMachine(machine, alwaysBroadcast) {
     let response = await axios({method: "get", url: machine.url});
     if (alwaysBroadcast || machine.value !== response.data) {
       machine.value = response.data;
-      broadcast(OUTGOING_MESSAGE_TYPES.MACHINE, {id: machine.id, value: machine.value});
+      broadcast(OUTGOING_MESSAGE_TYPES.MACHINE, {id: machine.id, value: machine.value}, "modify");
     }
   } catch (error) {
     log.error(`error occurred in http call get counter for machine ${machine.id}`);
