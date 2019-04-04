@@ -54,7 +54,7 @@ func _ready():
 	for m in machines:
 		var coords = machines[m].coords #map.map_to_world(machines[m].coords)
 		coords.y += .5
-		machines[m].coords = coords 
+		machines[m].coords = coords
 
 func get_matrix():
 	var csv_array = []
@@ -92,7 +92,7 @@ func add_mechanic():
 		mechanic.position = map_pos #$Navigation2D/TileMap.map_to_world(nav_points[nav_points.size()-1])
 		self.add_child(mechanic)
 		mechanics.append(mechanic)
-		
+
 func _process(delta: float) -> void:
 	if !path:
 		$Line2D.hide()
@@ -119,14 +119,14 @@ func _connect():
 	ws.connect("connection_established", self, "_connection_established")
 	ws.connect("connection_closed", self, "_connection_closed")
 	ws.connect("connection_error", self, "_connection_error")
-	
+
 	print("Connecting to " + url)
 	ws.connect_to_url(url)
-	
+
 func _connection_established(protocol):
 	ws.get_peer(1).set_write_mode(_write_mode)
 	print("Connection established with protocol: ", protocol)
-	
+
 func _connection_closed():
 	print("Connection closed, retrying in %ds" % retryTimeout)
 	yield(get_tree().create_timer(retryTimeout), "timeout")

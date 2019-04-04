@@ -4,9 +4,9 @@ const WebSocket = require("ws");
 const gdComUtils = require('@gd-com/utils');
 
 
-module.exports = function gdBroadcast(type, data) {
+module.exports = function gdBroadcast(type, data, action) {
   if (global.socketServer.clients) {
-    let jsonMessage = JSON.stringify({type: type, data});
+    let jsonMessage = JSON.stringify({type: type, data, action});
     // log.debug(`sending gd message to clients: ${jsonMessage}`);
 
     let gdBuffer = new gdComUtils.GdBuffer();
