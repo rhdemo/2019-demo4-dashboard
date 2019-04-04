@@ -2,7 +2,7 @@ extends Node2D
 
 var ws = null
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
-var retryTimeout = 5 # seconds
+var retryTimeout = 2 # seconds
 const url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket" #"ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
 
 # {"type":"machine","data":{"id":"machine-6","value":1000000000000000000}}
@@ -24,17 +24,17 @@ var goal : Vector2
 export var speed := 250
 var mechanics = []
 var machines = {
-	"machine-1": { "coords": Vector2(7,3), "color": Color.yellow},
-	"machine-2": { "coords": Vector2(16,-6), "color": Color.green},
-	"machine-3": { "coords": Vector2(16, -11), "color": Color.purple},
-	"machine-4": { "coords": Vector2(22,-17), "color": Color.pink},
-	"machine-5": { "coords": Vector2(22,-6), "color": Color.black},
-	"machine-6": { "coords": Vector2(28,-6), "color": Color.maroon},
+	"machine-1": { "coords": Vector2(6,3), "color": Color.yellow},
+	"machine-2": { "coords": Vector2(15,-7), "color": Color.green},
+	"machine-3": { "coords": Vector2(15, -12), "color": Color.purple},
+	"machine-4": { "coords": Vector2(21,-17), "color": Color.pink},
+	"machine-5": { "coords": Vector2(21,-7), "color": Color.black},
+	"machine-6": { "coords": Vector2(28,-7), "color": Color.maroon},
 	"machine-7": { "coords": Vector2(29,1), "color": Color.blue},
 	"machine-8": { "coords": Vector2(19,9), "color": Color.lightblue},
-	"machine-9": { "coords": Vector2(23,16), "color": Color.orange},
-	"machine-10": { "coords": Vector2(13,9), "color": Color.red},
-	"gate": { "coords": Vector2(20,14), "color": Color.white}
+	"machine-9": { "coords": Vector2(23,17), "color": Color.orange},
+	"machine-10": { "coords": Vector2(14,9), "color": Color.red},
+	"gate": { "coords": Vector2(22,14), "color": Color.white}
 	}
 #var distance_matrix = "";
 
@@ -45,6 +45,7 @@ func _input(event: InputEvent):
 			path = nav.get_simple_path($Mechanic.position, goal, false)
 			$Line2D.points = PoolVector2Array(path)
 			$Line2D.show()
+			$Mechanic/Sprite/anim.play("walk")
 
 func _ready():
 	self._connect()
@@ -108,9 +109,10 @@ func _process(delta: float) -> void:
 	if ws.get_peer(1).is_connected_to_host():
 		if ws.get_peer(1).get_available_packet_count() > 0 :
 			var packet = ws.get_peer(1).get_packet()
-			var res = JSON.parse(decode_data(packet)).result
-			if res['type'] == "optaplanner":
-				print(res['data'])
+			print(decode_data(packet))
+			#var res = JSON.parse(decode_data(packet)).result
+			#if res['type'] == "optaplanner":
+				#print(res['data'])
 			#var test = ws.get_peer(1).get_var()
 			#print('receive %s' % JSON.parse(test))
 
