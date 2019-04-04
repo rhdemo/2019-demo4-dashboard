@@ -27,8 +27,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	$health.health = self.health
-	#$light.set_position(self.light_location)
-	#$health.set_position(self.healthbar_location)
+	$light.set_position(self.light_location)
+	$health.set_position(self.healthbar_location)
 	#print(machine_name, " HEALTH:", $health.health)
 
 func _on_health_machine_damaged(data):
