@@ -14,7 +14,7 @@ let machineUrl = key => {
 };
 
 let machines = {};
-for (let i = 1; i <= MAX_MACHINES; i++) {
+for (let i = 0; i < MAX_MACHINES; i++) {
   let id = `machine-${i}`;
   let url = machineUrl(id);
   machines[`MACHINE_${i}`] = {id, url}
