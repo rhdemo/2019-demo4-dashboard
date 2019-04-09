@@ -27,16 +27,16 @@ var goal : Vector2
 var lineColors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
 var mechanics = []
 var machines = [
-	{name: "machine-1", "coords": Vector2(6,3), "color": Color.yellow},
-	{name: "machine-1", "coords": Vector2(15,-7), "color": Color.green},
-	{name: "machine-1", "coords": Vector2(15, -12), "color": Color.purple},
-	{name: "machine-1", "coords": Vector2(21,-17), "color": Color.pink},
-	{name: "machine-1", "coords": Vector2(21,-7), "color": Color.black},
-	{name: "machine-1", "coords": Vector2(28,-7), "color": Color.maroon},
-	{name: "machine-1", "coords": Vector2(29,1), "color": Color.blue},
-	{name: "machine-1", "coords": Vector2(19,9), "color": Color.lightblue},
-	{name: "machine-1", "coords": Vector2(23,17), "color": Color.orange},
-	{name: "machine-1", "coords": Vector2(14,9), "color": Color.red},
+	{name: "machine-a", "coords": Vector2(7,3), "color": Color.yellow},
+	{name: "machine-b", "coords": Vector2(16,-5), "color": Color.green},
+	{name: "machine-c", "coords": Vector2(16, -11), "color": Color.purple},
+	{name: "machine-d", "coords": Vector2(21,-15), "color": Color.pink},
+	{name: "machine-e", "coords": Vector2(22,-5), "color": Color.black},
+	{name: "machine-f", "coords": Vector2(28,-5), "color": Color.maroon},
+	{name: "machine-g", "coords": Vector2(29,1), "color": Color.blue},
+	{name: "machine-h", "coords": Vector2(19,9), "color": Color.lightblue},
+	{name: "machine-i", "coords": Vector2(23,16), "color": Color.orange},
+	{name: "machine-j", "coords": Vector2(14,9), "color": Color.red},
 	{name: "gate", "coords": Vector2(22,14), "color": Color.white}
 	]
 #var distance_matrix = "";
