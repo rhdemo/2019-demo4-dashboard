@@ -13,7 +13,7 @@ signal dispatch_mechanic
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect("machine_damaged", self, "_on_health_machine_damaged")
+	get_parent().connect("machine_health", self, "_on_machine_health")
 	self.texture = tex
 
 	$health/label.text = self.machine_name
@@ -26,16 +26,21 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$health.health = self.health
-	$light.set_position(self.light_location)
-	$health.set_position(self.healthbar_location)
+	if health < 934318851427100800:
+		$light/anim.play("alert")
+	else:
+		$light/anim.current_animation == 'alert'
+		$light/anim.play("healthy")
+	$health.health = self.health	
+	
+	#$light.set_position(self.light_location)
+	#$health.set_position(self.healthbar_location)
 	#print(machine_name, " HEALTH:", $health.health)
 
-func _on_health_machine_damaged(data):
-	if $light/anim.current_animation == 'alert':
-		$light/anim.play("healthy")
-	else:
-		$light/anim.play("alert")
+func _on_machine_health(data):
+	#print(self.name, data)
+	if data.id == self.name:
+		health = data.value
 
 
 func _on_health_machine_repaired(data):
