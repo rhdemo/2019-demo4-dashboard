@@ -7,6 +7,7 @@ export (Vector2) var light_location = Vector2(0, 0);
 export (float) var health = 1.0;
 export (String) var machine_name = "0";
 export (Texture) var tex;
+const MAX_HEALTH = 1000000000000000000;
 # var b = "text"
 
 signal dispatch_mechanic
@@ -26,11 +27,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if health < 934318851427100800:
-		$light/anim.play("alert")
-	else:
-		$light/anim.current_animation == 'alert'
+	if health > (MAX_HEALTH * .75):
 		$light/anim.play("healthy")
+	elif health > (MAX_HEALTH * .45):
+		$light/anim.play("damaged")
+	else:
+		$light/anim.play("alert")
 	$health.health = self.health	
 	
 	#$light.set_position(self.light_location)

@@ -1,6 +1,7 @@
 extends Node2D
 
 export var mechanic_count = 5
+const MECHANIC_OFFSET = 21.5
 
 var ws = WebSocketClient.new()
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
@@ -27,28 +28,18 @@ var goal : Vector2
 var lineColors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
 var mechanics = []
 var machines = [
-	{"name": "machine-1", "coords": Vector2(7,3), "color": Color.yellow},
-	{"name": "machine-2", "coords": Vector2(16,-5), "color": Color.green},
-	{"name": "machine-c", "coords": Vector2(16, -11), "color": Color.purple},
-	{"name": "machine-d", "coords": Vector2(21,-15), "color": Color.pink},
-	{"name": "machine-e", "coords": Vector2(22,-5), "color": Color.black},
-	{"name": "machine-f", "coords": Vector2(28,-5), "color": Color.maroon},
-	{"name": "machine-g", "coords": Vector2(29,1), "color": Color.blue},
-	{"name": "machine-h", "coords": Vector2(19,9), "color": Color.lightblue},
-	{"name": "machine-i", "coords": Vector2(23,16), "color": Color.orange},
-	{"name": "machine-j", "coords": Vector2(15,9), "color": Color.red},
+	{"name": "machine-0", "coords": Vector2(7,3), "color": Color.yellow},
+	{"name": "machine-1", "coords": Vector2(16,-5), "color": Color.green},
+	{"name": "machine-2", "coords": Vector2(16, -11), "color": Color.purple},
+	{"name": "machine-3", "coords": Vector2(21,-15), "color": Color.pink},
+	{"name": "machine-4", "coords": Vector2(22,-5), "color": Color.black},
+	{"name": "machine-5", "coords": Vector2(28,-5), "color": Color.maroon},
+	{"name": "machine-6", "coords": Vector2(29,1), "color": Color.blue},
+	{"name": "machine-7", "coords": Vector2(19,9), "color": Color.lightblue},
+	{"name": "machine-8", "coords": Vector2(23,16), "color": Color.orange},
+	{"name": "machine-9", "coords": Vector2(15,9), "color": Color.red},
 	{"name": "gate", "coords": Vector2(22,14), "color": Color.white}
 	]
-#var distance_matrix = "";
-
-#func _input(event: InputEvent):
-#	if event is InputEventMouseButton:
-#		if event.button_index == BUTTON_LEFT and event.pressed:
-#			goal = event.position
-#			path = nav.get_simple_path($Mechanic.position, goal, false)
-#			$Line2D.points = PoolVector2Array(path)
-#			$Line2D.show()
-#			$Mechanic/Sprite/anim.play("walk-up-left")
 
 func _init():
 	self._connect()
@@ -57,24 +48,19 @@ func _ready():
 	set_process(true)
 	for i in range(mechanic_count):
 		add_mechanic(i)
-	#$AddMechanic.connect('pressed', self, "add_mechanic")
-	#$GetMatrix.connect('pressed', self, "get_matrix")
-#	var pts : PoolVector2Array
-	for m in machines:
-		var coords = m.coords #map.map_to_world(machines[m].coords)
-		coords.y += .5
-		m.coords = coords
 	#get_matrix()
 
 func get_matrix():
 	var csv_array = []
-	var headings = ["machine name", "x", "y", "machine-1", "machine-2", "machine-3", "machine-4", "machine-5", "machine-6", "machine-7", "machine-8", "machine-9", "machine-10", "gate"]
+	var headings = ["machine name", "x", "y", "machine-0", "machine-1", "machine-2", "machine-3", "machine-4", "machine-5", "machine-6", "machine-7", "machine-8", "machine-9", "gate"]
 	csv_array.append(headings)
 	for pt in machines:
 		var ptDist = [pt['name'],map.map_to_world(pt.coords).x, map.map_to_world(pt.coords).y]
 		var start = map.map_to_world(pt.coords) #$TileMap.map_to_world(machines[pt]);
+		start.y += MECHANIC_OFFSET
 		for g in machines:
 			var goal = map.map_to_world(g.coords) #$TileMap.map_to_world(machines[g])
+			goal.y += MECHANIC_OFFSET
 			var dist = 0
 			var pth = nav.get_simple_path(start, goal)
 			if start != goal:
@@ -102,30 +88,11 @@ func add_mechanic(index):
 	mechanic.key = index
 	self.add_child(mechanic)
 	mechanics.append(mechanic)
-#	for pt in machines:
-#		var mechanic = mechanicNode.instance()
-#		var map_pos = map.map_to_world(machines[pt].coords)
-#		map_pos.y += 21.5
-#		mechanic.position = map_pos #$Navigation2D/TileMap.map_to_world(nav_points[nav_points.size()-1])
-#		mechanic.z_index = 5
-#		self.add_child(mechanic)
-#		mechanics.append(mechanic)
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
 		ws.poll()
-#	if !path:
-#		$Line2D.hide()
-#		return
-#	if path.size() > 0:
-#		var d: float = $Mechanic.position.distance_to(path[0])
-#		if d > 10:
-#			$Mechanic.position = $Mechanic.position.linear_interpolate(path[0], (speed * delta)/d)
-#		else:
-#			path.remove(0)
-	
-		#ws.poll()
-
+		
 func _connect():
 	ws.connect("connection_established", self, "_connection_established")
 	ws.connect("connection_closed", self, "_connection_closed")

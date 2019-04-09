@@ -50,6 +50,7 @@ func dispatch_mechanic(data):
 		if data.mechanic.focusMachineIndex != focusMachineIndex:
 			focusMachineIndex = data.mechanic.focusMachineIndex
 			var focus = map.map_to_world(machines[focusMachineIndex].coords)
+			focus.y += 21.5
 			focusPath = nav.get_simple_path(self.position, focus)
 			focusLine.points = focusPath
 			focusLine.show()
@@ -62,6 +63,7 @@ func remove_mechanic(data):
 	#print("REMOVE", data, self.key);
 	if  String(data.key) == String(self.key):
 		var focus = map.map_to_world(machines[machines.size()-1].coords)
+		focus.y += 21.5
 		focusPath = nav.get_simple_path(self.position, focus)
 		focusLine.points = focusPath
 		focusLine.show()
