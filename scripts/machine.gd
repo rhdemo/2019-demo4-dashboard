@@ -13,7 +13,7 @@ signal dispatch_mechanic
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#connect("machine_damaged", self, "_on_health_machine_damaged")
+	connect("machine_damaged", self, "_on_health_machine_damaged")
 	self.texture = tex
 
 	$health/label.text = self.machine_name
@@ -32,8 +32,6 @@ func _process(delta):
 	#print(machine_name, " HEALTH:", $health.health)
 
 func _on_health_machine_damaged(data):
-	emit_signal("dispatch_mechanic", machine_name)
-	print(machine_name," clicked:", self.health)
 	if $light/anim.current_animation == 'alert':
 		$light/anim.play("healthy")
 	else:

@@ -58,7 +58,7 @@ func _ready():
 	for i in range(mechanic_count):
 		add_mechanic(i)
 	#$AddMechanic.connect('pressed', self, "add_mechanic")
-	$GetMatrix.connect('pressed', self, "get_matrix")
+	#$GetMatrix.connect('pressed', self, "get_matrix")
 #	var pts : PoolVector2Array
 	for m in machines:
 		var coords = m.coords #map.map_to_world(machines[m].coords)

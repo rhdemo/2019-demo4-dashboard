@@ -1,4 +1,4 @@
-extends Sprite
+extends KinematicBody2D
 
 export var key = "0"
 export var speed = 200
