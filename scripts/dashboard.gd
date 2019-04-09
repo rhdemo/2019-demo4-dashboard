@@ -1,9 +1,14 @@
 extends Node2D
 
-var ws = null
+export var mechanic_count = 5
+
+var ws = WebSocketClient.new()
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
 var retryTimeout = 2 # seconds
-const url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket" #"ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
+var url = JavaScript.eval("window.location.hostname") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
+#var url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
+
+#"ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
 
 # {"type":"machine","data":{"id":"machine-6","value":1000000000000000000}}
 # {"type":"optaplanner","data":{"key":"1","value":{"responseType":"DISPATCH_MECHANIC","mechanic":{"mechanicIndex":1,"originalMachineIndex":3,"focusMachineIndex":3,"focusTravelTimeMillis":8358000,"focusFixTimeMillis":8360000,"futureMachineIndexes":[3,2,1,0]}}}}
@@ -17,45 +22,48 @@ onready var mechanicNode = preload("res://mechanic.tscn")
 onready var nav : = $Navigation2D
 onready var map : = $Navigation2D/TileMap
 
-
-var lines = []
 var path : PoolVector2Array
 var goal : Vector2
-export var speed := 250
+var lineColors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
 var mechanics = []
-var machines = {
-	"machine-1": { "coords": Vector2(6,3), "color": Color.yellow},
-	"machine-2": { "coords": Vector2(15,-7), "color": Color.green},
-	"machine-3": { "coords": Vector2(15, -12), "color": Color.purple},
-	"machine-4": { "coords": Vector2(21,-17), "color": Color.pink},
-	"machine-5": { "coords": Vector2(21,-7), "color": Color.black},
-	"machine-6": { "coords": Vector2(28,-7), "color": Color.maroon},
-	"machine-7": { "coords": Vector2(29,1), "color": Color.blue},
-	"machine-8": { "coords": Vector2(19,9), "color": Color.lightblue},
-	"machine-9": { "coords": Vector2(23,17), "color": Color.orange},
-	"machine-10": { "coords": Vector2(14,9), "color": Color.red},
-	"gate": { "coords": Vector2(22,14), "color": Color.white}
-	}
+var machines = [
+	{name: "machine-1", "coords": Vector2(6,3), "color": Color.yellow},
+	{name: "machine-1", "coords": Vector2(15,-7), "color": Color.green},
+	{name: "machine-1", "coords": Vector2(15, -12), "color": Color.purple},
+	{name: "machine-1", "coords": Vector2(21,-17), "color": Color.pink},
+	{name: "machine-1", "coords": Vector2(21,-7), "color": Color.black},
+	{name: "machine-1", "coords": Vector2(28,-7), "color": Color.maroon},
+	{name: "machine-1", "coords": Vector2(29,1), "color": Color.blue},
+	{name: "machine-1", "coords": Vector2(19,9), "color": Color.lightblue},
+	{name: "machine-1", "coords": Vector2(23,17), "color": Color.orange},
+	{name: "machine-1", "coords": Vector2(14,9), "color": Color.red},
+	{name: "gate", "coords": Vector2(22,14), "color": Color.white}
+	]
 #var distance_matrix = "";
 
-func _input(event: InputEvent):
-	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT and event.pressed:
-			goal = event.position
-			path = nav.get_simple_path($Mechanic.position, goal, false)
-			$Line2D.points = PoolVector2Array(path)
-			$Line2D.show()
-			$Mechanic/Sprite/anim.play("walk")
+#func _input(event: InputEvent):
+#	if event is InputEventMouseButton:
+#		if event.button_index == BUTTON_LEFT and event.pressed:
+#			goal = event.position
+#			path = nav.get_simple_path($Mechanic.position, goal, false)
+#			$Line2D.points = PoolVector2Array(path)
+#			$Line2D.show()
+#			$Mechanic/Sprite/anim.play("walk-up-left")
+
+func _init():
+	self._connect()
 
 func _ready():
-	self._connect()
-	$AddMechanic.connect('pressed', self, "add_mechanic")
+	set_process(true)
+	for i in range(mechanic_count):
+		add_mechanic(i)
+	#$AddMechanic.connect('pressed', self, "add_mechanic")
 	$GetMatrix.connect('pressed', self, "get_matrix")
 #	var pts : PoolVector2Array
 	for m in machines:
-		var coords = machines[m].coords #map.map_to_world(machines[m].coords)
+		var coords = m.coords #map.map_to_world(machines[m].coords)
 		coords.y += .5
-		machines[m].coords = coords
+		m.coords = coords
 
 func get_matrix():
 	var csv_array = []
@@ -85,48 +93,69 @@ func get_matrix():
 		prnt += "\n"
 	print(prnt)
 
-func add_mechanic():
-	for pt in machines:
-		var mechanic = mechanicNode.instance()
-		var map_pos = map.map_to_world(machines[pt].coords)
-		map_pos.y += 21.5
-		mechanic.position = map_pos #$Navigation2D/TileMap.map_to_world(nav_points[nav_points.size()-1])
-		self.add_child(mechanic)
-		mechanics.append(mechanic)
+func add_mechanic(index):
+	var mechanic = mechanicNode.instance()
+	var map_pos = map.map_to_world(machines[machines.find("name='gate'")].coords)
+	mechanic.position = map_pos
+	mechanic.z_index = 5
+	mechanic.key = index
+	self.add_child(mechanic)
+	mechanics.append(mechanic)
+#	for pt in machines:
+#		var mechanic = mechanicNode.instance()
+#		var map_pos = map.map_to_world(machines[pt].coords)
+#		map_pos.y += 21.5
+#		mechanic.position = map_pos #$Navigation2D/TileMap.map_to_world(nav_points[nav_points.size()-1])
+#		mechanic.z_index = 5
+#		self.add_child(mechanic)
+#		mechanics.append(mechanic)
 
-func _process(delta: float) -> void:
-	if !path:
-		$Line2D.hide()
-		return
-	if path.size() > 0:
-		var d: float = $Mechanic.position.distance_to(path[0])
-		if d > 10:
-			$Mechanic.position = $Mechanic.position.linear_interpolate(path[0], (speed * delta)/d)
-		else:
-			path.remove(0)
+func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
 		ws.poll()
-	if ws.get_peer(1).is_connected_to_host():
-		if ws.get_peer(1).get_available_packet_count() > 0 :
-			var packet = ws.get_peer(1).get_packet()
-			print(decode_data(packet))
-			#var res = JSON.parse(decode_data(packet)).result
-			#if res['type'] == "optaplanner":
-				#print(res['data'])
-			#var test = ws.get_peer(1).get_var()
-			#print('receive %s' % JSON.parse(test))
+#	if !path:
+#		$Line2D.hide()
+#		return
+#	if path.size() > 0:
+#		var d: float = $Mechanic.position.distance_to(path[0])
+#		if d > 10:
+#			$Mechanic.position = $Mechanic.position.linear_interpolate(path[0], (speed * delta)/d)
+#		else:
+#			path.remove(0)
+	
+		#ws.poll()
 
 func _connect():
-	ws = WebSocketClient.new()
 	ws.connect("connection_established", self, "_connection_established")
 	ws.connect("connection_closed", self, "_connection_closed")
 	ws.connect("connection_error", self, "_connection_error")
+	ws.connect("data_received", self, "_handle_data_received")
 
 	print("Connecting to " + url)
 	ws.connect_to_url(url)
+	
+func _handle_data_received():
+	var res = JSON.parse(decode_data(ws.get_peer(1).get_packet())).result
+	#print(res)
+	if res['type'] != "heartbeat":
+		if res.type == "optaplanner":
+			#print("OPTAPLANNER:",res)
+			if res.action == "modify":
+				if res.data.value.responseType == "DISPATCH_MECHANIC":
+					emit_signal("dispatch_mechanic", res.data.value)
+				if res.data.value.responseType == "ADD_MECHANIC":
+					emit_signal("add_mechanic", res.data.value)
+			if res.action == "remove":
+				emit_signal("remove_mechanic", res.data)
+		if res.type == "machine":
+			emit_signal("machine_health", res.data)
+			#print("MACHINE:",res) # res.data = {id:machine-#, value:100000000}
+		if res.type == "game":
+			pass # res.data.state = active, paused, lobby, stopped
 
 func _connection_established(protocol):
 	ws.get_peer(1).set_write_mode(_write_mode)
+	send('{"type":"init"}')
 	print("Connection established with protocol: ", protocol)
 
 func _connection_closed():
@@ -143,10 +172,10 @@ func _connection_error():
 
 func send(data):
 	ws.get_peer(1).set_write_mode(_write_mode)
-	ws.get_peer(1).put_packet(encode_data(data, _write_mode))
+	ws.get_peer(1).put_packet(data.to_utf8())
 
-func encode_data(data, mode):
-	return data.to_utf8() if mode == WebSocketPeer.WRITE_MODE_TEXT else var2bytes(data)
+#func encode_data(data, mode):
+#	return data.to_utf8() if mode == WebSocketPeer.WRITE_MODE_TEXT else var2bytes(data)
 
 func decode_data(data):
 	return data.get_string_from_utf8()
