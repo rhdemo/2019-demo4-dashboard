@@ -5,7 +5,7 @@ export var mechanic_count = 5
 var ws = WebSocketClient.new()
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
 var retryTimeout = 2 # seconds
-var url = JavaScript.eval("window.location.hostname") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
+var url = JavaScript.eval("'window.location.hostname'+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
 #var url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
 
 #"ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
