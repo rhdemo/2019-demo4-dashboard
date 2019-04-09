@@ -39,6 +39,7 @@ tile_data = PoolIntArray( -983024, 4, 0, -983023, 3, 0, -983022, 3, 0, -983021, 
 [node name="WebSocket" type="Node" parent="."]
 
 [node name="static_assets" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="pallet-barrel-2" type="Sprite" parent="static_assets"]
 position = Vector2( 1066.97, 774.783 )
@@ -93,8 +94,8 @@ z_index = 99
 texture = ExtResource( 7 )
 
 [node name="machine-10-sm-pusher" type="Sprite" parent="static_assets"]
-position = Vector2( 243.812, 463.589 )
-z_index = 6
+position = Vector2( 206.139, 436.191 )
+z_index = 3
 texture = ExtResource( 8 )
 
 [node name="server-stack5" type="Sprite" parent="static_assets"]
@@ -124,14 +125,14 @@ texture = ExtResource( 11 )
 position = Vector2( 349.434, 830 )
 texture = ExtResource( 12 )
 
-[node name="MachineA" parent="." instance=ExtResource( 13 )]
+[node name="machine-0" parent="." instance=ExtResource( 13 )]
 position = Vector2( 282.139, 175.623 )
 healthbar_location = Vector2( 0, -75 )
 light_location = Vector2( -18, 5 )
 machine_name = "A"
 tex = ExtResource( 14 )
 
-[node name="MachineB" parent="." instance=ExtResource( 13 )]
+[node name="machine-1" parent="." instance=ExtResource( 13 )]
 position = Vector2( 892.282, 237.257 )
 z_index = 4
 healthbar_location = Vector2( 0, -100 )
@@ -139,42 +140,42 @@ light_location = Vector2( -25, -40 )
 machine_name = "B"
 tex = ExtResource( 15 )
 
-[node name="MachineC" parent="." instance=ExtResource( 13 )]
+[node name="machine-2" parent="." instance=ExtResource( 13 )]
 position = Vector2( 929.045, 175.608 )
 healthbar_location = Vector2( 300, -132 )
 light_location = Vector2( 215, -150 )
 machine_name = "C"
 tex = ExtResource( 16 )
 
-[node name="MachineD" parent="." instance=ExtResource( 13 )]
+[node name="machine-3" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1702.08, 115.803 )
 healthbar_location = Vector2( 50, -50 )
 light_location = Vector2( -5, -50 )
 machine_name = "D"
 tex = ExtResource( 17 )
 
-[node name="MachineE" parent="." instance=ExtResource( 13 )]
+[node name="machine-4" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1319.92, 396.222 )
 healthbar_location = Vector2( 30, -100 )
 light_location = Vector2( 30, -40 )
 machine_name = "E"
 tex = ExtResource( 18 )
 
-[node name="MachineF" parent="." instance=ExtResource( 13 )]
+[node name="machine-5" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1572.79, 534.713 )
 healthbar_location = Vector2( 30, -100 )
 light_location = Vector2( 30, -40 )
 machine_name = "F"
 tex = ExtResource( 19 )
 
-[node name="MachineG" parent="." instance=ExtResource( 13 )]
+[node name="machine-6" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1278.5, 739.292 )
 healthbar_location = Vector2( 50, -250 )
 light_location = Vector2( 60, -125 )
 machine_name = "G"
 tex = ExtResource( 20 )
 
-[node name="MachineH" parent="." instance=ExtResource( 13 )]
+[node name="machine-7" parent="." instance=ExtResource( 13 )]
 position = Vector2( 764.533, 742.808 )
 z_index = 4
 healthbar_location = Vector2( -80, -200 )
@@ -182,7 +183,7 @@ light_location = Vector2( -85, -85 )
 machine_name = "H"
 tex = ExtResource( 21 )
 
-[node name="MachineI" parent="." instance=ExtResource( 13 )]
+[node name="machine-8" parent="." instance=ExtResource( 13 )]
 position = Vector2( 60, 830 )
 z_index = 7
 healthbar_location = Vector2( 180, 50 )
@@ -190,8 +191,9 @@ light_location = Vector2( 158, 115 )
 machine_name = "I"
 tex = ExtResource( 22 )
 
-[node name="MachineJ" parent="." instance=ExtResource( 13 )]
-position = Vector2( 370.384, 531.181 )
+[node name="machine-9" parent="." instance=ExtResource( 13 )]
+position = Vector2( 387.508, 538.03 )
+z_index = 3
 healthbar_location = Vector2( 25, -125 )
 light_location = Vector2( -45, -15 )
 machine_name = "J"

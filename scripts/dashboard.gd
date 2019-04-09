@@ -27,17 +27,17 @@ var goal : Vector2
 var lineColors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
 var mechanics = []
 var machines = [
-	{name: "machine-a", "coords": Vector2(7,3), "color": Color.yellow},
-	{name: "machine-b", "coords": Vector2(16,-5), "color": Color.green},
-	{name: "machine-c", "coords": Vector2(16, -11), "color": Color.purple},
-	{name: "machine-d", "coords": Vector2(21,-15), "color": Color.pink},
-	{name: "machine-e", "coords": Vector2(22,-5), "color": Color.black},
-	{name: "machine-f", "coords": Vector2(28,-5), "color": Color.maroon},
-	{name: "machine-g", "coords": Vector2(29,1), "color": Color.blue},
-	{name: "machine-h", "coords": Vector2(19,9), "color": Color.lightblue},
-	{name: "machine-i", "coords": Vector2(23,16), "color": Color.orange},
-	{name: "machine-j", "coords": Vector2(14,9), "color": Color.red},
-	{name: "gate", "coords": Vector2(22,14), "color": Color.white}
+	{"name": "machine-1", "coords": Vector2(7,3), "color": Color.yellow},
+	{"name": "machine-2", "coords": Vector2(16,-5), "color": Color.green},
+	{"name": "machine-c", "coords": Vector2(16, -11), "color": Color.purple},
+	{"name": "machine-d", "coords": Vector2(21,-15), "color": Color.pink},
+	{"name": "machine-e", "coords": Vector2(22,-5), "color": Color.black},
+	{"name": "machine-f", "coords": Vector2(28,-5), "color": Color.maroon},
+	{"name": "machine-g", "coords": Vector2(29,1), "color": Color.blue},
+	{"name": "machine-h", "coords": Vector2(19,9), "color": Color.lightblue},
+	{"name": "machine-i", "coords": Vector2(23,16), "color": Color.orange},
+	{"name": "machine-j", "coords": Vector2(15,9), "color": Color.red},
+	{"name": "gate", "coords": Vector2(22,14), "color": Color.white}
 	]
 #var distance_matrix = "";
 
@@ -64,16 +64,17 @@ func _ready():
 		var coords = m.coords #map.map_to_world(machines[m].coords)
 		coords.y += .5
 		m.coords = coords
+	#get_matrix()
 
 func get_matrix():
 	var csv_array = []
 	var headings = ["machine name", "x", "y", "machine-1", "machine-2", "machine-3", "machine-4", "machine-5", "machine-6", "machine-7", "machine-8", "machine-9", "machine-10", "gate"]
 	csv_array.append(headings)
 	for pt in machines:
-		var ptDist = [pt,map.map_to_world(machines[pt].coords).x, map.map_to_world(machines[pt].coords).y]
-		var start = map.map_to_world(machines[pt].coords) #$TileMap.map_to_world(machines[pt]);
+		var ptDist = [pt['name'],map.map_to_world(pt.coords).x, map.map_to_world(pt.coords).y]
+		var start = map.map_to_world(pt.coords) #$TileMap.map_to_world(machines[pt]);
 		for g in machines:
-			var goal = map.map_to_world(machines[g].coords) #$TileMap.map_to_world(machines[g])
+			var goal = map.map_to_world(g.coords) #$TileMap.map_to_world(machines[g])
 			var dist = 0
 			var pth = nav.get_simple_path(start, goal)
 			if start != goal:
