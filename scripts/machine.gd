@@ -8,6 +8,8 @@ export (float) var health = 1.0;
 export (String) var machine_name = "0";
 export (Texture) var tex;
 const MAX_HEALTH = 1000000000000000000;
+const IS_HEALTHY = 100
+const IS_DAMAGED = 50
 # var b = "text"
 
 signal dispatch_mechanic
@@ -27,13 +29,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if health > (MAX_HEALTH * .75):
+	if (health/MAX_HEALTH)*100 >= IS_HEALTHY:
 		$light/anim.play("healthy")
-	elif health > (MAX_HEALTH * .45):
+	elif (health/MAX_HEALTH)*100 > IS_DAMAGED:
 		$light/anim.play("damaged")
 	else:
 		$light/anim.play("alert")
-	$health.health = self.health	
+	$health.health = (self.health/MAX_HEALTH)*100
 	
 	#$light.set_position(self.light_location)
 	#$health.set_position(self.healthbar_location)

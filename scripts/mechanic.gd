@@ -6,6 +6,7 @@ export var speed = 200
 var focusMachineIndex : int
 var futureMachineIndexes = []
 var originalMachineIndex : int
+var focusTravelDurationMillis: int
 var focusFixDurationMillis : int
 var focusPath : PoolVector2Array
 var futurePath : PoolVector2Array
@@ -22,6 +23,7 @@ onready var colors : Array = get_parent().lineColors
 func _ready():
 	get_parent().connect('dispatch_mechanic', self, "dispatch_mechanic")  # Replace with function body.
 	get_parent().connect('remove_mechanic', self, "remove_mechanic")
+	get_parent().connect('update_future_visits', self, "update_future_visits")
 	focusLine.width = 15
 	futureLine.width = 5
 	focusLine.default_color = colors[key]
@@ -64,22 +66,25 @@ func dispatch_mechanic(data):
 #		print("DISPATCH", data);
 		if data.mechanic.focusMachineIndex != focusMachineIndex:
 			focusMachineIndex = data.mechanic.focusMachineIndex
-			focus = getMMachineMapCoordinates(focusMachineIndex)
+			focus = getMachineMapCoordinates(focusMachineIndex)
 			focus.y += 21.5
 			focusPath = nav.get_simple_path(self.position, focus)
 			focusLine.points = focusPath
 			focusLine.show()
-		if data.mechanic.futureMachineIndexes != futureMachineIndexes:
-			futureMachineIndexes = data.mechanic.futureMachineIndexes
-			var p0 = focus
-			for p in futureMachineIndexes:
-				self.futurePath.append_array(nav.get_simple_path(p0, getMMachineMapCoordinates(p)))
-				p0 = getMMachineMapCoordinates(p)
-			futureLine.show()
 
-		futureMachineIndexes = data.mechanic.futureMachineIndexes
 		originalMachineIndex = data.mechanic.originalMachineIndex
 		focusFixDurationMillis = data.mechanic.focusFixDurationMillis
+		focusTravelDurationMillis = data.mechanic.focusTravelDurationMillis
+		
+
+func update_future_visits(data):
+	if String(data.mechanicIndex) == String(self.key):
+		futureMachineIndexes = data.futureMachineIndexes
+		var p0 = focus
+		for p in futureMachineIndexes:
+			self.futurePath.append_array(nav.get_simple_path(p0, getMachineMapCoordinates(p)))
+			p0 = getMachineMapCoordinates(p)
+		futureLine.show()
 
 func remove_mechanic(data):
 	#print("REMOVE", data, self.key);
@@ -90,7 +95,7 @@ func remove_mechanic(data):
 		focusLine.points = focusPath
 		focusLine.show()
 
-func getMMachineMapCoordinates(mIdx):
+func getMachineMapCoordinates(mIdx):
 	return map.map_to_world(machines[mIdx].coords)
 		
 #if event is InputEventMouseButton:

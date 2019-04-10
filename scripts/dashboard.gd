@@ -17,6 +17,7 @@ signal dispatch_mechanic
 signal add_mechanic
 signal remove_mechanic
 signal machine_health
+signal update_future_visits
 
 onready var mechanicNode = preload("res://mechanic.tscn")
 #onready var machineNode = preload("res://machine.tscn")
@@ -111,6 +112,8 @@ func _handle_data_received():
 			if res.action == "modify":
 				if res.data.value.responseType == "DISPATCH_MECHANIC":
 					emit_signal("dispatch_mechanic", res.data.value)
+				if res.data.value.responseType == "UPDATE_FUTURE_VISITS":
+					emit_signal("update_future_visits", res.data.value)
 				if res.data.value.responseType == "ADD_MECHANIC":
 					emit_signal("add_mechanic", res.data.value)
 			if res.action == "remove":
