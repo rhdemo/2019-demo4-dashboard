@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/machine.gd" type="Script" id=1]
 [ext_resource path="res://sprites/machines/sprite-lights-lg.png" type="Texture" id=2]
@@ -19,8 +19,9 @@ tracks/0/keys = {
 "values": [ 7, 8, 9, 10, 11 ]
 }
 
-[sub_resource type="Animation" id=2]
-length = 0.001
+[sub_resource type="Animation" id=3]
+resource_name = "damaged"
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -28,10 +29,25 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 19 ]
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=2]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 14, 15, 16, 17, 18 ]
 }
 
 [node name="machine" type="Sprite"]
@@ -43,10 +59,11 @@ z_index = 75
 texture = ExtResource( 2 )
 vframes = 3
 hframes = 7
-frame = 6
+frame = 18
 
 [node name="anim" type="AnimationPlayer" parent="light"]
 anims/alert = SubResource( 1 )
+anims/damaged = SubResource( 3 )
 anims/healthy = SubResource( 2 )
 
 [node name="health" parent="." instance=ExtResource( 3 )]

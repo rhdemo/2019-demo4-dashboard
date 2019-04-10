@@ -50,4 +50,3 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 5/navigation = SubResource( 3 )
 5/shapes = [  ]
 5/z_index = 0
-

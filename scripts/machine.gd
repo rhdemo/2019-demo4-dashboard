@@ -7,13 +7,14 @@ export (Vector2) var light_location = Vector2(0, 0);
 export (float) var health = 1.0;
 export (String) var machine_name = "0";
 export (Texture) var tex;
+const MAX_HEALTH = 1000000000000000000;
 # var b = "text"
 
 signal dispatch_mechanic
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#connect("machine_damaged", self, "_on_health_machine_damaged")
+	get_parent().connect("machine_health", self, "_on_machine_health")
 	self.texture = tex
 
 	$health/label.text = self.machine_name
@@ -26,18 +27,22 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$health.health = self.health
-	$light.set_position(self.light_location)
-	$health.set_position(self.healthbar_location)
-	#print(machine_name, " HEALTH:", $health.health)
-
-func _on_health_machine_damaged(data):
-	emit_signal("dispatch_mechanic", machine_name)
-	print(machine_name," clicked:", self.health)
-	if $light/anim.current_animation == 'alert':
+	if health > (MAX_HEALTH * .75):
 		$light/anim.play("healthy")
+	elif health > (MAX_HEALTH * .45):
+		$light/anim.play("damaged")
 	else:
 		$light/anim.play("alert")
+	$health.health = self.health	
+	
+	#$light.set_position(self.light_location)
+	#$health.set_position(self.healthbar_location)
+	#print(machine_name, " HEALTH:", $health.health)
+
+func _on_machine_health(data):
+	#print(self.name, data)
+	if data.id == self.name:
+		health = data.value
 
 
 func _on_health_machine_repaired(data):
