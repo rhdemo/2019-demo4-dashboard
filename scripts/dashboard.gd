@@ -29,17 +29,17 @@ var goal : Vector2
 var lineColors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
 var mechanics = []
 var machines = [
-	{"name": "machine-0", "coords": Vector2(7,3), "color": Color.yellow},
-	{"name": "machine-1", "coords": Vector2(16,-5), "color": Color.green},
-	{"name": "machine-2", "coords": Vector2(16, -11), "color": Color.purple},
-	{"name": "machine-3", "coords": Vector2(21,-15), "color": Color.pink},
-	{"name": "machine-4", "coords": Vector2(22,-5), "color": Color.black},
-	{"name": "machine-5", "coords": Vector2(28,-5), "color": Color.maroon},
-	{"name": "machine-6", "coords": Vector2(29,1), "color": Color.blue},
-	{"name": "machine-7", "coords": Vector2(19,9), "color": Color.lightblue},
-	{"name": "machine-8", "coords": Vector2(23,16), "color": Color.orange},
-	{"name": "machine-9", "coords": Vector2(15,9), "color": Color.red},
-	{"name": "gate", "coords": Vector2(22,14), "color": Color.white}
+	{"name": "machine-0", "coords": Vector2(180,290), "color": Color.yellow},
+	{"name": "machine-1", "coords": Vector2(945,320), "color": Color.green},
+	{"name": "machine-2", "coords": Vector2(1215,160), "color": Color.purple},
+	{"name": "machine-3", "coords": Vector2(1620,180), "color": Color.pink},
+	{"name": "machine-4", "coords": Vector2(1200,454), "color": Color.black},
+	{"name": "machine-5", "coords": Vector2(1500,630), "color": Color.maroon},
+	{"name": "machine-6", "coords": Vector2(1280,810), "color": Color.blue},
+	{"name": "machine-7", "coords": Vector2(405,725), "color": Color.lightblue},
+	{"name": "machine-8", "coords": Vector2(315,1035), "color": Color.orange},
+	{"name": "machine-9", "coords": Vector2(270,624), "color": Color.red},
+	{"name": "gate", "coords": Vector2(360,936), "color": Color.white}
 	]
 
 func _init():
@@ -47,20 +47,40 @@ func _init():
 
 func _ready():
 	set_process(true)
+	$static_assets/toLeaderBoard/leaderboardBtn.connect("pressed", self, "show_leaderboard")
 	for i in range(mechanic_count):
 		add_mechanic(i)
+	for m in machines:
+		$MachineLine.add_point(m.coords)
 	#get_matrix()
 
+func _process(delta: float):
+	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
+		ws.poll()
+	$MachineLine.hide()
+	$MachineLine.points = []
+	for m in machines:
+		$MachineLine.add_point(m.coords)
+
+func _connect():
+	ws.connect("connection_established", self, "_connection_established")
+	ws.connect("connection_closed", self, "_connection_closed")
+	ws.connect("connection_error", self, "_connection_error")
+	ws.connect("data_received", self, "_handle_data_received")
+
+	print("Connecting to " + url)
+	ws.connect_to_url(url)
+	
 func get_matrix():
 	var csv_array = []
 	var headings = ["machine name", "x", "y", "machine-0", "machine-1", "machine-2", "machine-3", "machine-4", "machine-5", "machine-6", "machine-7", "machine-8", "machine-9", "gate"]
 	csv_array.append(headings)
 	for pt in machines:
-		var ptDist = [pt['name'],map.map_to_world(pt.coords).x, map.map_to_world(pt.coords).y]
-		var start = map.map_to_world(pt.coords) #$TileMap.map_to_world(machines[pt]);
+		var ptDist = [pt['name'],pt.coords.x, pt.coords.y]
+		var start = pt.coords #$TileMap.map_to_world(machines[pt]);
 		start.y += MECHANIC_OFFSET
 		for g in machines:
-			var goal = map.map_to_world(g.coords) #$TileMap.map_to_world(machines[g])
+			var goal = g.coords #$TileMap.map_to_world(machines[g])
 			goal.y += MECHANIC_OFFSET
 			var dist = 0
 			var pth = nav.get_simple_path(start, goal)
@@ -83,26 +103,14 @@ func get_matrix():
 
 func add_mechanic(index):
 	var mechanic = mechanicNode.instance()
-	var map_pos = map.map_to_world(machines[machines.find("name='gate'")].coords)
+	var map_pos = machines[machines.find("name='gate'")].coords
 	mechanic.position = map_pos
 	mechanic.z_index = 5
 	mechanic.key = index
 	self.add_child(mechanic)
 	mechanics.append(mechanic)
 
-func _process(delta: float):
-	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
-		ws.poll()
-		
-func _connect():
-	ws.connect("connection_established", self, "_connection_established")
-	ws.connect("connection_closed", self, "_connection_closed")
-	ws.connect("connection_error", self, "_connection_error")
-	ws.connect("data_received", self, "_handle_data_received")
 
-	print("Connecting to " + url)
-	ws.connect_to_url(url)
-	
 func _handle_data_received():
 	var res = JSON.parse(decode_data(ws.get_peer(1).get_packet())).result
 	#print(res)
@@ -147,6 +155,9 @@ func send(data):
 
 #func encode_data(data, mode):
 #	return data.to_utf8() if mode == WebSocketPeer.WRITE_MODE_TEXT else var2bytes(data)
-
+func show_leaderboard():
+	#print("CLICKED")
+	get_tree().change_scene("res://leaderboard.tscn")
+	
 func decode_data(data):
 	return data.get_string_from_utf8()

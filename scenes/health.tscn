@@ -1,14 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/health.gd" type="Script" id=1]
-[ext_resource path="res://sprites/machines/health-grey.png" type="Texture" id=2]
-[ext_resource path="res://sprites/machines/health-green.png" type="Texture" id=3]
-[ext_resource path="res://fonts/overpass-mono-regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://sprites/machines/health-bg.png" type="Texture" id=2]
+[ext_resource path="res://sprites/machines/health-grey.png" type="Texture" id=3]
+[ext_resource path="res://sprites/machines/health-green.png" type="Texture" id=4]
+[ext_resource path="res://fonts/overpass-mono-regular.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
 outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 4 )
+font_data = ExtResource( 5 )
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 42.0
@@ -17,15 +18,17 @@ radius = 42.0
 z_index = 80
 script = ExtResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
 [node name="value" type="TextureProgress" parent="."]
-margin_left = -35.0
-margin_top = -38.0
-margin_right = 36.0
-margin_bottom = 44.0
-texture_under = ExtResource( 2 )
-texture_progress = ExtResource( 3 )
+margin_left = -36.1664
+margin_top = -41.4991
+margin_right = 34.8336
+margin_bottom = 40.5009
+texture_under = ExtResource( 3 )
+texture_progress = ExtResource( 4 )
 fill_mode = 5
-radial_initial_angle = 360.0
 
 [node name="label" type="RichTextLabel" parent="."]
 margin_left = -13.0
@@ -41,5 +44,10 @@ text = "Z"
 scroll_active = false
 
 [node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -1.16635 )
 z_index = 99
 shape = SubResource( 2 )
+
+[node name="Line2D" type="Line2D" parent="."]
+texture_mode = 1069547908
+

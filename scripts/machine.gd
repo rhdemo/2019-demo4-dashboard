@@ -2,13 +2,14 @@ extends Sprite
 
 # Declare member variables here. Examples:
 export (Vector2) var healthbar_location = Vector2(0,0);
-export (Vector2) var heal_tile = Vector2(0,0);
+export (Vector2) var heal_coords = Vector2(0,0);
 export (Vector2) var light_location = Vector2(0, 0);
 export (float) var health = 1.0;
 export (String) var machine_name = "0";
 export (Texture) var tex;
+export (Vector2) var direction = Vector2(0,0)
 const MAX_HEALTH = 1000000000000000000;
-const IS_HEALTHY = 100
+const IS_HEALTHY = 90
 const IS_DAMAGED = 50
 # var b = "text"
 
@@ -16,7 +17,7 @@ signal dispatch_mechanic
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_parent().connect("machine_health", self, "_on_machine_health")
+	get_parent().get_parent().connect("machine_health", self, "_on_machine_health")
 	self.texture = tex
 
 	$health/label.text = self.machine_name
@@ -37,8 +38,8 @@ func _process(delta):
 		$light/anim.play("alert")
 	$health.health = (self.health/MAX_HEALTH)*100
 	
-	#$light.set_position(self.light_location)
-	#$health.set_position(self.healthbar_location)
+	$light.set_position(self.light_location)
+	$health.set_position(self.healthbar_location)
 	#print(machine_name, " HEALTH:", $health.health)
 
 func _on_machine_health(data):

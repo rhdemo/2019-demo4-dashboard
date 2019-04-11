@@ -54,6 +54,9 @@ npm start
     * Teal - Fixed @ (21,10)
     * Orange - Fixed @ (22,16)
     * Red - Fixed @ (11,10)
+    2.35 (-1,1), .785 (1,1), -.785 (1,-1), -2.35(-1,-1), 
+    [(180, 260), (945, 286), (1215, 130), (1620, 156), (1215, 442), (1485, 598), (1260, 780), (450, 728), (315, 1014), (270, 624), (360, 936)]
+
 
 * Distance Matrix
 machine name, x, y, machine-1, machine-2, machine-3, machine-4, machine-5, machine-6, machine-7, machine-8, machine-9, machine-10, gate

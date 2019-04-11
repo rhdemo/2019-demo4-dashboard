@@ -13,6 +13,8 @@ var futurePath : PoolVector2Array
 var focusLine : = Line2D.new()
 var futureLine : = Line2D.new()
 var focus : Vector2
+var h = "right"
+var v = "up"
 
 onready var nav : Navigation2D = get_parent().get_child(0)
 onready var map : TileMap = nav.get_child(0)
@@ -26,6 +28,7 @@ func _ready():
 	get_parent().connect('update_future_visits', self, "update_future_visits")
 	focusLine.width = 15
 	futureLine.width = 5
+
 	focusLine.default_color = colors[key]
 	futureLine.default_color = colors[key]
 	get_parent().add_child(focusLine)
@@ -38,16 +41,10 @@ func _process(delta):
 	if focusPath.size() > 0:
 		var d: float = self.position.distance_to(focusPath[0])
 		if d > 10:
-			var dx = self.position.x - focusPath[0].x
-			var dy = self.position.y - focusPath[0].y
-			if dx >= 0 and dy >= 0:
-				$Sprite/anim.play("walk-up-left")
-			elif dx < 0 and dy < 0:
-				$Sprite/anim.play("walk-down-right")
-			elif dx < 0 and dy > 0:
-				$Sprite/anim.play("walk-up-right")
-			else:
-				$Sprite/anim.play("walk-down-left")
+			var dxy = Vector2(-1 if self.position.x - focusPath[0].x <=0 else 1, -1 if self.position.y - focusPath[0].y <= 0 else 1)
+			h = "left" if abs(dxy.angle()) < 1 else "right"
+			v = "up" if dxy.angle() > 0 else "down"
+			$Sprite/anim.play("walk-%s-%s" % [v, h])
 			self.position = self.position.linear_interpolate(focusPath[0], (speed * delta)/d)
 		else:
 			focusPath.remove(0)
@@ -66,7 +63,7 @@ func dispatch_mechanic(data):
 #		print("DISPATCH", data);
 		if data.mechanic.focusMachineIndex != focusMachineIndex:
 			focusMachineIndex = data.mechanic.focusMachineIndex
-			focus = getMachineMapCoordinates(focusMachineIndex)
+			focus = machines[focusMachineIndex].coords
 			focus.y += 21.5
 			focusPath = nav.get_simple_path(self.position, focus)
 			focusLine.points = focusPath
@@ -82,22 +79,17 @@ func update_future_visits(data):
 		futureMachineIndexes = data.futureMachineIndexes
 		var p0 = focus
 		for p in futureMachineIndexes:
-			self.futurePath.append_array(nav.get_simple_path(p0, getMachineMapCoordinates(p)))
-			p0 = getMachineMapCoordinates(p)
+			self.futurePath.append_array(nav.get_simple_path(p0, machines[p].coords))
+			p0 = machines[p].coords
 		futureLine.show()
 
 func remove_mechanic(data):
-	#print("REMOVE", data, self.key);
 	if  String(data.key) == String(self.key):
-		focus = map.map_to_world(machines[machines.size()-1].coords)
-		focus.y += 21.5
+		focus = machines[machines.size()-1].coords
 		focusPath = nav.get_simple_path(self.position, focus)
 		focusLine.points = focusPath
 		focusLine.show()
 
-func getMachineMapCoordinates(mIdx):
-	return map.map_to_world(machines[mIdx].coords)
-		
 #if event is InputEventMouseButton:
 #		if event.button_index == BUTTON_LEFT and event.pressed:
 #			goal = event.position

@@ -2,7 +2,8 @@
 
 [ext_resource path="res://scripts/machine.gd" type="Script" id=1]
 [ext_resource path="res://sprites/machines/sprite-lights-lg.png" type="Texture" id=2]
-[ext_resource path="res://health.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/health.tscn" type="PackedScene" id=3]
+
 
 [sub_resource type="Animation" id=1]
 loop = true
@@ -67,4 +68,5 @@ anims/damaged = SubResource( 2 )
 anims/healthy = SubResource( 3 )
 
 [node name="health" parent="." instance=ExtResource( 3 )]
+
 [connection signal="machine_damaged" from="health" to="." method="_on_health_machine_damaged"]

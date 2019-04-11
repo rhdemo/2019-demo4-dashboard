@@ -6,7 +6,7 @@ onready var brokenTexture = preload("res://sprites/machines/health-red.png")
 
 signal machine_damaged
 signal machine_repaired
-const IS_HEALTHY = 100
+const IS_HEALTHY = 90
 const IS_DAMAGED = 50
 
 export (float) var health = 100.0;
