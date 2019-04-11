@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scripts/dashboard.gd" type="Script" id=1]
 [ext_resource path="res://iso_tiles/iso_tileset.tres" type="TileSet" id=2]
@@ -9,18 +9,18 @@
 [ext_resource path="res://sprites/machines/server-stack.png" type="Texture" id=7]
 [ext_resource path="res://sprites/machines-sm/machine-10-sm-pusher.png" type="Texture" id=8]
 [ext_resource path="res://sprites/machines/data-pools.png" type="Texture" id=9]
-[ext_resource path="res://scenes/machine.tscn" type="PackedScene" id=10]
-[ext_resource path="res://sprites/machines-sm/machine-1-sm.png" type="Texture" id=11]
-[ext_resource path="res://sprites/machines-sm/machine-3-sm.png" type="Texture" id=12]
-[ext_resource path="res://sprites/machines-sm/machine-4-sm.png" type="Texture" id=13]
-[ext_resource path="res://sprites/machines-sm/machine-5-sm.png" type="Texture" id=14]
-[ext_resource path="res://sprites/machines-sm/machine-6-sm.png" type="Texture" id=15]
-[ext_resource path="res://sprites/machines-sm/machine-7-sm.png" type="Texture" id=16]
-[ext_resource path="res://sprites/machines/machine-7.png" type="Texture" id=17]
-[ext_resource path="res://sprites/machines-sm/machine-10-sm.png" type="Texture" id=18]
-[ext_resource path="res://sprites/machines-sm/machine-8-sm.png" type="Texture" id=19]
-[ext_resource path="res://sprites/machines-sm/machine-2-sm.png" type="Texture" id=20]
-
+[ext_resource path="res://sprites/machines-sm/machine-2-sm-doorway.png" type="Texture" id=10]
+[ext_resource path="res://scenes/machine.tscn" type="PackedScene" id=11]
+[ext_resource path="res://sprites/machines-sm/machine-1-sm.png" type="Texture" id=12]
+[ext_resource path="res://sprites/machines-sm/machine-3-sm.png" type="Texture" id=13]
+[ext_resource path="res://sprites/machines-sm/machine-4-sm.png" type="Texture" id=14]
+[ext_resource path="res://sprites/machines-sm/machine-5-sm.png" type="Texture" id=15]
+[ext_resource path="res://sprites/machines-sm/machine-6-sm.png" type="Texture" id=16]
+[ext_resource path="res://sprites/machines-sm/machine-7-sm.png" type="Texture" id=17]
+[ext_resource path="res://sprites/machines/machine-7.png" type="Texture" id=18]
+[ext_resource path="res://sprites/machines-sm/machine-10-sm.png" type="Texture" id=19]
+[ext_resource path="res://sprites/machines-sm/machine-8-sm.png" type="Texture" id=20]
+[ext_resource path="res://sprites/machines-sm/machine-2-sm.png" type="Texture" id=21]
 
 [node name="Dashboard" type="Node2D"]
 script = ExtResource( 1 )
@@ -37,6 +37,7 @@ tile_data = PoolIntArray( -983024, 4, 0, -983023, 3, 0, -983022, 3, 0, -983021, 
 [node name="WebSocket" type="Node" parent="."]
 
 [node name="static_assets" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="pallet-barrel-2" type="Sprite" parent="static_assets"]
 position = Vector2( 1066.97, 774.783 )
@@ -85,6 +86,11 @@ position = Vector2( 1855.31, 879.901 )
 z_index = 18
 texture = ExtResource( 7 )
 
+[node name="server-stack7" type="Sprite" parent="static_assets"]
+position = Vector2( 1530.06, 902.756 )
+z_index = 18
+texture = ExtResource( 7 )
+
 [node name="machine-10-sm-pusher" type="Sprite" parent="static_assets"]
 position = Vector2( 131.9, 409.598 )
 z_index = 9
@@ -105,99 +111,91 @@ position = Vector2( 1589.73, 328.698 )
 z_index = 6
 texture = ExtResource( 9 )
 
-[node name="toLeaderBoard" type="Node2D" parent="static_assets"]
-z_index = 18
-
-[node name="leaderboardBtn" type="TextureButton" parent="static_assets/toLeaderBoard"]
-margin_left = 1454.85
-margin_top = 786.289
-margin_right = 1605.85
-margin_bottom = 1025.29
-texture_normal = ExtResource( 7 )
-stretch_mode = 2
+[node name="Sprite" type="Sprite" parent="static_assets"]
+position = Vector2( 291.842, 792.897 )
+texture = ExtResource( 10 )
 
 [node name="machines" type="Node" parent="."]
 editor/display_folded = true
 
-[node name="machine-0" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-0" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 263.962, 164.263 )
 healthbar_location = Vector2( 0, -75 )
 light_location = Vector2( -18, 5 )
 machine_name = "A"
-tex = ExtResource( 11 )
+tex = ExtResource( 12 )
 
-[node name="machine-1" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-1" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 892.282, 237.257 )
 z_index = 1
 healthbar_location = Vector2( 0, -100 )
 light_location = Vector2( -25, -40 )
 machine_name = "B"
-tex = ExtResource( 12 )
+tex = ExtResource( 13 )
 
-[node name="machine-2" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-2" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 929.045, 175.608 )
 healthbar_location = Vector2( 300, -132 )
 light_location = Vector2( 215, -150 )
 machine_name = "C"
-tex = ExtResource( 13 )
+tex = ExtResource( 14 )
 
-[node name="machine-3" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-3" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 1702.08, 115.803 )
 healthbar_location = Vector2( 50, -75 )
 light_location = Vector2( -2, -50 )
 machine_name = "D"
-tex = ExtResource( 14 )
+tex = ExtResource( 15 )
 
-[node name="machine-4" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-4" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 1284.72, 365.537 )
 z_index = 7
 healthbar_location = Vector2( 20, -115 )
 light_location = Vector2( 30, -40 )
 machine_name = "E"
-tex = ExtResource( 15 )
+tex = ExtResource( 16 )
 
-[node name="machine-5" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-5" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 1574.6, 533.81 )
 z_index = 7
 healthbar_location = Vector2( 20, -115 )
 light_location = Vector2( 30, -40 )
 machine_name = "F"
-tex = ExtResource( 16 )
+tex = ExtResource( 17 )
 
-[node name="machine-6" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-6" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 1205.23, 611.095 )
 z_index = 8
 healthbar_location = Vector2( 120, -100 )
 light_location = Vector2( 130, 0 )
 machine_name = "G"
-tex = ExtResource( 17 )
+tex = ExtResource( 18 )
 
-[node name="machine-9" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-9" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 309.945, 507.005 )
 z_index = 9
 healthbar_location = Vector2( 25, -125 )
 light_location = Vector2( -45, -15 )
 machine_name = "I"
-tex = ExtResource( 18 )
+tex = ExtResource( 19 )
 
-[node name="machine-7" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-7" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( 739.048, 731.727 )
 z_index = 9
 healthbar_location = Vector2( -80, -200 )
 light_location = Vector2( -85, -85 )
 machine_name = "H"
-tex = ExtResource( 19 )
+tex = ExtResource( 20 )
 
-[node name="machine-8" parent="machines" instance=ExtResource( 10 )]
+[node name="machine-8" parent="machines" instance=ExtResource( 11 )]
 position = Vector2( -3.82097, 804.537 )
 z_index = 10
 healthbar_location = Vector2( 180, 50 )
 light_location = Vector2( 158, 115 )
 machine_name = "J"
-tex = ExtResource( 20 )
+tex = ExtResource( 21 )
 
 [node name="MachineLine" type="Line2D" parent="."]
 z_index = 99
-default_color = Color( 0.415686, 0.619608, 0.917647, 0.780392 )
+default_color = Color( 0.415686, 0.619608, 0.917647, 0.666667 )
 texture_mode = 1069547908
-

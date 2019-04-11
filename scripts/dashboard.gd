@@ -5,7 +5,7 @@ const MECHANIC_OFFSET = 21.5
 
 var ws = WebSocketClient.new()
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
-var retryTimeout = 2 # seconds
+var retryTimeout = 5 # seconds
 #var url = JavaScript.eval("'window.location.hostname'+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
 var url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
 
@@ -19,14 +19,14 @@ signal remove_mechanic
 signal machine_health
 signal update_future_visits
 
-onready var mechanicNode = preload("res://mechanic.tscn")
+onready var mechanicNode = preload("res://scenes/mechanic.tscn")
 #onready var machineNode = preload("res://machine.tscn")
 onready var nav : = $Navigation2D
 onready var map : = $Navigation2D/TileMap
 
 var path : PoolVector2Array
 var goal : Vector2
-var lineColors = [Color.red, Color.green, Color.blue, Color.orange, Color.purple]
+var lineColors = [Color(255, 0, 0, 150), Color(0,255,0,150), Color(0,0,255,150), Color(255,100,100,150), Color(100,100,255,150)]
 var mechanics = []
 var machines = [
 	{"name": "machine-0", "coords": Vector2(180,290), "color": Color.yellow},
@@ -47,7 +47,6 @@ func _init():
 
 func _ready():
 	set_process(true)
-	$static_assets/toLeaderBoard/leaderboardBtn.connect("pressed", self, "show_leaderboard")
 	for i in range(mechanic_count):
 		add_mechanic(i)
 	for m in machines:
@@ -116,7 +115,7 @@ func _handle_data_received():
 	#print(res)
 	if res['type'] != "heartbeat":
 		if res.type == "optaplanner":
-			#print("OPTAPLANNER:",res)
+			print("OPTAPLANNER:",res)
 			if res.action == "modify":
 				if res.data.value.responseType == "DISPATCH_MECHANIC":
 					emit_signal("dispatch_mechanic", res.data.value)
@@ -155,9 +154,6 @@ func send(data):
 
 #func encode_data(data, mode):
 #	return data.to_utf8() if mode == WebSocketPeer.WRITE_MODE_TEXT else var2bytes(data)
-func show_leaderboard():
-	#print("CLICKED")
-	get_tree().change_scene("res://leaderboard.tscn")
 	
 func decode_data(data):
 	return data.get_string_from_utf8()

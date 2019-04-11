@@ -141,8 +141,9 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -67.66 )
 texture = ExtResource( 2 )
+vframes = 5
 hframes = 20
-frame = 15
+frame = 21
 
 [node name="anim" type="AnimationPlayer" parent="Sprite"]
 anims/wait-down-left = SubResource( 1 )
@@ -157,4 +158,3 @@ anims/walk-up-right = SubResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -68.7 )
 shape = SubResource( 9 )
-

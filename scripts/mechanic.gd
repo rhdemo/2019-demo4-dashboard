@@ -28,7 +28,7 @@ func _ready():
 	get_parent().connect('update_future_visits', self, "update_future_visits")
 	focusLine.width = 15
 	futureLine.width = 5
-
+	colors[key]
 	focusLine.default_color = colors[key]
 	futureLine.default_color = colors[key]
 	get_parent().add_child(focusLine)
@@ -55,7 +55,9 @@ func _process(delta):
 			elif $Sprite/anim.current_animation == "walk-down-left":
 				$Sprite/anim.play("wait-down-left")
 			else:			
-				$Sprite/anim.play("wait-down-right")		
+				$Sprite/anim.play("wait-down-right")
+	futureLine.points = futurePath
+	futureLine.show()	
 		
 	
 func dispatch_mechanic(data):
@@ -64,7 +66,6 @@ func dispatch_mechanic(data):
 		if data.mechanic.focusMachineIndex != focusMachineIndex:
 			focusMachineIndex = data.mechanic.focusMachineIndex
 			focus = machines[focusMachineIndex].coords
-			focus.y += 21.5
 			focusPath = nav.get_simple_path(self.position, focus)
 			focusLine.points = focusPath
 			focusLine.show()
@@ -77,10 +78,12 @@ func dispatch_mechanic(data):
 func update_future_visits(data):
 	if String(data.mechanicIndex) == String(self.key):
 		futureMachineIndexes = data.futureMachineIndexes
+		futurePath = []
 		var p0 = focus
 		for p in futureMachineIndexes:
 			self.futurePath.append_array(nav.get_simple_path(p0, machines[p].coords))
 			p0 = machines[p].coords
+		#print(futurePath)
 		futureLine.show()
 
 func remove_mechanic(data):

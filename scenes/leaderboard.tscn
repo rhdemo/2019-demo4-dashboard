@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://scripts/leaderboard.gd" type="Script" id=1]
-[ext_resource path="res://sprites/machines/server-stack.png" type="Texture" id=2]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -15,11 +14,3 @@ valign = 1
 uppercase = true
 
 [node name="toDashboard" type="Node2D" parent="."]
-
-[node name="load_dashboard" type="TextureButton" parent="toDashboard"]
-margin_left = 9.76068
-margin_top = 829.658
-margin_right = 160.761
-margin_bottom = 1068.66
-texture_normal = ExtResource( 2 )
-
