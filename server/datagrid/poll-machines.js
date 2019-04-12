@@ -3,11 +3,13 @@ const log = require("../utils/log")("datagrid/poll-machines");
 const GAME_STATES = require("../models/game-states");
 const {OUTGOING_MESSAGE_TYPES} = require("../message-types");
 const broadcast = require("../utils/broadcast");
+const MAX_HEALTH = 1000000000000000000;
 
-
-function pollMachines(interval, alwaysPoll) {
+async function pollMachines(interval, alwaysPoll) {
   setInterval(function () {
-    if (!alwaysPoll && global.game.state !== GAME_STATES.ACTIVE) {
+    const inactiveGameState = (global.game.state === GAME_STATES.LOBBY || global.game.state === GAME_STATES.LOADING);
+
+    if (!alwaysPoll && inactiveGameState) {
       return;
     }
 
@@ -20,15 +22,17 @@ function pollMachines(interval, alwaysPoll) {
 async function refreshMachine(machine, alwaysBroadcast) {
   try {
     let response = await axios({method: "get", url: machine.url});
-    if (alwaysBroadcast || machine.value !== response.data) {
-      machine.value = response.data;
-      broadcast(OUTGOING_MESSAGE_TYPES.MACHINE, {id: machine.id, value: machine.value}, "modify");
-    }
+    machine.value = response.data;
   } catch (error) {
     log.error(`error occurred in http call get counter for machine ${machine.id}`);
     log.error(error)
   }
-}
 
+  let percent =  Math.floor(machine.value / MAX_HEALTH * 100);
+  if (alwaysBroadcast || machine.percent !== percent) {
+    machine.percent = percent;
+    broadcast(OUTGOING_MESSAGE_TYPES.MACHINE, {id: machine.id, value: machine.value, percent: machine.percent}, "modify");
+  }
+}
 
 module.exports = pollMachines;
