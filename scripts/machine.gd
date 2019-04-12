@@ -8,7 +8,7 @@ export (float) var health = 1.0;
 export (String) var machine_name = "0";
 export (Texture) var tex;
 export (Vector2) var direction = Vector2(0,0)
-const MAX_HEALTH = 1000000000000000000;
+const MAX_HEALTH = 100;
 const IS_HEALTHY = 90
 const IS_DAMAGED = 50
 # var b = "text"
@@ -17,7 +17,7 @@ signal dispatch_mechanic
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_parent().get_parent().connect("machine_health", self, "_on_machine_health")
+	get_node("/root/Dashboard").connect("machine_health", self, "_on_machine_health")
 	self.texture = tex
 
 	$health/label.text = self.machine_name
@@ -45,8 +45,4 @@ func _process(delta):
 func _on_machine_health(data):
 	#print(self.name, data)
 	if data.id == self.name:
-		health = data.value
-
-
-func _on_health_machine_repaired(data):
-	print(data)
+		health = data.percent if data.has('percent') else data.value

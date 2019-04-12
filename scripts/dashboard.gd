@@ -48,7 +48,7 @@ func _ready():
 	set_process(true)
 	for m in machines:
 		$MachineLine.add_point(m.coords)
-	#get_matrix()
+	get_matrix()
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
@@ -71,7 +71,6 @@ func add_mechanic(data):
 	var mechanic = mechanicNode.instance()
 	var map_pos = machines[data.value.mechanic.originalMachineIndex].coords
 	mechanic.position = map_pos
-	mechanic.z_index = 5
 	mechanic.key = data.key
 	mechanic.name = "mechanic-%s" % String(data.key)
 	$Mechanics.add_child(mechanic, true)

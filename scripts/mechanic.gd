@@ -6,6 +6,7 @@ export var speed = 200
 const futureColors = PoolColorArray([Color(255, 0,0, 255), Color(0,255,0,124), Color(0,0,255,124), Color(255,100,100,124), Color(100,100,255,124)])
 const focusColors = PoolColorArray([Color(255, 0, 0, 255), Color(0,255,0,255), Color(0,0,255,255), Color(255,100,100,255), Color(100,100,255,255)])
 const mechanicColors = [{"red":4},{"green":1},{"blue":0},{"black":3},{"orange":2}]
+const exitCoords = Vector2('200', '800')
 
 # Declare member variables here. Examples:
 var focusMachineIndex : int
@@ -28,12 +29,13 @@ onready var machines : Array = Dashboard.machines
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_process(true)
 	Dashboard.connect('dispatch_mechanic', self, "dispatch_mechanic")
 	Dashboard.connect('remove_mechanic', self, "remove_mechanic")
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.default_color = focusColors[int(key) % 5]
 	futureLine.default_color = futureColors[int(key) % 5]
-	print(key,' - ',mechanicColors[int(key) % 5])
+
 	Dashboard.add_child(focusLine)
 	Dashboard.add_child(futureLine)
 
@@ -52,6 +54,20 @@ func _init():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if global_position.y > 930:
+		self.z_index = 12
+	elif global_position.y > 900:
+		self.z_index = 10
+	elif global_position.y > 650 or (global_position.y > 300 and global_position.x < 850):
+		self.z_index = 8
+	elif global_position.y > 300 and global_position.x < 850:
+		self.z_index = 6
+	elif global_position.y > 300:
+		self.z_index = 4
+	else:
+		self.z_index = 0
+		
+	#print(z_index)
 	if !focusPath:
 		focusLine.hide()
 	if focusPath.size() > 0:
@@ -64,6 +80,8 @@ func _process(delta):
 			self.position = self.position.linear_interpolate(focusPath[0], (speed * delta)/d)
 		else:
 			focusPath.remove(0)
+			if position == exitCoords:
+				get_parent().remove_child(self)
 			if $Sprite/anim.current_animation == "walk-up-left":
 				$Sprite/anim.play("wait-up-left")
 			elif $Sprite/anim.current_animation == "walk-up-right":
@@ -103,10 +121,9 @@ func update_future_visits(data):
 
 func remove_mechanic(data):
 	if  String(data.key) == String(self.key):
-		focus = machines[machines.size()-1].coords
+		self.key = "99"
+		focus = exitCoords
 		focusPath = nav.get_simple_path(self.position, focus)
-		focusLine.points = focusPath
-		focusLine.show()
 		Dashboard.remove_child(futureLine)
 		Dashboard.remove_child(focusLine)
 
