@@ -48,7 +48,7 @@ func _ready():
 	set_process(true)
 	for m in machines:
 		$MachineLine.add_point(m.coords)
-	get_matrix()
+	#get_matrix()
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
