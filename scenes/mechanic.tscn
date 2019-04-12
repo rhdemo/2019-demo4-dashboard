@@ -139,7 +139,7 @@ extents = Vector2( 26.092, 68.6445 )
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -67.66 )
+position = Vector2( 0, -50 )
 texture = ExtResource( 2 )
 vframes = 5
 hframes = 20
@@ -156,5 +156,5 @@ anims/walk-up-left = SubResource( 7 )
 anims/walk-up-right = SubResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -68.7 )
+position = Vector2( 0, -50 )
 shape = SubResource( 9 )
