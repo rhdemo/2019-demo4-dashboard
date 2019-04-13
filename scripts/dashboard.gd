@@ -28,17 +28,17 @@ onready var map : = $Navigation2D/TileMap
 var path : PoolVector2Array
 var goal : Vector2
 var machines = [
-	{"name": "machine-0", "coords": Vector2(180,290), "color": Color.yellow},
-	{"name": "machine-1", "coords": Vector2(945,320), "color": Color.green},
-	{"name": "machine-2", "coords": Vector2(1215,160), "color": Color.purple},
-	{"name": "machine-3", "coords": Vector2(1620,180), "color": Color.pink},
-	{"name": "machine-4", "coords": Vector2(1200,454), "color": Color.black},
-	{"name": "machine-5", "coords": Vector2(1500,630), "color": Color.maroon},
-	{"name": "machine-6", "coords": Vector2(1280,810), "color": Color.blue},
-	{"name": "machine-7", "coords": Vector2(405,725), "color": Color.lightblue},
-	{"name": "machine-8", "coords": Vector2(200,1050), "color": Color.orange},
-	{"name": "machine-9", "coords": Vector2(210,610), "color": Color.red},
-	{"name": "gate", "coords": Vector2(320,936), "color": Color.white}
+	{"name": "machine-0", "label": "A", "coords": Vector2(180,290), "color": Color.yellow, "distances": []},
+	{"name": "machine-1", "label": "B", "coords": Vector2(945,320), "color": Color.green, "distances": []},
+	{"name": "machine-2", "label": "C", "coords": Vector2(1215,160), "color": Color.purple, "distances": []},
+	{"name": "machine-3", "label": "D", "coords": Vector2(1620,180), "color": Color.pink, "distances": []},
+	{"name": "machine-4", "label": "E", "coords": Vector2(1200,454), "color": Color.black, "distances": []},
+	{"name": "machine-5", "label": "F", "coords": Vector2(1500,630), "color": Color.maroon, "distances": []},
+	{"name": "machine-6", "label": "G", "coords": Vector2(1280,810), "color": Color.blue, "distances": []},
+	{"name": "machine-7", "label": "H", "coords": Vector2(405,725), "color": Color.lightblue, "distances": []},
+	{"name": "machine-8", "label": "I", "coords": Vector2(200,1050), "color": Color.orange, "distances": []},
+	{"name": "machine-9", "label": "J", "coords": Vector2(210,610), "color": Color.red, "distances": []},
+	{"name": "gate", "label": "", "coords": Vector2(320,936), "color": Color.white, "distances": []}
 	]
 
 func _init():
@@ -48,7 +48,7 @@ func _ready():
 	set_process(true)
 	for m in machines:
 		$MachineLine.add_point(m.coords)
-	#get_matrix()
+	get_matrix()
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
@@ -79,7 +79,7 @@ func add_mechanic(data):
 func dispatch_mechanic(data):
 	var mechExists = false
 	for m in $Mechanics.get_children():
-		if m.key == data.key:
+		if String(m.key) == String(data.key):
 			mechExists = true
 	if !mechExists:
 		add_mechanic(data)
@@ -139,7 +139,6 @@ func get_matrix():
 		start.y += MECHANIC_OFFSET
 		for g in machines:
 			var goal = g.coords #$TileMap.map_to_world(machines[g])
-			goal.y += MECHANIC_OFFSET
 			var dist = 0
 			var pth = nav.get_simple_path(start, goal)
 			if start != goal:
@@ -151,13 +150,14 @@ func get_matrix():
 						dist += diff
 						strt = wp
 			ptDist.append(dist)
+			pt.distances.append(dist)
 		csv_array.append(ptDist)
 	var prnt = ''
 	for ln in csv_array:
 		for v in ln:
 			prnt += String(v)+", "
 		prnt += "\n"
-	print(prnt)
+	#print(prnt)
 
 #func encode_data(data, mode):
 #	return data.to_utf8() if mode == WebSocketPeer.WRITE_MODE_TEXT else var2bytes(data)

@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
 export var key = "0"
-export var speed = 200
 
-const futureColors = PoolColorArray([Color(255, 0,0, 255), Color(0,255,0,124), Color(0,0,255,124), Color(255,100,100,124), Color(100,100,255,124)])
-const focusColors = PoolColorArray([Color(255, 0, 0, 255), Color(0,255,0,255), Color(0,0,255,255), Color(255,100,100,255), Color(100,100,255,255)])
+onready var wayPointNode = preload("res://scenes/waypoint.tscn")
+
+const futureColors = PoolColorArray([Color(255, 0,0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
+const focusColors = PoolColorArray([Color(255, 0, 0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
 const mechanicColors = [{"red":4},{"green":1},{"blue":0},{"black":3},{"orange":2}]
 const exitCoords = Vector2('200', '800')
 
@@ -21,6 +22,8 @@ var futureLine : = Line2D.new()
 var focus : Vector2
 var h = "right"
 var v = "up"
+var velocity = 0
+var waypoints = []
 
 onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
 onready var map : TileMap = get_node("/root/Dashboard/Navigation2D/TileMap")
@@ -35,7 +38,14 @@ func _ready():
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.default_color = focusColors[int(key) % 5]
 	futureLine.default_color = futureColors[int(key) % 5]
+	
+	waypoints = [wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance()]
 
+	for wp in waypoints:
+		wp.get_child(0).modulate = futureColors[int(key)]
+		wp.z_index = 12
+		Dashboard.add_child(wp)
+		wp.hide()
 	Dashboard.add_child(focusLine)
 	Dashboard.add_child(futureLine)
 
@@ -58,9 +68,9 @@ func _process(delta):
 		self.z_index = 12
 	elif global_position.y > 900:
 		self.z_index = 10
-	elif global_position.y > 650 or (global_position.y > 300 and global_position.x < 850):
+	elif global_position.y > 650 or (global_position.y > 300 and global_position.x < 500):
 		self.z_index = 8
-	elif global_position.y > 300 and global_position.x < 850:
+	elif global_position.y > 300 and global_position.x < 500:
 		self.z_index = 6
 	elif global_position.y > 300:
 		self.z_index = 4
@@ -77,7 +87,8 @@ func _process(delta):
 			h = "left" if abs(dxy.angle()) < 1 else "right"
 			v = "up" if dxy.angle() > 0 else "down"
 			$Sprite/anim.play("walk-%s-%s" % [v, h])
-			self.position = self.position.linear_interpolate(focusPath[0], (speed * delta)/d)
+			self.position = self.position.linear_interpolate(focusPath[0], (velocity * delta)/d)
+			focusTravelDurationMillis -= delta
 		else:
 			focusPath.remove(0)
 			if position == exitCoords:
@@ -90,6 +101,9 @@ func _process(delta):
 				$Sprite/anim.play("wait-down-left")
 			else:			
 				$Sprite/anim.play("wait-down-right")
+	for wp in range(futureMachineIndexes.size()):
+		waypoints[wp].get_child(1).text = String(wp+1)
+		waypoints[wp].show()
 	futureLine.points = futurePath
 	futureLine.show()	
 		
@@ -97,26 +111,31 @@ func _process(delta):
 func dispatch_mechanic(data):
 	#print(data.key, " - ", self.key)
 	if String(data.key) == String(self.key):
-		if data.value.mechanic.focusMachineIndex != focusMachineIndex:
-			focusMachineIndex = data.value.mechanic.focusMachineIndex
-			focus = machines[focusMachineIndex].coords
-			focusPath = nav.get_simple_path(self.position, focus)
-			focusLine.points = focusPath
-			focusLine.show()
-
 		originalMachineIndex = data.value.mechanic.originalMachineIndex
 		focusFixDurationMillis = data.value.mechanic.focusFixDurationMillis
 		focusTravelDurationMillis = data.value.mechanic.focusTravelDurationMillis
 		
+		if data.value.mechanic.focusMachineIndex != focusMachineIndex:
+			focusMachineIndex = data.value.mechanic.focusMachineIndex
+			focus = machines[focusMachineIndex].coords
+			velocity = getTotalDistance(self.position, focus)/(focusTravelDurationMillis/1000)
+			focusPath = nav.get_simple_path(self.position, focus)
+			focusLine.points = focusPath
+			focusLine.show()
 
 func update_future_visits(data):
 	if String(data.mechanicIndex) == String(self.key):
 		futureMachineIndexes = data.futureMachineIndexes
 		futurePath = []
 		var p0 = focus
-		for p in futureMachineIndexes:
-			self.futurePath.append_array(nav.get_simple_path(p0, machines[p].coords))
-			p0 = machines[p].coords
+		for wp in waypoints:
+			wp.hide()
+		for p in range(futureMachineIndexes.size()):
+			var machineIdx = futureMachineIndexes[p]
+			waypoints[p].position = machines[machineIdx].coords
+		
+			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].coords))
+			p0 = machines[machineIdx].coords
 		#print(futurePath)
 
 func remove_mechanic(data):
@@ -126,6 +145,21 @@ func remove_mechanic(data):
 		focusPath = nav.get_simple_path(self.position, focus)
 		Dashboard.remove_child(futureLine)
 		Dashboard.remove_child(focusLine)
+
+func getDistanceToFocus():
+	return getTotalDistance(self.position, machines[focusMachineIndex].coords)
+
+func getTotalDistance(start:Vector2, goal:Vector2):
+	var path = nav.get_simple_path(start, goal)
+	var dist = 0
+	if start != goal:
+		if path.size() > 0:
+			var strt = path[0] #map.map_to_world(pth[0])
+			for wp in path:
+				var diff = strt.distance_to(wp)
+				dist += diff
+				strt = wp
+	return dist
 
 #if event is InputEventMouseButton:
 #		if event.button_index == BUTTON_LEFT and event.pressed:
