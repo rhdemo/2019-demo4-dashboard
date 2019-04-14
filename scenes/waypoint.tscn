@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/waypoint.gd" type="Script" id=1]
-[ext_resource path="res://sprites/machines/health-grey.png" type="Texture" id=2]
+[ext_resource path="res://sprites/health/health-grey.png" type="Texture" id=2]
 [ext_resource path="res://fonts/overpass_mono.tres" type="DynamicFont" id=3]
+
 
 [node name="waypoint" type="Node2D"]
 scale = Vector2( 0.5, 0.5 )

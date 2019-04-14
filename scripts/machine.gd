@@ -1,45 +1,40 @@
 extends Sprite
 
 # Declare member variables here. Examples:
-export (Vector2) var healthbar_location = Vector2(0,0);
 export (Vector2) var heal_coords = Vector2(0,0);
-export (Vector2) var light_location = Vector2(0, 0);
-export (float) var health = 1.0;
-export (String) var machine_name = "0";
-export (Texture) var tex;
+export (Color) var color = Color.red
+export (float) var health = 100;
+export (String) var machine_name = "Z";
 export (Vector2) var direction = Vector2(0,0)
-const MAX_HEALTH = 100;
-const IS_HEALTHY = 90
-const IS_DAMAGED = 50
-# var b = "text"
-
-signal dispatch_mechanic
+export var MAX_HEALTH : int = 100
+export var HEALTHY_MIN_PCT : int = 90
+export var DAMAGE_MIN_PCT : int = 50
+onready var healthNode : Sprite = find_node("health")
+onready var lightNode : Sprite = find_node("light")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_node("/root/Dashboard").connect("machine_health", self, "_on_machine_health")
-	self.texture = tex
 
-	$health/label.text = self.machine_name
-	if self.texture:
-		#$graphic.set_position()
-		$light.set_position(self.light_location)
-		$health.set_position(self.healthbar_location)
-		#$collision.
+	if healthNode:
+		if healthNode["IS_HEALTHY"]:
+			healthNode["IS_HEALTHY"] = HEALTHY_MIN_PCT
+		if healthNode["IS_DAMAGED"]:
+			healthNode["IS_DAMAGED"] = DAMAGE_MIN_PCT
+		healthNode.get_child(1).text = self.machine_name
 	#var p = Vector2(self.global_position.x+self.texture.get_width(), self.global_position.y-self.texture.get_height())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (health/MAX_HEALTH)*100 >= IS_HEALTHY:
-		$light/anim.play("healthy")
-	elif (health/MAX_HEALTH)*100 > IS_DAMAGED:
-		$light/anim.play("damaged")
-	else:
-		$light/anim.play("alert")
-	$health.health = (self.health/MAX_HEALTH)*100
-	
-	$light.set_position(self.light_location)
-	$health.set_position(self.healthbar_location)
+	if lightNode:
+		if (health/MAX_HEALTH)*100 >= HEALTHY_MIN_PCT:
+			lightNode.get_child(0).play("healthy")
+		elif (health/MAX_HEALTH)*100 > DAMAGE_MIN_PCT:
+			lightNode.get_child(0).play("damaged")
+		else:
+			lightNode.get_child(0).play("alert")
+	if healthNode:
+		healthNode.health = (health/MAX_HEALTH)*100
 	#print(machine_name, " HEALTH:", $health.health)
 
 func _on_machine_health(data):

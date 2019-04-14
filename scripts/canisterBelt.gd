@@ -1,9 +1,9 @@
 extends Path2D
 
-onready var canisterNode = preload("res://scenes/canister.tscn")
+onready var canisterNode = preload("res://scenes/canister_ph.tscn")
 onready var flow : Timer = $canister_flow
 export var canisters : int = 20
-export var speed : int = 20
+export var speed : int = 45
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,7 +12,7 @@ func _ready():
 
 func spawnCanister():
 	var new_canister : PathFollow2D = canisterNode.instance()
-	new_canister.z_index = 8
+	new_canister.z_index = 9
 	self.add_child(new_canister)
 	var tween = Tween.new()
 	add_child(tween)

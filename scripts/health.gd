@@ -1,18 +1,15 @@
-extends Area2D
+extends Sprite
 
-onready var healthyTexture = preload("res://sprites/machines/health-green.png")
-onready var damagedTexture = preload("res://sprites/machines/health-orange.png")
-onready var brokenTexture = preload("res://sprites/machines/health-red.png")
+onready var healthyTexture = preload("res://sprites/health/health-green.png")
+onready var damagedTexture = preload("res://sprites/health/health-orange.png")
+onready var brokenTexture = preload("res://sprites/health/health-red.png")
 
 signal machine_damaged
 signal machine_repaired
-const IS_HEALTHY = 90
-const IS_DAMAGED = 50
+export var IS_HEALTHY : int = 90
+export var IS_DAMAGED : int = 50
 
 export (float) var health = 100.0;
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,7 +23,3 @@ func _process(delta):
 	else:
 		$value.texture_progress = brokenTexture
 	$value.value = health
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
