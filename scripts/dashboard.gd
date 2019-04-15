@@ -54,8 +54,8 @@ func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
 		ws.poll()
 	$MachineLine.points = []
-	for m in machines:
-		$MachineLine.add_point(m.coords)
+	for m in $machines.get_children():
+		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position )
 	#$MachineLine.show()
 
 func _connect():
@@ -69,11 +69,15 @@ func _connect():
 	
 func add_mechanic(data):
 	var mechanic = mechanicNode.instance()
-	var map_pos = machines[data.value.mechanic.originalMachineIndex].coords
+	var machine = $machines.get_child(data.value.mechanic.originalMachineIndex)
+	var map_pos = machine.heal_coords if machine.get('heal_coords') else machine.position
+	if data.value.mechanic.originalMachineIndex == $machines.get_children().size()-1:
+		map_pos = $mechanic_spawn.position
 	mechanic.position = map_pos
 	mechanic.key = data.key
 	mechanic.name = "mechanic-%s" % String(data.key)
 	$Mechanics.add_child(mechanic, true)
+	dispatch_mechanic(data)
 	
 
 func dispatch_mechanic(data):
@@ -90,6 +94,7 @@ func _handle_data_received():
 	#print(res)
 	if res['type'] != "heartbeat":
 		if res.type == "optaplanner":
+			print(res)
 			#print("OPTAPLANNER:",res)
 			if res.action == "modify":
 				if res.data.value.responseType == "DISPATCH_MECHANIC":
@@ -98,6 +103,7 @@ func _handle_data_received():
 				if res.data.value.responseType == "UPDATE_FUTURE_VISITS":
 					#print(res.data)
 					emit_signal("update_future_visits", res.data.value)
+			if res.action == "create":
 				if res.data.value.responseType == "ADD_MECHANIC":
 					add_mechanic(res.data)
 			if res.action == "remove":

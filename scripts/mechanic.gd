@@ -3,11 +3,11 @@ extends KinematicBody2D
 export var key = "0"
 
 onready var wayPointNode = preload("res://scenes/waypoint.tscn")
+onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 
 const futureColors = PoolColorArray([Color(255, 0,0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
 const focusColors = PoolColorArray([Color(255, 0, 0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
 const mechanicColors = [{"red":4},{"green":1},{"blue":0},{"black":3},{"orange":2}]
-const exitCoords = Vector2('200', '800')
 
 # Declare member variables here. Examples:
 var focusMachineIndex : int
@@ -28,7 +28,8 @@ var waypoints = []
 onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
 onready var map : TileMap = get_node("/root/Dashboard/Navigation2D/TileMap")
 onready var Dashboard = get_node("/root/Dashboard")
-onready var machines : Array = Dashboard.machines
+onready var machines : Array = Dashboard.get_node('machines').get_children()
+onready var exitCoords = spawn.position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -113,11 +114,11 @@ func dispatch_mechanic(data):
 	if String(data.key) == String(self.key):
 		originalMachineIndex = data.value.mechanic.originalMachineIndex
 		focusFixDurationMillis = data.value.mechanic.focusFixDurationMillis
-		focusTravelDurationMillis = data.value.mechanic.focusTravelDurationMillis
+		focusTravelDurationMillis = data.value.mechanic.focusTravelDurationMillis if data.value.mechanic.focusTravelDurationMillis > 0 else 200
 		
 		if data.value.mechanic.focusMachineIndex != focusMachineIndex:
 			focusMachineIndex = data.value.mechanic.focusMachineIndex
-			focus = machines[focusMachineIndex].coords
+			focus = machines[focusMachineIndex].heal_coords
 			velocity = getTotalDistance(self.position, focus)/(focusTravelDurationMillis/1000)
 			focusPath = nav.get_simple_path(self.position, focus)
 			focusLine.points = focusPath
@@ -132,10 +133,10 @@ func update_future_visits(data):
 			wp.hide()
 		for p in range(futureMachineIndexes.size()):
 			var machineIdx = futureMachineIndexes[p]
-			waypoints[p].position = machines[machineIdx].coords
+			waypoints[p].position = machines[machineIdx].heal_coords if machines[machineIdx].get('heal_coords') else machines[machineIdx].position
 		
-			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].coords))
-			p0 = machines[machineIdx].coords
+			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].heal_coords if machines[machineIdx].get('heal_coords') else machines[machineIdx].position))
+			p0 = machines[machineIdx].heal_coords
 		#print(futurePath)
 
 func remove_mechanic(data):
