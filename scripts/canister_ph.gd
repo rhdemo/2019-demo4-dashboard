@@ -15,7 +15,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _fixed_process(delta):
 func _physics_process(delta):
-	acc.x = 2
+	acc.x = 0
 	acc.y = GRAVITY
 	vel += acc * delta
 	#vel.x = clamp(vel.x, -MAX_SPEED, MAX_SPEED)

@@ -49,7 +49,7 @@ tracks/0/keys = {
 }
 
 [node name="light" type="Sprite"]
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 0.115, 0.115 )
 z_index = 75
 texture = ExtResource( 1 )
 vframes = 3

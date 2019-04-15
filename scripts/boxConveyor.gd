@@ -1,6 +1,6 @@
 extends Path2D
 
-onready var boxNode = preload("res://scenes/box_ph.tscn")
+onready var boxNode = preload("res://scenes/box.tscn")
 onready var flow : Timer = $box_flow
 export var boxes : int = 11
 export var speed : int = 60

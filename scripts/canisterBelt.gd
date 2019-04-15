@@ -1,6 +1,6 @@
 extends Path2D
 
-onready var canisterNode = preload("res://scenes/canister_ph.tscn")
+onready var canisterNode = preload("res://scenes/canister.tscn")
 onready var flow : Timer = $canister_flow
 export var canisters : int = 20
 export var speed : int = 45
