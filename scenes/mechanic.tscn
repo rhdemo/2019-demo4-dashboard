@@ -135,17 +135,17 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 26.092, 68.6445 )
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="mechanic" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="img" type="Sprite" parent="."]
 position = Vector2( 0, -50 )
 texture = ExtResource( 2 )
 vframes = 5
 hframes = 20
 frame = 21
 
-[node name="anim" type="AnimationPlayer" parent="Sprite"]
+[node name="anim" type="AnimationPlayer" parent="img"]
 anims/wait-down-left = SubResource( 1 )
 anims/wait-down-right = SubResource( 2 )
 anims/wait-up-left = SubResource( 3 )
@@ -155,6 +155,6 @@ anims/walk-down-right = SubResource( 6 )
 anims/walk-up-left = SubResource( 7 )
 anims/walk-up-right = SubResource( 8 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -50 )
 shape = SubResource( 9 )

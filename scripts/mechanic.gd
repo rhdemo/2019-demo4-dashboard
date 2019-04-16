@@ -75,7 +75,7 @@ func _process(delta):
 	elif global_position.y > 300:
 		self.z_index = 4
 	else:
-		self.z_index = 0
+		self.z_index = 2
 		
 	#print(z_index)
 	if !focusPath:
@@ -86,22 +86,21 @@ func _process(delta):
 			var dxy = Vector2(-1 if self.position.x - focusPath[0].x <=0 else 1, -1 if self.position.y - focusPath[0].y <= 0 else 1)
 			h = "left" if abs(dxy.angle()) < 1 else "right"
 			v = "up" if dxy.angle() > 0 else "down"
-			$Sprite/anim.play("walk-%s-%s" % [v, h])
+			$img/anim.play("walk-%s-%s" % [v, h])
 			self.position = self.position.linear_interpolate(focusPath[0], (velocity * delta)/d)
 			focusTravelDurationMillis -= delta
 		else:
 			focusPath.remove(0)
-			if $Sprite/anim.current_animation == "walk-up-left":
-				$Sprite/anim.play("wait-up-left")
-			elif $Sprite/anim.current_animation == "walk-up-right":
-				$Sprite/anim.play("wait-up-right")
-			elif $Sprite/anim.current_animation == "walk-down-left":
-				$Sprite/anim.play("wait-down-left")
+			if $img/anim.current_animation == "walk-up-left":
+				$img/anim.play("wait-up-left")
+			elif $img/anim.current_animation == "walk-up-right":
+				$img/anim.play("wait-up-right")
+			elif $img/anim.current_animation == "walk-down-left":
+				$img/anim.play("wait-down-left")
 			else:			
-				$Sprite/anim.play("wait-down-right")
-	else:
-		if position == spawn.position:
-			get_parent().remove_child(self)
+				$img/anim.play("wait-down-right")
+#	if position == spawn.position:
+#		get_parent().remove_child(self)
 	for wp in range(futureMachineIndexes.size()):
 		waypoints[wp].get_child(1).text = String(wp+1)
 		waypoints[wp].show()
@@ -144,6 +143,9 @@ func remove_mechanic(data):
 		focusPath = nav.get_simple_path(self.position, focus)
 		Dashboard.remove_child(futureLine)
 		Dashboard.remove_child(focusLine)
+		for wp in waypoints:
+			wp.hide()
+		futureMachineIndexes = []
 
 func getTotalDistance(start:Vector2, goal:Vector2):
 	var path = nav.get_simple_path(start, goal)
@@ -155,7 +157,7 @@ func getTotalDistance(start:Vector2, goal:Vector2):
 				var diff = strt.distance_to(wp)
 				dist += diff
 				strt = wp
-	dist = dist if dist != 0 else 999
+	dist = dist if dist != 0 else 200
 	return dist
 
 #if event is InputEventMouseButton:

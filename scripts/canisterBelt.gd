@@ -12,7 +12,7 @@ func _ready():
 
 func spawnCanister():
 	var new_canister : PathFollow2D = canisterNode.instance()
-	new_canister.z_index = 9
+	#new_canister.z_index = 4
 	self.add_child(new_canister)
 	var tween = Tween.new()
 	add_child(tween)

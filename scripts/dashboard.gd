@@ -48,7 +48,7 @@ func _ready():
 	set_process(true)
 	for m in $machines.get_children():
 		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position)
-	get_matrix()
+	#get_matrix()
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
@@ -77,7 +77,7 @@ func add_mechanic(data):
 	mechanic.key = data.key
 	mechanic.name = "mechanic-%s" % String(data.key)
 	$Mechanics.add_child(mechanic, true)
-	print("ADD: ", data)
+	#print("ADD: ", data)
 	dispatch_mechanic(data)
 	
 
@@ -108,7 +108,7 @@ func _handle_data_received():
 				if res.data.value.responseType == "ADD_MECHANIC":
 					add_mechanic(res.data)
 			if res.action == "remove":
-				print(res)
+				#print(res)
 				emit_signal("remove_mechanic", res.data)
 		if res.type == "machine":
 			emit_signal("machine_health", res.data)
@@ -160,17 +160,17 @@ func get_matrix():
 						dist += diff
 						strt = wp
 			ptDist.append(dist)
-			if pt.get('distances'):
-				pt.distances.append(dist)
-			else:
-				pt.set('distances', [dist])
+#			if pt.get('distances'):
+#				pt.distances.append(dist)
+#			else:
+#				pt.set('distances', [dist])
 		csv_array.append(ptDist)
 	var prnt = ''
 	for ln in csv_array:
 		for v in ln:
 			prnt += String(v)+", "
 		prnt += "\n"
-	#print(prnt)
+	print(prnt)
 
 #func encode_data(data, mode):
 #	return data.to_utf8() if mode == WebSocketPeer.WRITE_MODE_TEXT else var2bytes(data)
