@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://scripts/dashboard.gd" type="Script" id=1]
 [ext_resource path="res://iso_tiles/iso_tileset.tres" type="TileSet" id=2]
@@ -28,6 +28,8 @@
 [ext_resource path="res://sprites/machines/machine-2-sm-doorway.png" type="Texture" id=26]
 [ext_resource path="res://sprites/machines/machine-8-sm-stacks.png" type="Texture" id=27]
 [ext_resource path="res://sprites/machines/machine-2-sm.png" type="Texture" id=28]
+[ext_resource path="res://sprites/machines/pit.png" type="Texture" id=29]
+[ext_resource path="res://sprites/machines/machine-10-sm-pusher.png" type="Texture" id=30]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 953.538, 311.533, 1583.21, 675.133, 1567.74, 674.715, 946.056, 314.174, 1224.46, 882.939, 1303.9, 827.747, 1296.38, 831.51, 1216.1, 887.12, 1395.87, 48.7773, 1915.87, 346.797, 1909.05, 348.503, 1396.31, 53.1785, 174.758, 285.459, -27.1488, 171.038, -17.5104, 166.754, 180.207, 288.525, 682.466, 467.423, 675.98, 470.203, 116.203, 1106.95, 108.192, 1102.69, 353.279, 961.745, 583.846, 836.323, 198.567, 874.125, 206.077, 869.869, 360.539, 957.489, 573.582, 832.067, 1606, 1092, 1579, 1109, 585.864, 516.948, 944.891, 1037.54, 945.269, 1046.68, -84.5976, 442.924, -96.8364, 442.843, 585.638, 523.944 )
@@ -36,7 +38,7 @@ outlines = [ PoolVector2Array( -17.5104, 166.754, 585.864, 516.948, 1395.87, 48.
 
 [sub_resource type="Curve2D" id=2]
 _data = {
-"points": PoolVector2Array( -13.4148, -35.4689, 0, 0, 87.4986, -2.41878, -40.9017, -24.6094, 40.9017, 24.6094, 82.6865, 103.848, -12.6708, -1.5056, 12.6708, 1.5056, 543.543, 362.235, 0, 0, 0, 0, 1355.02, -96.2726, 0, 0, 0, 0, 1939.16, 239.106, 213.784, 167.018, -213.784, -167.018, 1877.8, -63.9182, 227.145, -43.4248, -227.145, 43.4248, 249.367, -182.501, 0, 0, 0, 0, 86.9582, -2.41878, 0, 0, 0, 0, 87.4986, -2.41878 )
+"points": PoolVector2Array( 0, 0, 0, 0, 57.9199, 13.3481, -40.9017, -24.6094, 40.9017, 24.6094, 82.6865, 103.848, -12.6708, -1.5056, 12.6708, 1.5056, 543.543, 362.235, 0, 0, 0, 0, 1355.02, -96.2726, 0, 0, 0, 0, 1939.16, 239.106, 213.784, 167.018, -213.784, -167.018, 1917.61, -100.986, 227.145, -43.4248, -227.145, 43.4248, 287.582, -154.797, 0, 0, 0, 0, 72.2738, -54.3201, 0, 0, 0, 0, 57.9199, 13.3481 )
 }
 
 [sub_resource type="Animation" id=3]
@@ -58,7 +60,7 @@ tracks/0/keys = {
 
 [sub_resource type="Curve2D" id=4]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 158.463, 407.545, 13.7202, 7.9479, -13.7202, -7.9479, 510.392, 614.913, -42.2602, -35.2075, 42.2602, 35.2075, 914.487, 832.252, 0, 0, 0, 0, 956.814, 1137.39, 0, 0, 0, 0, 158.463, 1134.07, 0, 0, 0, 0, 159.478, 409.534, 0, 0, 0, 0, 158.463, 407.545 )
+"points": PoolVector2Array( -42.2602, -35.2075, 42.2602, 35.2075, 185.225, 403.755, -75.7567, -21.0003, 75.7567, 21.0003, 937.507, 830.761, 0, 0, 0, 0, 1020.31, 1123.02, 0, 0, 0, 0, 158.463, 1134.07, 0, 0, 0, 0, 185.225, 403.755 )
 }
 
 [sub_resource type="Animation" id=5]
@@ -78,14 +80,12 @@ tracks/0/keys = {
 }
 
 [node name="Dashboard" type="Node2D"]
-position = Vector2( 56.2588, 35.1617 )
+position = Vector2( 0, 52.74 )
 script = ExtResource( 1 )
 
 [node name="WebSocket" type="Node" parent="."]
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
-editor/display_folded = true
-position = Vector2( 12.9508, 56.1202 )
 
 [node name="TileMap" type="TileMap" parent="Navigation2D"]
 mode = 1
@@ -98,11 +98,10 @@ tile_data = PoolIntArray( -983024, 13, 0, -983023, 8, 0, -983022, 8, 0, -983021,
 navpoly = SubResource( 1 )
 
 [node name="machines" type="Node2D" parent="."]
-position = Vector2( 0, 8.79044 )
 
 [node name="machine-0" parent="machines" instance=ExtResource( 3 )]
 editor/display_folded = true
-position = Vector2( 296.649, 266.403 )
+position = Vector2( 296.249, 214.199 )
 z_index = 1
 texture = ExtResource( 4 )
 heal_coords = Vector2( 210, 305 )
@@ -117,7 +116,8 @@ position = Vector2( 12.1824, -103.46 )
 position = Vector2( -12.4385, -31.6935 )
 
 [node name="machine-1" parent="machines" instance=ExtResource( 3 )]
-position = Vector2( 245.968, 521.257 )
+editor/display_folded = true
+position = Vector2( 307.485, 515.105 )
 z_index = 8
 texture = ExtResource( 7 )
 heal_coords = Vector2( 200, 600 )
@@ -126,14 +126,14 @@ machine_name = "B"
 direction = Vector2( 1, -1 )
 
 [node name="health" parent="machines/machine-1" instance=ExtResource( 5 )]
-position = Vector2( 101.544, -82.2957 )
+position = Vector2( 58.4824, -113.054 )
 
 [node name="light" parent="machines/machine-1" instance=ExtResource( 6 )]
-position = Vector2( 28.1366, 14.1838 )
+position = Vector2( -32.7371, -17.5396 )
 
 [node name="machine-2" parent="machines" instance=ExtResource( 3 )]
 editor/display_folded = true
-position = Vector2( 782.622, 796.934 )
+position = Vector2( 587.82, 645.193 )
 z_index = 8
 texture = ExtResource( 8 )
 heal_coords = Vector2( 405, 725 )
@@ -142,14 +142,14 @@ machine_name = "C"
 direction = Vector2( 1, -1 )
 
 [node name="health" parent="machines/machine-2" instance=ExtResource( 5 )]
-position = Vector2( -80.5472, -176.396 )
+position = Vector2( 69.494, -94.9451 )
 
 [node name="light" parent="machines/machine-2" instance=ExtResource( 6 )]
-position = Vector2( -86.7222, -83.3833 )
+position = Vector2( 67.6055, 4.92676 )
 
 [node name="machine-3" parent="machines" instance=ExtResource( 3 )]
 editor/display_folded = true
-position = Vector2( 883.714, 474.323 )
+position = Vector2( 845.989, 452.889 )
 z_index = 4
 texture = ExtResource( 9 )
 heal_coords = Vector2( 810, 540 )
@@ -164,7 +164,8 @@ position = Vector2( 56.6996, -80.3829 )
 position = Vector2( 37.7622, 13.1121 )
 
 [node name="machine-4" parent="machines" instance=ExtResource( 3 )]
-position = Vector2( 902.665, 292.344 )
+editor/display_folded = true
+position = Vector2( 898.348, 236.224 )
 z_index = 1
 texture = ExtResource( 10 )
 heal_coords = Vector2( 945, 320 )
@@ -179,7 +180,8 @@ position = Vector2( -51.9812, -58.0233 )
 position = Vector2( -26.375, -41.8145 )
 
 [node name="machine-5" parent="machines" instance=ExtResource( 3 )]
-position = Vector2( 1088.62, 134.516 )
+editor/display_folded = true
+position = Vector2( 1073.51, 80.5541 )
 z_index = 1
 texture = ExtResource( 11 )
 heal_coords = Vector2( 1135, 210 )
@@ -195,8 +197,8 @@ position = Vector2( 6.02734, -15.363 )
 
 [node name="machine-6" parent="machines" instance=ExtResource( 3 )]
 editor/display_folded = true
-position = Vector2( 1292.92, 414.75 )
-z_index = 3
+position = Vector2( 1280.62, 361.436 )
+z_index = 4
 texture = ExtResource( 12 )
 heal_coords = Vector2( 1195, 450 )
 color = Color( 0.294118, 0.396078, 0.4, 1 )
@@ -211,7 +213,7 @@ position = Vector2( 34.21, -38.2817 )
 
 [node name="machine-7" parent="machines" instance=ExtResource( 3 )]
 editor/display_folded = true
-position = Vector2( 1219.38, 666.06 )
+position = Vector2( 1205.03, 612.746 )
 z_index = 5
 texture = ExtResource( 13 )
 heal_coords = Vector2( 1275, 810 )
@@ -227,8 +229,8 @@ position = Vector2( 132.811, 0.469727 )
 
 [node name="machine-8" parent="machines" instance=ExtResource( 3 )]
 editor/display_folded = true
-position = Vector2( 1580.75, 585.074 )
-z_index = 3
+position = Vector2( 1556.14, 521.507 )
+z_index = 4
 texture = ExtResource( 14 )
 heal_coords = Vector2( 1495, 625 )
 machine_name = "I"
@@ -241,7 +243,8 @@ position = Vector2( 18.6157, -124.582 )
 position = Vector2( 31.5039, -40.0952 )
 
 [node name="machine-9" parent="machines" instance=ExtResource( 3 )]
-position = Vector2( 1686.81, 130.551 )
+editor/display_folded = true
+position = Vector2( 1680.33, 80.9061 )
 z_index = 1
 texture = ExtResource( 15 )
 heal_coords = Vector2( 1610, 170 )
@@ -256,25 +259,24 @@ position = Vector2( 23.6133, -89.2879 )
 position = Vector2( -9.46191, -26.841 )
 
 [node name="gate" type="Position2D" parent="machines"]
-position = Vector2( 343.61, 1000.36 )
+position = Vector2( 340.094, 945.859 )
 
 [node name="MachineLine" type="Line2D" parent="."]
 visible = false
-position = Vector2( -6.80188, 1.36035 )
 z_index = 99
-default_color = Color( 0.665222, 0.665222, 0.984375, 0.486275 )
+default_color = Color( 0.658824, 0, 0.188235, 1 )
 texture_mode = 1069547908
 joint_mode = 2
 begin_cap_mode = 1
 end_cap_mode = 2
 
-[node name="Mechanics" type="Node" parent="."]
+[node name="Mechanics" type="Node2D" parent="."]
 
 [node name="mechanic_spawn" type="Position2D" parent="."]
-position = Vector2( 221.369, 930.933 )
+position = Vector2( 214.337, 874.674 )
 
 [node name="boxBelt" type="Path2D" parent="."]
-position = Vector2( 12.9508, 56.1202 )
+position = Vector2( 4.31689, 2.15832 )
 curve = SubResource( 2 )
 script = ExtResource( 16 )
 
@@ -293,7 +295,7 @@ autoplay = "move"
 anims/move = SubResource( 3 )
 
 [node name="canisterBelt" type="Path2D" parent="."]
-position = Vector2( 14.9279, 54.2334 )
+position = Vector2( -27.2662, 1.4906 )
 scale = Vector2( 0.997905, 1.00461 )
 z_index = 2
 curve = SubResource( 4 )
@@ -305,7 +307,8 @@ wait_time = 5.0
 autostart = true
 
 [node name="belt" type="Sprite" parent="canisterBelt"]
-position = Vector2( 542.926, 629.749 )
+editor/display_folded = true
+position = Vector2( 567.005, 634.718 )
 scale = Vector2( 1.0021, 0.995411 )
 texture = ExtResource( 19 )
 vframes = 2
@@ -315,7 +318,6 @@ autoplay = "move"
 anims/move = SubResource( 5 )
 
 [node name="static_assets" type="Node2D" parent="."]
-position = Vector2( 12.9508, 56.1202 )
 
 [node name="pallet-barrel-2" type="Sprite" parent="static_assets"]
 position = Vector2( 1066.97, 774.783 )
@@ -400,5 +402,13 @@ texture = ExtResource( 27 )
 position = Vector2( -0.738983, 800.305 )
 z_index = 12
 texture = ExtResource( 28 )
+
+[node name="pit" type="Sprite" parent="static_assets"]
+position = Vector2( 968.052, 908.163 )
+texture = ExtResource( 29 )
+
+[node name="machine-10-sm-pusher" type="Sprite" parent="static_assets"]
+position = Vector2( 125.925, 417.655 )
+texture = ExtResource( 30 )
 [connection signal="timeout" from="boxBelt/box_flow" to="boxBelt" method="_on_flow_timeout"]
 [connection signal="timeout" from="canisterBelt/canister_flow" to="canisterBelt" method="_on_canister_flow_timeout"]
