@@ -27,27 +27,27 @@ onready var map : = $Navigation2D/TileMap
 
 var path : PoolVector2Array
 var goal : Vector2
-var machines = [
-	{"name": "machine-0", "label": "A", "coords": Vector2(180,290), "color": Color.yellow, "distances": []},
-	{"name": "machine-1", "label": "B", "coords": Vector2(945,320), "color": Color.green, "distances": []},
-	{"name": "machine-2", "label": "C", "coords": Vector2(1215,160), "color": Color.purple, "distances": []},
-	{"name": "machine-3", "label": "D", "coords": Vector2(1620,180), "color": Color.pink, "distances": []},
-	{"name": "machine-4", "label": "E", "coords": Vector2(1200,454), "color": Color.black, "distances": []},
-	{"name": "machine-5", "label": "F", "coords": Vector2(1500,630), "color": Color.maroon, "distances": []},
-	{"name": "machine-6", "label": "G", "coords": Vector2(1280,810), "color": Color.blue, "distances": []},
-	{"name": "machine-7", "label": "H", "coords": Vector2(405,725), "color": Color.lightblue, "distances": []},
-	{"name": "machine-8", "label": "I", "coords": Vector2(200,1050), "color": Color.orange, "distances": []},
-	{"name": "machine-9", "label": "J", "coords": Vector2(210,610), "color": Color.red, "distances": []},
-	{"name": "gate", "label": "", "coords": Vector2(320,936), "color": Color.white, "distances": []}
-	]
+#var machines = [
+#	{"name": "machine-0", "label": "A", "coords": Vector2(180,290), "color": Color.yellow, "distances": []},
+#	{"name": "machine-1", "label": "B", "coords": Vector2(945,320), "color": Color.green, "distances": []},
+#	{"name": "machine-2", "label": "C", "coords": Vector2(1215,160), "color": Color.purple, "distances": []},
+#	{"name": "machine-3", "label": "D", "coords": Vector2(1620,180), "color": Color.pink, "distances": []},
+#	{"name": "machine-4", "label": "E", "coords": Vector2(1200,454), "color": Color.black, "distances": []},
+#	{"name": "machine-5", "label": "F", "coords": Vector2(1500,630), "color": Color.maroon, "distances": []},
+#	{"name": "machine-6", "label": "G", "coords": Vector2(1280,810), "color": Color.blue, "distances": []},
+#	{"name": "machine-7", "label": "H", "coords": Vector2(405,725), "color": Color.lightblue, "distances": []},
+#	{"name": "machine-8", "label": "I", "coords": Vector2(200,1050), "color": Color.orange, "distances": []},
+#	{"name": "machine-9", "label": "J", "coords": Vector2(210,610), "color": Color.red, "distances": []},
+#	{"name": "gate", "label": "", "coords": Vector2(320,936), "color": Color.white, "distances": []}
+#	]
 
 func _init():
 	self._connect()
 
 func _ready():
 	set_process(true)
-	for m in machines:
-		$MachineLine.add_point(m.coords)
+	for m in $machines.get_children():
+		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position)
 	get_matrix()
 
 func _process(delta: float):
@@ -77,6 +77,7 @@ func add_mechanic(data):
 	mechanic.key = data.key
 	mechanic.name = "mechanic-%s" % String(data.key)
 	$Mechanics.add_child(mechanic, true)
+	print("ADD: ", data)
 	dispatch_mechanic(data)
 	
 
@@ -94,7 +95,7 @@ func _handle_data_received():
 	#print(res)
 	if res['type'] != "heartbeat":
 		if res.type == "optaplanner":
-			print(res)
+			#print(res)
 			#print("OPTAPLANNER:",res)
 			if res.action == "modify":
 				if res.data.value.responseType == "DISPATCH_MECHANIC":
@@ -107,6 +108,7 @@ func _handle_data_received():
 				if res.data.value.responseType == "ADD_MECHANIC":
 					add_mechanic(res.data)
 			if res.action == "remove":
+				print(res)
 				emit_signal("remove_mechanic", res.data)
 		if res.type == "machine":
 			emit_signal("machine_health", res.data)
@@ -139,12 +141,14 @@ func get_matrix():
 	var csv_array = []
 	var headings = ["machine name", "x", "y", "machine-0", "machine-1", "machine-2", "machine-3", "machine-4", "machine-5", "machine-6", "machine-7", "machine-8", "machine-9", "gate"]
 	csv_array.append(headings)
-	for pt in machines:
-		var ptDist = [pt['name'],pt.coords.x, pt.coords.y]
-		var start = pt.coords #$TileMap.map_to_world(machines[pt]);
+	for pt in $machines.get_children():
+		var coords = pt.heal_coords if pt.get('heal_coords') else pt.position
+		var ptDist = [pt['name'],coords.x, coords.y]
+		var start = coords #$TileMap.map_to_world(machines[pt]);
 		start.y += MECHANIC_OFFSET
-		for g in machines:
-			var goal = g.coords #$TileMap.map_to_world(machines[g])
+		for g in $machines.get_children():
+			var gcoords = g.heal_coords if g.get('heal_coords') else g.position
+			var goal = gcoords #$TileMap.map_to_world(machines[g])
 			var dist = 0
 			var pth = nav.get_simple_path(start, goal)
 			if start != goal:
@@ -156,7 +160,10 @@ func get_matrix():
 						dist += diff
 						strt = wp
 			ptDist.append(dist)
-			pt.distances.append(dist)
+			if pt.get('distances'):
+				pt.distances.append(dist)
+			else:
+				pt.set('distances', [dist])
 		csv_array.append(ptDist)
 	var prnt = ''
 	for ln in csv_array:

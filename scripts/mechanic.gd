@@ -29,7 +29,6 @@ onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
 onready var map : TileMap = get_node("/root/Dashboard/Navigation2D/TileMap")
 onready var Dashboard = get_node("/root/Dashboard")
 onready var machines : Array = Dashboard.get_node('machines').get_children()
-onready var exitCoords = spawn.position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -92,8 +91,6 @@ func _process(delta):
 			focusTravelDurationMillis -= delta
 		else:
 			focusPath.remove(0)
-			if position == exitCoords:
-				get_parent().remove_child(self)
 			if $Sprite/anim.current_animation == "walk-up-left":
 				$Sprite/anim.play("wait-up-left")
 			elif $Sprite/anim.current_animation == "walk-up-right":
@@ -102,6 +99,9 @@ func _process(delta):
 				$Sprite/anim.play("wait-down-left")
 			else:			
 				$Sprite/anim.play("wait-down-right")
+	else:
+		if position == spawn.position:
+			get_parent().remove_child(self)
 	for wp in range(futureMachineIndexes.size()):
 		waypoints[wp].get_child(1).text = String(wp+1)
 		waypoints[wp].show()
@@ -114,15 +114,13 @@ func dispatch_mechanic(data):
 	if String(data.key) == String(self.key):
 		originalMachineIndex = data.value.mechanic.originalMachineIndex
 		focusFixDurationMillis = data.value.mechanic.focusFixDurationMillis
-		focusTravelDurationMillis = data.value.mechanic.focusTravelDurationMillis if data.value.mechanic.focusTravelDurationMillis > 0 else 200
-		
-		if data.value.mechanic.focusMachineIndex != focusMachineIndex:
-			focusMachineIndex = data.value.mechanic.focusMachineIndex
-			focus = machines[focusMachineIndex].heal_coords
-			velocity = getTotalDistance(self.position, focus)/(focusTravelDurationMillis/1000)
-			focusPath = nav.get_simple_path(self.position, focus)
-			focusLine.points = focusPath
-			focusLine.show()
+		focusTravelDurationMillis = data.value.mechanic.focusTravelDurationMillis if data.value.mechanic.focusTravelDurationMillis > 0 else 200.0
+		focusMachineIndex = data.value.mechanic.focusMachineIndex
+		focus = machines[focusMachineIndex].heal_coords if machines[focusMachineIndex].get('heal_coords') else machines[focusMachineIndex].position
+		velocity = getTotalDistance(self.position, focus)/(focusTravelDurationMillis/1000.0)
+		focusPath = nav.get_simple_path(self.position, focus)
+		focusLine.points = focusPath
+		focusLine.show()
 
 func update_future_visits(data):
 	if String(data.mechanicIndex) == String(self.key):
@@ -142,13 +140,10 @@ func update_future_visits(data):
 func remove_mechanic(data):
 	if  String(data.key) == String(self.key):
 		self.key = "99"
-		focus = exitCoords
+		focus = spawn.position
 		focusPath = nav.get_simple_path(self.position, focus)
 		Dashboard.remove_child(futureLine)
 		Dashboard.remove_child(focusLine)
-
-func getDistanceToFocus():
-	return getTotalDistance(self.position, machines[focusMachineIndex].coords)
 
 func getTotalDistance(start:Vector2, goal:Vector2):
 	var path = nav.get_simple_path(start, goal)
@@ -160,6 +155,7 @@ func getTotalDistance(start:Vector2, goal:Vector2):
 				var diff = strt.distance_to(wp)
 				dist += diff
 				strt = wp
+	dist = dist if dist != 0 else 999
 	return dist
 
 #if event is InputEventMouseButton:
