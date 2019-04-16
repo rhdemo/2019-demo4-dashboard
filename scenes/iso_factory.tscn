@@ -40,8 +40,9 @@ _data = {
 "points": PoolVector2Array( -13.4148, -35.4689, 0, 0, 87.4986, -2.41878, -40.9017, -24.6094, 40.9017, 24.6094, 82.6865, 103.848, -12.6708, -1.5056, 12.6708, 1.5056, 560, 376, 0, 0, 0, 0, 1362.32, -85.8422, 0, 0, 0, 0, 1939.16, 239.106, 213.784, 167.018, -213.784, -167.018, 1877.8, -63.9182, 227.145, -43.4248, -227.145, 43.4248, 249.367, -182.501, 0, 0, 0, 0, 86.9582, -2.41878, 0, 0, 0, 0, 87.4986, -2.41878 )
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "move"
+length = 1.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -50,20 +51,19 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
+"times": PoolRealArray( 0, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Curve2D" id=3]
+[sub_resource type="Curve2D" id=4]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 158.463, 407.545, 13.7202, 7.9479, -13.7202, -7.9479, 510.392, 614.913, -42.2602, -35.2075, 42.2602, 35.2075, 945.098, 863.077, 0, 0, 0, 0, 956.814, 1137.39, 0, 0, 0, 0, 158.463, 1134.07, 0, 0, 0, 0, 159.478, 409.534, 0, 0, 0, 0, 158.463, 407.545 )
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "move"
-length = 0.8
+[sub_resource type="Animation" id=5]
+length = 1.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -72,7 +72,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
@@ -290,13 +290,13 @@ frame = 1
 
 [node name="anim" type="AnimationPlayer" parent="boxBelt/belt"]
 autoplay = "move"
-anims/move = SubResource( 5 )
+anims/move = SubResource( 3 )
 
 [node name="canisterBelt" type="Path2D" parent="."]
 position = Vector2( 1.97713, -1.88684 )
 scale = Vector2( 0.997905, 1.00461 )
 z_index = 12
-curve = SubResource( 3 )
+curve = SubResource( 4 )
 script = ExtResource( 18 )
 canisters = 8
 
@@ -313,7 +313,7 @@ vframes = 2
 
 [node name="anim" type="AnimationPlayer" parent="canisterBelt/belt"]
 autoplay = "move"
-anims/move = SubResource( 4 )
+anims/move = SubResource( 5 )
 
 [node name="static_assets" type="Node2D" parent="."]
 
