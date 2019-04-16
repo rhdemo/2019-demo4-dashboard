@@ -109,7 +109,6 @@ func _process(delta):
 		
 	
 func dispatch_mechanic(data):
-	#print(data.key, " - ", self.key)
 	if String(data.key) == String(self.key):
 		originalMachineIndex = data.value.mechanic.originalMachineIndex
 		focusFixDurationMillis = data.value.mechanic.focusFixDurationMillis

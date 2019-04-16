@@ -9,37 +9,18 @@ var retryTimeout = 5 # seconds
 #var url = JavaScript.eval("'window.location.hostname'+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
 var url = "ws://dashboard-web-game-demo.apps.dev.openshift.redhatkeynote.com/dashboard-socket"
 
-#"ws://dashboard-web-game-demo.192.168.42.86.nip.io/dashboard-socket"
-
-# {"type":"machine","data":{"id":"machine-6","value":1000000000000000000}}
-# {"type":"optaplanner","data":{"key":"1","value":{"responseType":"DISPATCH_MECHANIC","mechanic":{"mechanicIndex":1,"originalMachineIndex":3,"focusMachineIndex":3,"focusTravelTimeMillis":8358000,"focusFixTimeMillis":8360000,"futureMachineIndexes":[3,2,1,0]}}}}
 signal add_mechanic
 signal dispatch_mechanic
 signal update_future_visits
 signal remove_mechanic
 signal machine_health
 
-
 onready var mechanicNode = preload("res://scenes/mechanic.tscn")
-#onready var machineNode = preload("res://machine.tscn")
 onready var nav : = $Navigation2D
 onready var map : = $Navigation2D/TileMap
 
 var path : PoolVector2Array
 var goal : Vector2
-#var machines = [
-#	{"name": "machine-0", "label": "A", "coords": Vector2(180,290), "color": Color.yellow, "distances": []},
-#	{"name": "machine-1", "label": "B", "coords": Vector2(945,320), "color": Color.green, "distances": []},
-#	{"name": "machine-2", "label": "C", "coords": Vector2(1215,160), "color": Color.purple, "distances": []},
-#	{"name": "machine-3", "label": "D", "coords": Vector2(1620,180), "color": Color.pink, "distances": []},
-#	{"name": "machine-4", "label": "E", "coords": Vector2(1200,454), "color": Color.black, "distances": []},
-#	{"name": "machine-5", "label": "F", "coords": Vector2(1500,630), "color": Color.maroon, "distances": []},
-#	{"name": "machine-6", "label": "G", "coords": Vector2(1280,810), "color": Color.blue, "distances": []},
-#	{"name": "machine-7", "label": "H", "coords": Vector2(405,725), "color": Color.lightblue, "distances": []},
-#	{"name": "machine-8", "label": "I", "coords": Vector2(200,1050), "color": Color.orange, "distances": []},
-#	{"name": "machine-9", "label": "J", "coords": Vector2(210,610), "color": Color.red, "distances": []},
-#	{"name": "gate", "label": "", "coords": Vector2(320,936), "color": Color.white, "distances": []}
-#	]
 
 func _init():
 	self._connect()
@@ -56,7 +37,6 @@ func _process(delta: float):
 	$MachineLine.points = []
 	for m in $machines.get_children():
 		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position )
-	#$MachineLine.show()
 
 func _connect():
 	ws.connect("connection_established", self, "_connection_established")
@@ -77,9 +57,7 @@ func add_mechanic(data):
 	mechanic.key = data.key
 	mechanic.name = "mechanic-%s" % String(data.key)
 	$Mechanics.add_child(mechanic, true)
-	#print("ADD: ", data)
 	dispatch_mechanic(data)
-	
 
 func dispatch_mechanic(data):
 	var mechExists = false
@@ -92,27 +70,20 @@ func dispatch_mechanic(data):
 
 func _handle_data_received():
 	var res = JSON.parse(decode_data(ws.get_peer(1).get_packet())).result
-	#print(res)
 	if res['type'] != "heartbeat":
 		if res.type == "optaplanner":
-			#print(res)
-			#print("OPTAPLANNER:",res)
 			if res.action == "modify":
 				if res.data.value.responseType == "DISPATCH_MECHANIC":
-					#print(res.data)
 					dispatch_mechanic(res.data)
 				if res.data.value.responseType == "UPDATE_FUTURE_VISITS":
-					#print(res.data)
 					emit_signal("update_future_visits", res.data.value)
 			if res.action == "create":
 				if res.data.value.responseType == "ADD_MECHANIC":
 					add_mechanic(res.data)
 			if res.action == "remove":
-				#print(res)
 				emit_signal("remove_mechanic", res.data)
 		if res.type == "machine":
 			emit_signal("machine_health", res.data)
-			#print("MACHINE:",res) # res.data = {id:machine-#, value:100000000}
 		if res.type == "game":
 			pass # res.data.state = active, paused, lobby, stopped
 
