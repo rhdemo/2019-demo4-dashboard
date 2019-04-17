@@ -14,6 +14,7 @@ signal dispatch_mechanic
 signal update_future_visits
 signal remove_mechanic
 signal machine_health
+signal machine_repair
 
 onready var mechanicNode = preload("res://scenes/mechanic.tscn")
 onready var nav : = $Navigation2D
@@ -56,8 +57,12 @@ func add_mechanic(data):
 	mechanic.position = map_pos
 	mechanic.key = data.key
 	mechanic.name = "mechanic-%s" % String(data.key)
+	connect("repairing_machine", self, "_repair_machine")
 	$Mechanics.add_child(mechanic, true)
 	dispatch_mechanic(data)
+
+func _repair_machine(machineIdx):
+	emit_signal("machine_repair", machineIdx)
 
 func dispatch_mechanic(data):
 	var mechExists = false

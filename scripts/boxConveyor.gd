@@ -1,6 +1,6 @@
 extends Path2D
 
-onready var boxNode = preload("res://scenes/box.tscn")
+onready var boxNode = preload("res://scenes/box_ph.tscn")
 onready var flow : Timer = $box_flow
 export var boxes : int = 11
 export var speed : int = 60
@@ -12,20 +12,22 @@ func _ready():
 
 func spawnBox():
 	var new_box : PathFollow2D = boxNode.instance()
-	new_box.position = Vector2(60, 10)
+	new_box.position = $spawn.position
 	new_box.z_index = 0
 	self.add_child(new_box)
-	var tween = Tween.new()
-	add_child(tween)
-	tween.interpolate_property(new_box, "unit_offset", 
-								0, 1, speed, 
-								tween.TRANS_LINEAR, 
-								tween.EASE_OUT_IN)
-	tween.repeat = true
-	tween.start()
+#	var tween = Tween.new()
+#	add_child(tween)
+#	tween.interpolate_property(new_box, "unit_offset", 
+#								0, 1, speed, 
+#								tween.TRANS_LINEAR, 
+#								tween.EASE_OUT_IN)
+#	tween.repeat = true
+#	tween.start()
 
 func _on_flow_timeout():
-	if boxes > 0:
-		spawnBox()
-		boxes -= 1
-		flow.start()
+	spawnBox()
+	print(get_child_count())
+#	if boxes > 0:
+#		spawnBox()
+#		boxes -= 1
+#		flow.start()

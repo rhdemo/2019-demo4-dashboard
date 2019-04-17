@@ -12,6 +12,7 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 5 )
 
 [node name="health" type="Sprite"]
+z_index = 99
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 

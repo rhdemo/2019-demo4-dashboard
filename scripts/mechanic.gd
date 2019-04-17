@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 export var key = "0"
 
+signal repairing_machine
+
 onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 
@@ -43,7 +45,7 @@ func _ready():
 
 	for wp in waypoints:
 		wp.get_child(0).modulate = futureColors[int(key)]
-		wp.z_index = 12
+		wp.z_index = 16
 		Dashboard.add_child(wp)
 		wp.hide()
 	Dashboard.add_child(focusLine)
@@ -56,7 +58,7 @@ func _init():
 	focusLine.end_cap_mode = Line2D.LINE_CAP_ROUND
 	focusLine.begin_cap_mode = Line2D.LINE_CAP_BOX
 	
-	futureLine.z_index = 1
+	futureLine.z_index = 12
 	futureLine.width = 5
 	futureLine.joint_mode = Line2D.LINE_JOINT_ROUND
 	futureLine.end_cap_mode = Line2D.LINE_CAP_ROUND
@@ -99,6 +101,8 @@ func _process(delta):
 				$img/anim.play("wait-down-left")
 			else:			
 				$img/anim.play("wait-down-right")
+			emit_signal("repairing_machine", focusMachineIndex)
+			update_future_visits({"mechanicIndex": self.key, "futureMachineIndexes": futureMachineIndexes})
 #	if position == spawn.position:
 #		get_parent().remove_child(self)
 	for wp in range(futureMachineIndexes.size()):

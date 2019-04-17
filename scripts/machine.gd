@@ -15,6 +15,7 @@ onready var lightNode : Sprite = find_node("light")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_node("/root/Dashboard").connect("machine_health", self, "_on_machine_health")
+	get_node("/root/Dashboard").connect("repair_machine", self, "_on_repair_machine")
 
 	if healthNode:
 		if healthNode["IS_HEALTHY"]:
@@ -36,6 +37,10 @@ func _process(delta):
 	if healthNode:
 		healthNode.health = (health/MAX_HEALTH)*100
 	#print(machine_name, " HEALTH:", $health.health)
+
+func _on_repair_machine(machineIdx):
+	if machineIdx == self.key:
+		healthNode.repair = true
 
 func _on_machine_health(data):
 	#print(self.name, data)

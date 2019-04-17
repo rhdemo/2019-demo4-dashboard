@@ -6,7 +6,7 @@ const FRICTION = -500
 const GRAVITY = 500
 
 var acc = Vector2()
-var vel = Vector2()
+var vel = Vector2(10,100)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,8 +15,12 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _fixed_process(delta):
 func _physics_process(delta):
-	acc.x = 0
-	acc.y = GRAVITY
-	vel += acc * delta
-	#vel.x = clamp(vel.x, -MAX_SPEED, MAX_SPEED)
-	move_and_slide(vel, Vector2(0,0), false, 4, 0.785398, true) 
+	var collision = move_and_collide(vel * delta)
+	if collision:
+		if collision.collider.name != "deflector":
+			vel = vel.slide(collision.normal)
+		if collision.collider.name == "disposal":
+			get_parent().remove_child(self)
+			queue_free()
+	else:
+		vel = Vector2(25,150)

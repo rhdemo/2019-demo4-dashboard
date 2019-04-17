@@ -158,3 +158,4 @@ anims/walk-up-right = SubResource( 8 )
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -50 )
 shape = SubResource( 9 )
+disabled = true
