@@ -26,7 +26,6 @@ func spawnBox():
 
 func _on_flow_timeout():
 	spawnBox()
-	print(get_child_count())
 #	if boxes > 0:
 #		spawnBox()
 #		boxes -= 1

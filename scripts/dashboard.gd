@@ -14,7 +14,8 @@ signal dispatch_mechanic
 signal update_future_visits
 signal remove_mechanic
 signal machine_health
-signal machine_repair
+signal repairing_machine
+signal fixed_machine
 
 onready var mechanicNode = preload("res://scenes/mechanic.tscn")
 onready var nav : = $Navigation2D
@@ -37,7 +38,7 @@ func _process(delta: float):
 		ws.poll()
 	$MachineLine.points = []
 	for m in $machines.get_children():
-		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position )
+		$MachineLine.add_point(m.repair if m.get('repair') else m.position )
 
 func _connect():
 	ws.connect("connection_established", self, "_connection_established")
@@ -51,18 +52,22 @@ func _connect():
 func add_mechanic(data):
 	var mechanic = mechanicNode.instance()
 	var machine = $machines.get_child(data.value.mechanic.originalMachineIndex)
-	var map_pos = machine.heal_coords if machine.get('heal_coords') else machine.position
+	var map_pos = machine.repair if machine.get('repair') else machine.position
 	if data.value.mechanic.originalMachineIndex == $machines.get_children().size()-1:
 		map_pos = $mechanic_spawn.position
 	mechanic.position = map_pos
 	mechanic.key = data.key
 	mechanic.name = "mechanic-%s" % String(data.key)
-	connect("repairing_machine", self, "_repair_machine")
+	mechanic.connect("repairing_machine", self, "_repair_machine")
+	mechanic.connect("fixed_machine", self, "_fix_machine")
 	$Mechanics.add_child(mechanic, true)
 	dispatch_mechanic(data)
 
 func _repair_machine(machineIdx):
-	emit_signal("machine_repair", machineIdx)
+	emit_signal("repairing_machine", machineIdx)
+
+func _fix_machine(machineIdx):
+	emit_signal("fixed_machine", machineIdx)
 
 func dispatch_mechanic(data):
 	var mechExists = false

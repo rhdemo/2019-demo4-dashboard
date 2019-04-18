@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var key = "0"
 
 signal repairing_machine
+signal fixed_machine
 
 onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
@@ -24,6 +25,7 @@ var futureLine : = Line2D.new()
 var focus : Vector2
 var h = "right"
 var v = "up"
+var repairing = false
 var velocity = 0
 var waypoints = []
 
@@ -82,6 +84,11 @@ func _process(delta):
 	#print(z_index)
 	if !focusPath:
 		focusLine.hide()
+		if $clock.time_left <= 0 and !repairing:
+			$clock.wait_time = focusFixDurationMillis/1000
+			$clock.start()
+			emit_signal("repairing_machine", focusMachineIndex)
+			repairing = true
 	if focusPath.size() > 0:
 		var d: float = self.position.distance_to(focusPath[0])
 		if d > 10:
@@ -93,15 +100,11 @@ func _process(delta):
 			focusTravelDurationMillis -= delta
 		else:
 			focusPath.remove(0)
-			if $img/anim.current_animation == "walk-up-left":
-				$img/anim.play("wait-up-left")
-			elif $img/anim.current_animation == "walk-up-right":
-				$img/anim.play("wait-up-right")
-			elif $img/anim.current_animation == "walk-down-left":
-				$img/anim.play("wait-down-left")
-			else:			
-				$img/anim.play("wait-down-right")
-			emit_signal("repairing_machine", focusMachineIndex)
+			var machine = machines[focusMachineIndex]
+			var mxy = Vector2(-1 if self.position.x - machine.position.x <=0 else 1, -1 if self.position.y - machine.position.y <= 0 else 1)
+			h = "left" if abs(mxy.angle()) < 1 else "right"
+			v = "up" if mxy.angle() > 0 else "down"
+			$img/anim.play("wait-%s-%s" % [v, h])
 			update_future_visits({"mechanicIndex": self.key, "futureMachineIndexes": futureMachineIndexes})
 #	if position == spawn.position:
 #		get_parent().remove_child(self)
@@ -118,11 +121,13 @@ func dispatch_mechanic(data):
 		focusFixDurationMillis = data.value.mechanic.focusFixDurationMillis
 		focusTravelDurationMillis = data.value.mechanic.focusTravelDurationMillis if data.value.mechanic.focusTravelDurationMillis > 0 else 200.0
 		focusMachineIndex = data.value.mechanic.focusMachineIndex
-		focus = machines[focusMachineIndex].heal_coords if machines[focusMachineIndex].get('heal_coords') else machines[focusMachineIndex].position
+		focus = machines[focusMachineIndex].repair if machines[focusMachineIndex].get('repair') else machines[focusMachineIndex].position
 		velocity = getTotalDistance(self.position, focus)/(focusTravelDurationMillis/1000.0)
 		focusPath = nav.get_simple_path(self.position, focus)
 		focusLine.points = focusPath
 		focusLine.show()
+		repairing = false
+		emit_signal("fixed_machine", originalMachineIndex)
 
 func update_future_visits(data):
 	if String(data.mechanicIndex) == String(self.key):
@@ -133,15 +138,16 @@ func update_future_visits(data):
 			wp.hide()
 		for p in range(futureMachineIndexes.size()):
 			var machineIdx = futureMachineIndexes[p]
-			waypoints[p].position = machines[machineIdx].heal_coords if machines[machineIdx].get('heal_coords') else machines[machineIdx].position
+			waypoints[p].position = machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position
 		
-			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].heal_coords if machines[machineIdx].get('heal_coords') else machines[machineIdx].position))
-			p0 = machines[machineIdx].heal_coords
+			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position))
+			p0 = machines[machineIdx].repair
 		#print(futurePath)
 
 func remove_mechanic(data):
 	if  String(data.key) == String(self.key):
 		self.key = "99"
+		emit_signal("fixed_machine", focusMachineIndex)
 		focus = spawn.position
 		focusPath = nav.get_simple_path(self.position, focus)
 		Dashboard.remove_child(futureLine)
@@ -163,19 +169,5 @@ func getTotalDistance(start:Vector2, goal:Vector2):
 	dist = dist if dist != 0 else 200
 	return dist
 
-#if event is InputEventMouseButton:
-#		if event.button_index == BUTTON_LEFT and event.pressed:
-#			goal = event.position
-#			print(nav.get_child(0).world_to_map(goal))
-#			path = nav.get_simple_path($Mechanic.position, goal)
-#			$Line2D.points = path
-#			$Line2D.show()
-#			if path:
-#				emit_signal("mechanic_embark", {
-#					"mechanic_id": 0,
-#					"machine_id": 0,
-#					"pos_start": $Mechanic.position,
-#					"pos_end": path[-1],
-#					"pos_target": event.position,
-#					"path": path
-#				})
+func _on_clock_timeout():
+	$clock.stop()

@@ -18,9 +18,8 @@ func _ready():
 	pass
 	
 func _process(delta):
-	if repair:
-		$value.texture_over = repairTexture
-	elif health >= IS_HEALTHY:
+	$value.texture_over = null if !repair else repairTexture
+	if health >= IS_HEALTHY:
 		$value.texture_progress = healthyTexture
 	elif health > IS_DAMAGED:
 		$value.texture_progress = damagedTexture
