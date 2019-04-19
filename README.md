@@ -72,6 +72,20 @@ machine-i, 315, 1014, 1291.296616, 1927.478394, 2239.305237, 2682.144958, 1772.9
 machine-j, 270, 624, 588.098923, 1224.280701, 1536.107544, 1978.947266, 1512.685181, 1559.134369, 1195.365234, 207.884583, 704.230988, 0, 652.259842
 gate, 360, 936, 1239.32547, 1875.507248, 2187.334091, 2630.173813, 1722.272888, 1410.446014, 1046.67688, 447.272369, 103.971146, 652.259842, 0
 
+
+{"name": "machine-0", "label": "A", "coords": Vector2(180,290), "color": Color.yellow, "distances": []},
+{"name": "machine-1", "label": "B", "coords": Vector2(945,320), "color": Color.green, "distances": []},
+{"name": "machine-2", "label": "C", "coords": Vector2(1215,160), "color": Color.purple, "distances": []},
+{"name": "machine-3", "label": "D", "coords": Vector2(1620,180), "color": Color.pink, "distances": []},
+{"name": "machine-4", "label": "E", "coords": Vector2(1200,454), "color": Color.black, "distances": []},
+{"name": "machine-5", "label": "F", "coords": Vector2(1500,630), "color": Color.maroon, "distances": []},
+{"name": "machine-6", "label": "G", "coords": Vector2(1280,810), "color": Color.blue, "distances": []},
+{"name": "machine-7", "label": "H", "coords": Vector2(405,725), "color": Color.lightblue, "distances": []},
+{"name": "machine-8", "label": "I", "coords": Vector2(200,1050), "color": Color.orange, "distances": []},
+{"name": "machine-9", "label": "J", "coords": Vector2(210,610), "color": Color.red, "distances": []},
+{"name": "gate", "label": "", "coords": Vector2(320,936), "color": Color.white, "distances": []}
+
+
 ## To-Do
 
 * Distance CSV to Optaplanner team

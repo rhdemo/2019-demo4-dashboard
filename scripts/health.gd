@@ -3,7 +3,8 @@ extends Sprite
 onready var healthyTexture = preload("res://sprites/health/health-green.png")
 onready var damagedTexture = preload("res://sprites/health/health-orange.png")
 onready var brokenTexture = preload("res://sprites/health/health-red.png")
-onready var repairTexture = preload("res://sprites/health/health-maintenance-icon.png")
+onready var repairBGTexture = preload("res://sprites/health/health-maintenance-icon.png")
+onready var healthBGTexture = preload("res://sprites/health/health-bg.png")
 
 signal machine_damaged
 signal machine_repaired
@@ -18,7 +19,12 @@ func _ready():
 	pass
 	
 func _process(delta):
-	$value.texture_over = null if !repair else repairTexture
+	if !repair:
+		$value.texture_over = null
+		$label.show()
+	else:
+		$value.texture_over = repairBGTexture
+		$label.hide()
 	if health >= IS_HEALTHY:
 		$value.texture_progress = healthyTexture
 	elif health > IS_DAMAGED:

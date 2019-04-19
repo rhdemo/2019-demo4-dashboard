@@ -14,22 +14,21 @@ font_data = ExtResource( 5 )
 [node name="health" type="Sprite"]
 z_index = 99
 texture = ExtResource( 1 )
+centered = false
 script = ExtResource( 2 )
 
 [node name="value" type="TextureProgress" parent="."]
-margin_left = -36.1664
-margin_top = -41.4991
-margin_right = 34.8336
-margin_bottom = 40.5009
+margin_right = 71.0
+margin_bottom = 82.0
 texture_under = ExtResource( 3 )
 texture_progress = ExtResource( 4 )
 fill_mode = 5
 
 [node name="label" type="RichTextLabel" parent="."]
-margin_left = -13.0
-margin_top = -31.0
-margin_right = 31.0
-margin_bottom = 13.0
+margin_left = 22.9709
+margin_top = 10.0296
+margin_right = 66.9709
+margin_bottom = 54.0296
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0

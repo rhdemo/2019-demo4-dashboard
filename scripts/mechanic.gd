@@ -10,7 +10,7 @@ onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 
 const futureColors = PoolColorArray([Color(255, 0,0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
 const focusColors = PoolColorArray([Color(255, 0, 0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
-const mechanicColors = [{"red":4},{"green":1},{"blue":0},{"black":3},{"orange":2}]
+const mechanicColors = [Color(255.0,0,0,1.0),Color.green,Color.blue,Color.orange,Color.gray]
 
 # Declare member variables here. Examples:
 var focusMachineIndex : int
@@ -42,6 +42,7 @@ func _ready():
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.default_color = focusColors[int(key) % 5]
 	futureLine.default_color = futureColors[int(key) % 5]
+	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
 	
 	waypoints = [wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance()]
 
