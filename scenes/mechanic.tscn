@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://scripts/mechanic_coverall.shader" type="Shader" id=1]
 [ext_resource path="res://sprites/mechanic/sprite-mechanic.png" type="Texture" id=2]
-[ext_resource path="res://scripts/mechanic_coverall.shader" type="Shader" id=3]
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
 
 export var key = \"0\"
@@ -14,9 +14,9 @@ signal fixed_machine
 onready var wayPointNode = preload(\"res://scenes/waypoint.tscn\")
 onready var spawn : Position2D = get_node(\"/root/Dashboard/mechanic_spawn\")
 
-const futureColors = PoolColorArray([Color(255, 0,0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
-const focusColors = PoolColorArray([Color(255, 0, 0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
-const mechanicColors = [Color(2,0,0,1.0),Color.green,Color(0,0,2,1.0),Color.orange,Color.gray]
+const futureColors = PoolColorArray([Color(2, 0,0, .5), Color(0,1.5,0,.5), Color(0.6,1.2,2.2,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
+const focusColors = PoolColorArray([Color(2, 0, 0, .5), Color(0,1.5,0,.5), Color(0.6,1.2,2.2,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
+const mechanicColors = [Color(2,0,0,1.0), Color(0,1.5,0,1.0),Color(0.6,1.2,2.2,1.0),Color(2.8, 1.05, .2, 1.0),Color(1.05,1.15,1.25,1.0)]
 
 # Declare member variables here. Examples:
 var focusMachineIndex : int
@@ -180,11 +180,11 @@ func getTotalDistance(start:Vector2, goal:Vector2):
 func _on_clock_timeout():
 	$clock.stop()"
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 3 )
-shader_param/coverall_color = null
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+shader_param/coverall_color = Plane( 1.05, 1.15, 1.2, 1 )
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -199,7 +199,7 @@ tracks/0/keys = {
 "values": [ 19 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -214,7 +214,7 @@ tracks/0/keys = {
 "values": [ 14 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -229,7 +229,7 @@ tracks/0/keys = {
 "values": [ 9 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -242,23 +242,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 4 ]
-}
-
-[sub_resource type="Animation" id=6]
-length = 0.8
-loop = true
-step = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 16, 15, 18, 17 ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -275,10 +258,27 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 13, 12, 11, 10 ]
+"values": [ 16, 15, 18, 17 ]
 }
 
 [sub_resource type="Animation" id=8]
+length = 0.8
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 13, 12, 11, 10 ]
+}
+
+[sub_resource type="Animation" id=9]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -294,7 +294,7 @@ tracks/0/keys = {
 "values": [ 8, 5, 6, 7 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -310,14 +310,14 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 26.092, 68.6445 )
 
 [node name="mechanic" type="KinematicBody2D"]
-script = SubResource( 11 )
+script = SubResource( 1 )
 
 [node name="img" type="Sprite" parent="."]
-material = SubResource( 1 )
+material = SubResource( 2 )
 position = Vector2( 0, -50 )
 texture = ExtResource( 2 )
 vframes = 5
@@ -325,19 +325,19 @@ hframes = 20
 frame = 9
 
 [node name="anim" type="AnimationPlayer" parent="img"]
-anims/wait-down-left = SubResource( 2 )
-anims/wait-down-right = SubResource( 3 )
-anims/wait-up-left = SubResource( 4 )
-anims/wait-up-right = SubResource( 5 )
-anims/walk-down-left = SubResource( 6 )
-anims/walk-down-right = SubResource( 7 )
-anims/walk-up-left = SubResource( 8 )
-anims/walk-up-right = SubResource( 9 )
+anims/wait-down-left = SubResource( 3 )
+anims/wait-down-right = SubResource( 4 )
+anims/wait-up-left = SubResource( 5 )
+anims/wait-up-right = SubResource( 6 )
+anims/walk-down-left = SubResource( 7 )
+anims/walk-down-right = SubResource( 8 )
+anims/walk-up-left = SubResource( 9 )
+anims/walk-up-right = SubResource( 10 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, -50 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 disabled = true
 
 [node name="clock" type="Timer" parent="."]
