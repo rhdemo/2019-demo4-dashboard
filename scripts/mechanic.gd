@@ -8,9 +8,9 @@ signal fixed_machine
 onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 
-const futureColors = PoolColorArray([Color(255, 0,0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
-const focusColors = PoolColorArray([Color(255, 0, 0, .5), Color(0,255,0,.5), Color(0,0,255,.5), Color(255,100,100,.5), Color(100,100,255,.5)])
-const mechanicColors = [Color(255.0,0,0,1.0),Color.green,Color.blue,Color.orange,Color.gray]
+const futureColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
+const focusColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
+const mechanicColors = [Color(2,0,0,1.0), Color(0,1.5,0,1.0),Color(0.6,1.2,2.2,1.0),Color(2.8, 1.05, .2, 1.0),Color(1.05,1.15,1.25,1.0)]
 
 # Declare member variables here. Examples:
 var focusMachineIndex : int
@@ -42,6 +42,7 @@ func _ready():
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.default_color = focusColors[int(key) % 5]
 	futureLine.default_color = futureColors[int(key) % 5]
+	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
 	
 	waypoints = [wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance()]
@@ -73,7 +74,7 @@ func _process(delta):
 		self.z_index = 12
 	elif global_position.y > 900:
 		self.z_index = 10
-	elif global_position.y > 650 or (global_position.y > 300 and global_position.x < 500):
+	elif global_position.y > 750 or (global_position.y > 300 and global_position.x < 500):
 		self.z_index = 8
 	elif global_position.y > 300 and global_position.x < 500:
 		self.z_index = 6
