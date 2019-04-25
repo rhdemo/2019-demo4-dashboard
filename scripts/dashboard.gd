@@ -31,7 +31,7 @@ func _ready():
 	set_process(true)
 	for m in $machines.get_children():
 		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position)
-	get_matrix()
+	#get_matrix()
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
@@ -104,15 +104,11 @@ func _connection_established(protocol):
 
 func _connection_closed():
 	print("Connection closed, retrying in %ds" % retryTimeout)
-	yield(get_tree().create_timer(retryTimeout), "timeout")
-	retryTimeout *= 2
-	self._connect()
+	$connection.start()
 
 func _connection_error():
 	print("Connection error, retrying in %ds" % retryTimeout)
-	yield(get_tree().create_timer(retryTimeout), "timeout")
-	retryTimeout *= 2
-	self._connect()
+	$connection.start()
 
 func send(data):
 	ws.get_peer(1).set_write_mode(_write_mode)
@@ -123,28 +119,20 @@ func get_matrix():
 	var headings = ["machine name", "x", "y", "machine-0", "machine-1", "machine-2", "machine-3", "machine-4", "machine-5", "machine-6", "machine-7", "machine-8", "machine-9", "gate"]
 	csv_array.append(headings)
 	for pt in $machines.get_children():
-		var coords = pt.heal_coords if pt.get('heal_coords') else pt.position
-		var ptDist = [pt['name'],coords.x, coords.y]
-		var start = coords #$TileMap.map_to_world(machines[pt]);
-		start.y += MECHANIC_OFFSET
+		var start = pt.get('repair') if pt.get('repair') else pt.position
+		var ptDist = [pt['name'],start.x, start.y]
 		for g in $machines.get_children():
-			var gcoords = g.heal_coords if g.get('heal_coords') else g.position
-			var goal = gcoords #$TileMap.map_to_world(machines[g])
+			var goal = g.get('repair') if g.get('repair') else g.position
 			var dist = 0
 			var pth = nav.get_simple_path(start, goal)
 			if start != goal:
 				if pth.size() > 0:
-					var strt = pth[0] #map.map_to_world(pth[0])
+					var strt = pth[0]
 					for wp in pth:
-						#wp = map.map_to_world(wp)
 						var diff = strt.distance_to(wp)
 						dist += diff
 						strt = wp
 			ptDist.append(dist)
-#			if pt.get('distances'):
-#				pt.distances.append(dist)
-#			else:
-#				pt.set('distances', [dist])
 		csv_array.append(ptDist)
 	var prnt = ''
 	for ln in csv_array:
@@ -158,3 +146,7 @@ func get_matrix():
 	
 func decode_data(data):
 	return data.get_string_from_utf8()
+
+func _on_connection_timeout():
+	$connection.wait_time *= 2
+	self._connect()

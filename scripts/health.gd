@@ -10,6 +10,7 @@ signal machine_damaged
 signal machine_repaired
 export var IS_HEALTHY : int = 90
 export var IS_DAMAGED : int = 50
+export (Texture) var icon
 
 export (bool) var repair = false
 export (float) var health = 100.0;
@@ -20,11 +21,9 @@ func _ready():
 	
 func _process(delta):
 	if !repair:
-		$value.texture_over = null
-		$label.show()
+		$value.texture_over = icon
 	else:
 		$value.texture_over = repairBGTexture
-		$label.hide()
 	if health >= IS_HEALTHY:
 		$value.texture_progress = healthyTexture
 	elif health > IS_DAMAGED:

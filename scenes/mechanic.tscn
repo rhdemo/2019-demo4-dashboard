@@ -4,11 +4,11 @@
 [ext_resource path="res://sprites/mechanic/sprite-mechanic.png" type="Texture" id=2]
 [ext_resource path="res://scripts/mechanic.gd" type="Script" id=3]
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
 shader_param/coverall_color = Plane( 1.05, 1.15, 1.2, 1 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -23,7 +23,7 @@ tracks/0/keys = {
 "values": [ 19 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -38,7 +38,7 @@ tracks/0/keys = {
 "values": [ 14 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -53,7 +53,7 @@ tracks/0/keys = {
 "values": [ 9 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -68,7 +68,7 @@ tracks/0/keys = {
 "values": [ 4 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 length = 0.8
 loop = true
 step = 0.2
@@ -85,7 +85,7 @@ tracks/0/keys = {
 "values": [ 16, 15, 18, 17 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 length = 0.8
 loop = true
 step = 0.2
@@ -102,7 +102,7 @@ tracks/0/keys = {
 "values": [ 13, 12, 11, 10 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -118,7 +118,7 @@ tracks/0/keys = {
 "values": [ 8, 5, 6, 7 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -134,14 +134,14 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 26.092, 68.6445 )
 
 [node name="mechanic" type="KinematicBody2D"]
 script = ExtResource( 3 )
 
 [node name="img" type="Sprite" parent="."]
-material = SubResource( 2 )
+material = SubResource( 1 )
 position = Vector2( 0, -50 )
 texture = ExtResource( 2 )
 vframes = 5
@@ -149,19 +149,18 @@ hframes = 20
 frame = 9
 
 [node name="anim" type="AnimationPlayer" parent="img"]
-anims/wait-down-left = SubResource( 3 )
-anims/wait-down-right = SubResource( 4 )
-anims/wait-up-left = SubResource( 5 )
-anims/wait-up-right = SubResource( 6 )
-anims/walk-down-left = SubResource( 7 )
-anims/walk-down-right = SubResource( 8 )
-anims/walk-up-left = SubResource( 9 )
-anims/walk-up-right = SubResource( 10 )
+anims/wait-down-left = SubResource( 2 )
+anims/wait-down-right = SubResource( 3 )
+anims/wait-up-left = SubResource( 4 )
+anims/wait-up-right = SubResource( 5 )
+anims/walk-down-left = SubResource( 6 )
+anims/walk-down-right = SubResource( 7 )
+anims/walk-up-left = SubResource( 8 )
+anims/walk-up-right = SubResource( 9 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, -50 )
-shape = SubResource( 11 )
+shape = SubResource( 10 )
 disabled = true
 
 [node name="clock" type="Timer" parent="."]

@@ -4,7 +4,6 @@ extends Sprite
 export (Vector2) var heal_coords = Vector2(0,0);
 export (Color) var color = Color.red
 export (float) var health = 100;
-export (String) var machine_name = "Z";
 export (Vector2) var direction = Vector2(0,0)
 export var MAX_HEALTH : int = 100
 export var HEALTHY_MIN_PCT : int = 90
@@ -26,10 +25,7 @@ func _ready():
 			healthNode["IS_HEALTHY"] = HEALTHY_MIN_PCT
 		if healthNode["IS_DAMAGED"]:
 			healthNode["IS_DAMAGED"] = DAMAGE_MIN_PCT
-		healthNode.get_child(1).text = self.machine_name
-	#var p = Vector2(self.global_position.x+self.texture.get_width(), self.global_position.y-self.texture.get_height())
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if lightNode:
 		if (health/MAX_HEALTH)*100 >= HEALTHY_MIN_PCT:
