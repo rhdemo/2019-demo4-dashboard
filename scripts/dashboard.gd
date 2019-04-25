@@ -31,7 +31,7 @@ func _ready():
 	set_process(true)
 	for m in $machines.get_children():
 		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position)
-	get_matrix()
+	#get_matrix()
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:

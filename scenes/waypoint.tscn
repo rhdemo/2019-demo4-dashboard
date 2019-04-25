@@ -4,9 +4,9 @@
 [ext_resource path="res://sprites/health/health-grey.png" type="Texture" id=2]
 [ext_resource path="res://fonts/overpass_mono.tres" type="DynamicFont" id=3]
 
-
 [node name="waypoint" type="Node2D"]
 scale = Vector2( 0.5, 0.5 )
+z_index = 99
 script = ExtResource( 1 )
 
 [node name="sprite" type="Sprite" parent="."]
@@ -14,10 +14,12 @@ modulate = Color( 1, 1, 1, 0.768627 )
 texture = ExtResource( 2 )
 
 [node name="number" type="Label" parent="."]
-margin_left = -14.0
-margin_top = -38.5914
-margin_right = 25.0
-margin_bottom = 26.4086
+margin_left = -31.0
+margin_top = -41.0
+margin_right = 31.0
+margin_bottom = 41.0
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "1"
+align = 1
+valign = 1

@@ -19,6 +19,8 @@ func _physics_process(delta):
 	if collision:
 		if collision.collider.name == "mover":
 			vel = vel.slide(collision.normal)
+			if collision.normal.x < 0:
+				vel += Vector2(1, 0)
 		elif collision.collider.name == "disposal":
 			get_parent().remove_child(self)
 			queue_free()

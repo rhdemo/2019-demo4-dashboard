@@ -4,9 +4,9 @@
 [ext_resource path="res://iso_tiles/iso_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://scenes/machine.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/machines/machine-1-cutout.png" type="Texture" id=4]
-[ext_resource path="res://scenes/health.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/light.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/health/A.png" type="Texture" id=6]
-[ext_resource path="res://scenes/light.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/health.tscn" type="PackedScene" id=7]
 [ext_resource path="res://sprites/machines/red-machine-cutout-pt-1.png" type="Texture" id=8]
 [ext_resource path="res://sprites/health/B.png" type="Texture" id=9]
 [ext_resource path="res://sprites/machines/turquoise-machine-cutout-pt-1.png" type="Texture" id=10]
@@ -127,7 +127,6 @@ navpoly = SubResource( 1 )
 [node name="machines" type="Node2D" parent="."]
 
 [node name="machine-0" parent="machines" instance=ExtResource( 3 )]
-editor/display_folded = true
 z_index = 1
 texture = ExtResource( 4 )
 offset = Vector2( 296.249, 269.315 )
@@ -135,11 +134,11 @@ heal_coords = Vector2( 210, 305 )
 color = Color( 0.964706, 0.94902, 0.184314, 1 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-0" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-0" instance=ExtResource( 7 )]
 position = Vector2( 276.854, 126.716 )
 icon = ExtResource( 6 )
 
-[node name="light" parent="machines/machine-0" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-0" instance=ExtResource( 5 )]
 position = Vector2( 284.366, 233.311 )
 
 [node name="repair" type="Position2D" parent="machines/machine-0"]
@@ -153,11 +152,11 @@ heal_coords = Vector2( 225, 625 )
 color = Color( 0.831373, 0.192157, 0.176471, 1 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-1" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-1" instance=ExtResource( 7 )]
 position = Vector2( 323.921, 416.143 )
 icon = ExtResource( 9 )
 
-[node name="light" parent="machines/machine-1" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-1" instance=ExtResource( 5 )]
 position = Vector2( 270.561, 538.569 )
 
 [node name="repair" type="Position2D" parent="machines/machine-1"]
@@ -171,11 +170,11 @@ heal_coords = Vector2( 405, 725 )
 color = Color( 0.196078, 1, 0.960784, 1 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-2" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-2" instance=ExtResource( 7 )]
 position = Vector2( 632.605, 563.623 )
 icon = ExtResource( 11 )
 
-[node name="light" parent="machines/machine-2" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-2" instance=ExtResource( 5 )]
 position = Vector2( 647.965, 693.938 )
 
 [node name="repair" type="Position2D" parent="machines/machine-2"]
@@ -189,11 +188,11 @@ heal_coords = Vector2( 835, 555 )
 color = Color( 0.92549, 0.368627, 0.184314, 1 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-3" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-3" instance=ExtResource( 7 )]
 position = Vector2( 901.274, 382.605 )
 icon = ExtResource( 13 )
 
-[node name="light" parent="machines/machine-3" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-3" instance=ExtResource( 5 )]
 position = Vector2( 872.423, 470.153 )
 
 [node name="repair" type="Position2D" parent="machines/machine-3"]
@@ -207,11 +206,11 @@ heal_coords = Vector2( 945, 320 )
 color = Color( 0.341176, 0.831373, 0.0941176, 1 )
 direction = Vector2( -1, -1 )
 
-[node name="health" parent="machines/machine-4" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-4" instance=ExtResource( 7 )]
 position = Vector2( 860.853, 142.85 )
 icon = ExtResource( 15 )
 
-[node name="light" parent="machines/machine-4" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-4" instance=ExtResource( 5 )]
 position = Vector2( 871.665, 248.441 )
 
 [node name="repair" type="Position2D" parent="machines/machine-4"]
@@ -225,11 +224,11 @@ heal_coords = Vector2( 1135, 210 )
 color = Color( 0.686275, 0.329412, 1, 1 )
 direction = Vector2( -1, -1 )
 
-[node name="health" parent="machines/machine-5" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-5" instance=ExtResource( 7 )]
 position = Vector2( 1084.65, 0.266434 )
 icon = ExtResource( 17 )
 
-[node name="light" parent="machines/machine-5" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-5" instance=ExtResource( 5 )]
 position = Vector2( 1084.97, 116.331 )
 
 [node name="repair" type="Position2D" parent="machines/machine-5"]
@@ -243,11 +242,11 @@ heal_coords = Vector2( 1185, 450 )
 color = Color( 0.294118, 0.396078, 0.4, 1 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-6" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-6" instance=ExtResource( 7 )]
 position = Vector2( 1264.76, 244.94 )
 icon = ExtResource( 19 )
 
-[node name="light" parent="machines/machine-6" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-6" instance=ExtResource( 5 )]
 position = Vector2( 1316.03, 368.776 )
 
 [node name="repair" type="Position2D" parent="machines/machine-6"]
@@ -261,11 +260,11 @@ heal_coords = Vector2( 1255, 805 )
 color = Color( 0.258824, 0.85098, 0.992157, 1 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-7" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-7" instance=ExtResource( 7 )]
 position = Vector2( 1293.86, 511.087 )
 icon = ExtResource( 21 )
 
-[node name="light" parent="machines/machine-7" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-7" instance=ExtResource( 5 )]
 position = Vector2( 1338.29, 656.829 )
 
 [node name="repair" type="Position2D" parent="machines/machine-7"]
@@ -278,11 +277,11 @@ offset = Vector2( 1557.81, 569.943 )
 heal_coords = Vector2( 1495, 625 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-8" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-8" instance=ExtResource( 7 )]
 position = Vector2( 1539.72, 400.527 )
 icon = ExtResource( 23 )
 
-[node name="light" parent="machines/machine-8" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-8" instance=ExtResource( 5 )]
 position = Vector2( 1590.93, 526.011 )
 
 [node name="repair" type="Position2D" parent="machines/machine-8"]
@@ -296,11 +295,11 @@ heal_coords = Vector2( 1610, 170 )
 color = Color( 1, 0.439216, 1, 1 )
 direction = Vector2( 1, -1 )
 
-[node name="health" parent="machines/machine-9" instance=ExtResource( 5 )]
+[node name="health" parent="machines/machine-9" instance=ExtResource( 7 )]
 position = Vector2( 1658.61, 0.46405 )
 icon = ExtResource( 25 )
 
-[node name="light" parent="machines/machine-9" instance=ExtResource( 7 )]
+[node name="light" parent="machines/machine-9" instance=ExtResource( 5 )]
 position = Vector2( 1662.49, 97.9837 )
 
 [node name="repair" type="Position2D" parent="machines/machine-9"]
@@ -333,6 +332,7 @@ position = Vector2( 58.1561, -50.402 )
 
 [node name="box_flow" type="Timer" parent="boxBelt"]
 wait_time = 5.0
+autostart = true
 
 [node name="belt" type="Sprite" parent="boxBelt"]
 position = Vector2( 949.599, 162.667 )
@@ -486,7 +486,7 @@ texture = ExtResource( 38 )
 
 [node name="machine-8-sm-stacks" type="Sprite" parent="static_assets"]
 position = Vector2( 813.624, 626.477 )
-z_index = 15
+z_index = 14
 texture = ExtResource( 39 )
 
 [node name="machine-2-sm" type="Sprite" parent="static_assets"]
@@ -501,12 +501,12 @@ texture = ExtResource( 41 )
 
 [node name="red-machine-cutout-pt-2" type="Sprite" parent="static_assets"]
 position = Vector2( 360.708, 522.657 )
-z_index = 15
+z_index = 14
 texture = ExtResource( 42 )
 
 [node name="turquoise-machine-cutout-pt-2" type="Sprite" parent="static_assets"]
 position = Vector2( 723.632, 721.049 )
-z_index = 6
+z_index = 14
 texture = ExtResource( 43 )
 
 [node name="connection" type="Timer" parent="."]

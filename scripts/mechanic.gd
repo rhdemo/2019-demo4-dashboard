@@ -8,7 +8,7 @@ signal fixed_machine
 onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 
-const futureColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
+const futureColors = PoolColorArray([Color(.678,.11,.11,.75), Color(.2,.6,.2,.75), Color(0.18,.396,.604,.75), Color(.918,.255,.075,.75), Color(.302,.357,.4,.75)])
 const focusColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
 const mechanicColors = [Color(2,0,0,1.0), Color(0,1.5,0,1.0),Color(0.6,1.2,2.2,1.0),Color(2.8, 1.05, .2, 1.0),Color(1.05,1.15,1.25,1.0)]
 
@@ -49,7 +49,7 @@ func _ready():
 
 	for wp in waypoints:
 		wp.get_child(0).modulate = futureColors[int(key)]
-		wp.z_index = 50
+		wp.z_index = 99
 		Dashboard.add_child(wp)
 		wp.hide()
 	Dashboard.add_child(focusLine)
