@@ -5,7 +5,7 @@ const broadcast = require("../utils/broadcast");
 const MAX_HEALTH = 1000000000000000000;
 
 async function readMachines(broadcastAll) {
-  log.debug("readMachines broadcastAll=", broadcastAll);
+  // log.debug("readMachines broadcastAll=", broadcastAll);
   let promises = [];
   for (let key in global.machines) {
     promises.push(refreshMachine(global.machines[key], broadcastAll));
