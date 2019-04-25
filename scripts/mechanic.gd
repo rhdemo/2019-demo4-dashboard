@@ -49,7 +49,7 @@ func _ready():
 
 	for wp in waypoints:
 		wp.get_child(0).modulate = futureColors[int(key)]
-		wp.z_index = 16
+		wp.z_index = 50
 		Dashboard.add_child(wp)
 		wp.hide()
 	Dashboard.add_child(focusLine)
@@ -62,7 +62,7 @@ func _init():
 	focusLine.end_cap_mode = Line2D.LINE_CAP_ROUND
 	focusLine.begin_cap_mode = Line2D.LINE_CAP_BOX
 	
-	futureLine.z_index = 12
+	futureLine.z_index = 50
 	futureLine.width = 5
 	futureLine.joint_mode = Line2D.LINE_JOINT_ROUND
 	futureLine.end_cap_mode = Line2D.LINE_CAP_ROUND
@@ -70,18 +70,16 @@ func _init():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if global_position.y > 930:
-		self.z_index = 12
-	elif global_position.y > 900:
-		self.z_index = 10
-	elif global_position.y > 750 or (global_position.y > 300 and global_position.x < 500):
-		self.z_index = 8
-	elif global_position.y > 300 and global_position.x < 500:
-		self.z_index = 6
-	elif global_position.y > 300:
-		self.z_index = 4
+	if global_position.y > 775:
+		self.z_index = 19
+	elif global_position.x < 800 and global_position.y > 600:
+		self.z_index = 17
+	elif global_position.y > 500 and (global_position.x > 200 and global_position.x < 1475):
+		self.z_index = 13
+	elif global_position.y > 365 and global_position.x > 400:
+		self.z_index = 11
 	else:
-		self.z_index = 2
+		self.z_index = 5
 
 	if !focusPath:
 		focusLine.hide()
