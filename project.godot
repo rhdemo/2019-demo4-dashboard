@@ -24,6 +24,8 @@ config/icon="res://sprites/fedora.png"
 
 window/size/width=1920
 window/size/height=1080
+window/size/test_width=1200
+window/size/test_height=768
 window/dpi/allow_hidpi=true
 window/per_pixel_transparency/allowed=true
 window/per_pixel_transparency/enabled=true

@@ -5,7 +5,6 @@
 [ext_resource path="res://fonts/overpass_mono.tres" type="DynamicFont" id=3]
 
 [node name="waypoint" type="Node2D"]
-scale = Vector2( 0.5, 0.5 )
 z_index = 99
 script = ExtResource( 1 )
 
@@ -15,11 +14,16 @@ texture = ExtResource( 2 )
 
 [node name="number" type="Label" parent="."]
 margin_left = -31.0
-margin_top = -41.0
+margin_top = -38.0
 margin_right = 31.0
-margin_bottom = 41.0
+margin_bottom = 27.0
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "1"
 align = 1
 valign = 1
+
+[node name="trail" type="Line2D" parent="."]
+texture_mode = 1
+
+[node name="ping" type="Timer" parent="."]

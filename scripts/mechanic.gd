@@ -45,13 +45,6 @@ func _ready():
 	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
 	
-	waypoints = [wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance(), wayPointNode.instance()]
-
-	for wp in waypoints:
-		wp.get_child(0).modulate = futureColors[int(key)]
-		wp.z_index = 99
-		Dashboard.add_child(wp)
-		wp.hide()
 	Dashboard.add_child(focusLine)
 	Dashboard.add_child(futureLine)
 
@@ -107,9 +100,6 @@ func _physics_process(delta):
 			update_future_visits({"mechanicIndex": self.key, "futureMachineIndexes": futureMachineIndexes})
 #	if position == spawn.position:
 #		get_parent().remove_child(self)
-	for wp in range(futureMachineIndexes.size()):
-		waypoints[wp].get_child(1).text = String(wp+1)
-		waypoints[wp].show()
 	futureLine.points = futurePath
 	futureLine.show()	
 		
@@ -133,15 +123,23 @@ func update_future_visits(data):
 		futureMachineIndexes = data.futureMachineIndexes
 		futurePath = []
 		var p0 = focus
-		for wp in waypoints:
-			wp.hide()
 		for p in range(futureMachineIndexes.size()):
 			var machineIdx = futureMachineIndexes[p]
-			waypoints[p].position = machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position
+			createWaypoint(p, position, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position, futureColors[int(key) % 5])
+			#waypoints[p].position = machines[machineIdx].offset
 		
 			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position))
 			p0 = machines[machineIdx].repair
 		#print(futurePath)
+
+func createWaypoint(order, start, goal, color):
+	var wp = wayPointNode.instance()
+	wp.get_child(1).text = String(order+1)
+	wp.start = start
+	wp.goal = goal
+	wp.get_child(0).modulate = color
+	wp.z_index = 50
+	return wp
 
 func remove_mechanic(data):
 	if  String(data.key) == String(self.key):

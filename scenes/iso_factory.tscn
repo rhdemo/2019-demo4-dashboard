@@ -1,10 +1,10 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://scripts/dashboard.gd" type="Script" id=1]
 [ext_resource path="res://iso_tiles/iso_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://scenes/machine.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/light.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/machines/machine-1-cutout.png" type="Texture" id=4]
-[ext_resource path="res://scenes/light.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/machine.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/health/A.png" type="Texture" id=6]
 [ext_resource path="res://scenes/health.tscn" type="PackedScene" id=7]
 [ext_resource path="res://sprites/machines/red-machine-cutout-pt-1.png" type="Texture" id=8]
@@ -109,6 +109,9 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 6.38864, 10 )
+
 [node name="Dashboard" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -119,14 +122,14 @@ mode = 1
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 90, 52 )
 format = 1
-tile_data = PoolIntArray( -917487, 13, 0, -917486, 8, 0, -917485, 8, 0, -917484, 8, 0, -917483, 8, 0, -917482, 8, 0, -917481, 8, 0, -917480, 8, 0, -917479, 8, 0, -917478, 8, 0, -917477, 8, 0, -917476, 8, 0, -917475, 8, 0, -851951, 15, 0, -786415, 15, 0, -720879, 15, 0, -655343, 8, 0, -589807, 8, 0, -524271, 15, 0, -458735, 15, 0, -393199, 15, 0, -393182, 0, 0, -327663, 15, 0, -262127, 14, 0, -262126, 8, 0, -262125, 8, 0, -262124, 8, 0, -262123, 8, 0, -262122, 8, 0, -262121, 8, 0, -262120, 8, 0, -262119, 8, 0, -262118, 8, 0, -262117, 8, 0, -262116, 8, 0, -262115, 8, 0, -262114, 8, 0, -262113, 11, 0, -196591, 15, 0, -196577, 15, 0, -131055, 15, 0, -131041, 15, 0, -65519, 15, 0, -65505, 15, 0, 17, 15, 0, 31, 15, 0, 65553, 15, 0, 65567, 15, 0, 131089, 14, 0, 131090, 8, 0, 131091, 8, 0, 131092, 8, 0, 131093, 8, 0, 131094, 8, 0, 131095, 8, 0, 131096, 8, 0, 131097, 8, 0, 131098, 8, 0, 131099, 8, 0, 131100, 8, 0, 131101, 8, 0, 131102, 8, 0, 131103, 7, 0, 196625, 15, 0, 196639, 15, 0, 262148, 8, 0, 262149, 8, 0, 262150, 8, 0, 262151, 8, 0, 262152, 12, 0, 262153, 8, 0, 262154, 8, 0, 262155, 8, 0, 262156, 8, 0, 262157, 8, 0, 262158, 8, 0, 262159, 8, 0, 262160, 8, 0, 262161, 6, 0, 262175, 14, 0, 262176, 8, 0, 262177, 8, 0, 262178, 8, 0, 262179, 8, 0, 262180, 8, 0, 262181, 8, 0, 327688, 15, 0, 327711, 15, 0, 393224, 15, 0, 393247, 15, 0, 458760, 15, 0, 458783, 15, 0, 524296, 15, 0, 524319, 15, 0, 589832, 15, 0, 589855, 15, 0, 655368, 9, 0, 655369, 8, 0, 655370, 8, 0, 655371, 8, 0, 655372, 8, 0, 655373, 8, 0, 655374, 8, 0, 655375, 8, 0, 655376, 8, 0, 655377, 8, 0, 655378, 8, 0, 655379, 8, 0, 655380, 8, 0, 655381, 8, 0, 655382, 8, 0, 655383, 12, 0, 655384, 8, 0, 655385, 8, 0, 655386, 8, 0, 655387, 8, 0, 655388, 8, 0, 655389, 8, 0, 655390, 8, 0, 655391, 6, 0, 720919, 15, 0, 786455, 15, 0, 851991, 15, 0, 917527, 15, 0, 983059, 8, 0, 983060, 8, 0, 983061, 8, 0, 983062, 8, 0, 983063, 7, 0, 1048599, 15, 0, 1114135, 15, 0, 1179671, 15, 0, 1245207, 15, 0, 5046439, 19, 0 )
+tile_data = PoolIntArray( -917487, 13, 0, -917486, 8, 0, -917485, 8, 0, -917484, 8, 0, -917483, 8, 0, -917482, 8, 0, -917481, 8, 0, -917480, 8, 0, -917479, 8, 0, -917478, 8, 0, -917477, 8, 0, -917476, 8, 0, -917475, 8, 0, -851951, 15, 0, -786415, 15, 0, -720879, 15, 0, -655343, 15, 0, -589807, 15, 0, -524271, 15, 0, -458735, 15, 0, -393199, 15, 0, -393182, 0, 0, -327663, 15, 0, -262127, 14, 0, -262126, 8, 0, -262125, 8, 0, -262124, 8, 0, -262123, 8, 0, -262122, 8, 0, -262121, 8, 0, -262120, 8, 0, -262119, 8, 0, -262118, 8, 0, -262117, 8, 0, -262116, 8, 0, -262115, 8, 0, -262114, 8, 0, -262113, 11, 0, -196591, 15, 0, -196577, 15, 0, -131055, 15, 0, -131041, 15, 0, -65519, 15, 0, -65505, 15, 0, 17, 15, 0, 31, 15, 0, 65553, 15, 0, 65567, 15, 0, 131089, 14, 0, 131090, 8, 0, 131091, 8, 0, 131092, 8, 0, 131093, 8, 0, 131094, 8, 0, 131095, 8, 0, 131096, 8, 0, 131097, 8, 0, 131098, 8, 0, 131099, 8, 0, 131100, 8, 0, 131101, 8, 0, 131102, 8, 0, 131103, 7, 0, 196625, 15, 0, 196639, 15, 0, 262148, 8, 0, 262149, 8, 0, 262150, 8, 0, 262151, 8, 0, 262152, 12, 0, 262153, 8, 0, 262154, 8, 0, 262155, 8, 0, 262156, 8, 0, 262157, 8, 0, 262158, 8, 0, 262159, 8, 0, 262160, 8, 0, 262161, 6, 0, 262175, 14, 0, 262176, 8, 0, 262177, 8, 0, 262178, 8, 0, 262179, 8, 0, 262180, 8, 0, 262181, 8, 0, 327688, 15, 0, 327711, 15, 0, 393224, 15, 0, 393247, 15, 0, 458760, 15, 0, 458783, 15, 0, 524296, 15, 0, 524319, 15, 0, 589832, 15, 0, 589855, 15, 0, 655368, 9, 0, 655369, 8, 0, 655370, 8, 0, 655371, 8, 0, 655372, 8, 0, 655373, 8, 0, 655374, 8, 0, 655375, 8, 0, 655376, 8, 0, 655377, 8, 0, 655378, 8, 0, 655379, 8, 0, 655380, 8, 0, 655381, 8, 0, 655382, 8, 0, 655383, 12, 0, 655384, 8, 0, 655385, 8, 0, 655386, 8, 0, 655387, 8, 0, 655388, 8, 0, 655389, 8, 0, 655390, 8, 0, 655391, 6, 0, 720919, 15, 0, 786455, 15, 0, 851991, 15, 0, 917527, 15, 0, 983059, 8, 0, 983060, 8, 0, 983061, 8, 0, 983062, 8, 0, 983063, 7, 0, 1048599, 15, 0, 1114135, 15, 0, 1179671, 15, 0, 1245207, 15, 0, 5046439, 19, 0 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
 navpoly = SubResource( 1 )
 
 [node name="machines" type="Node2D" parent="."]
 
-[node name="machine-0" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-0" parent="machines" instance=ExtResource( 5 )]
 z_index = 1
 texture = ExtResource( 4 )
 offset = Vector2( 296.249, 269.315 )
@@ -138,13 +141,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 276.854, 126.716 )
 icon = ExtResource( 6 )
 
-[node name="light" parent="machines/machine-0" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-0" instance=ExtResource( 3 )]
 position = Vector2( 284.366, 233.311 )
 
 [node name="repair" type="Position2D" parent="machines/machine-0"]
 position = Vector2( 207, 355 )
 
-[node name="machine-1" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-1" parent="machines" instance=ExtResource( 5 )]
 z_index = 16
 texture = ExtResource( 8 )
 offset = Vector2( 270.344, 564.277 )
@@ -156,13 +159,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 323.921, 416.143 )
 icon = ExtResource( 9 )
 
-[node name="light" parent="machines/machine-1" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-1" instance=ExtResource( 3 )]
 position = Vector2( 270.561, 538.569 )
 
 [node name="repair" type="Position2D" parent="machines/machine-1"]
 position = Vector2( 185, 654 )
 
-[node name="machine-2" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-2" parent="machines" instance=ExtResource( 5 )]
 z_index = 16
 texture = ExtResource( 10 )
 offset = Vector2( 580.551, 691.533 )
@@ -174,13 +177,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 632.605, 563.623 )
 icon = ExtResource( 11 )
 
-[node name="light" parent="machines/machine-2" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-2" instance=ExtResource( 3 )]
 position = Vector2( 647.965, 693.938 )
 
 [node name="repair" type="Position2D" parent="machines/machine-2"]
 position = Vector2( 388, 774 )
 
-[node name="machine-3" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-3" parent="machines" instance=ExtResource( 5 )]
 z_index = 12
 texture = ExtResource( 12 )
 offset = Vector2( 934.359, 509.729 )
@@ -192,13 +195,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 901.274, 382.605 )
 icon = ExtResource( 13 )
 
-[node name="light" parent="machines/machine-3" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-3" instance=ExtResource( 3 )]
 position = Vector2( 872.423, 470.153 )
 
 [node name="repair" type="Position2D" parent="machines/machine-3"]
 position = Vector2( 818, 602 )
 
-[node name="machine-4" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-4" parent="machines" instance=ExtResource( 5 )]
 z_index = 1
 texture = ExtResource( 14 )
 offset = Vector2( 898.348, 289.67 )
@@ -210,13 +213,13 @@ direction = Vector2( -1, -1 )
 position = Vector2( 860.853, 142.85 )
 icon = ExtResource( 15 )
 
-[node name="light" parent="machines/machine-4" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-4" instance=ExtResource( 3 )]
 position = Vector2( 871.665, 248.441 )
 
 [node name="repair" type="Position2D" parent="machines/machine-4"]
 position = Vector2( 945, 364 )
 
-[node name="machine-5" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-5" parent="machines" instance=ExtResource( 5 )]
 z_index = 1
 texture = ExtResource( 16 )
 offset = Vector2( 1078.52, 130.66 )
@@ -228,13 +231,13 @@ direction = Vector2( -1, -1 )
 position = Vector2( 1084.65, 0.266434 )
 icon = ExtResource( 17 )
 
-[node name="light" parent="machines/machine-5" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-5" instance=ExtResource( 3 )]
 position = Vector2( 1084.97, 116.331 )
 
 [node name="repair" type="Position2D" parent="machines/machine-5"]
 position = Vector2( 1144, 250 )
 
-[node name="machine-6" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-6" parent="machines" instance=ExtResource( 5 )]
 z_index = 10
 texture = ExtResource( 18 )
 offset = Vector2( 1282.29, 409.871 )
@@ -246,13 +249,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1264.76, 244.94 )
 icon = ExtResource( 19 )
 
-[node name="light" parent="machines/machine-6" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-6" instance=ExtResource( 3 )]
 position = Vector2( 1316.03, 368.776 )
 
 [node name="repair" type="Position2D" parent="machines/machine-6"]
 position = Vector2( 1176, 498 )
 
-[node name="machine-7" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-7" parent="machines" instance=ExtResource( 5 )]
 z_index = 12
 texture = ExtResource( 20 )
 offset = Vector2( 1200, 661.051 )
@@ -264,13 +267,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1293.86, 511.087 )
 icon = ExtResource( 21 )
 
-[node name="light" parent="machines/machine-7" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-7" instance=ExtResource( 3 )]
 position = Vector2( 1338.29, 656.829 )
 
 [node name="repair" type="Position2D" parent="machines/machine-7"]
 position = Vector2( 1258, 857 )
 
-[node name="machine-8" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-8" parent="machines" instance=ExtResource( 5 )]
 z_index = 10
 texture = ExtResource( 22 )
 offset = Vector2( 1557.81, 569.943 )
@@ -281,13 +284,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1539.72, 400.527 )
 icon = ExtResource( 23 )
 
-[node name="light" parent="machines/machine-8" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-8" instance=ExtResource( 3 )]
 position = Vector2( 1590.93, 526.011 )
 
 [node name="repair" type="Position2D" parent="machines/machine-8"]
 position = Vector2( 1474, 668 )
 
-[node name="machine-9" parent="machines" instance=ExtResource( 3 )]
+[node name="machine-9" parent="machines" instance=ExtResource( 5 )]
 z_index = 1
 texture = ExtResource( 24 )
 offset = Vector2( 1675.32, 132.682 )
@@ -299,7 +302,7 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1658.61, 0.46405 )
 icon = ExtResource( 25 )
 
-[node name="light" parent="machines/machine-9" instance=ExtResource( 5 )]
+[node name="light" parent="machines/machine-9" instance=ExtResource( 3 )]
 position = Vector2( 1662.49, 97.9837 )
 
 [node name="repair" type="Position2D" parent="machines/machine-9"]
@@ -307,15 +310,6 @@ position = Vector2( 1585, 213 )
 
 [node name="gate" type="Position2D" parent="machines"]
 position = Vector2( 338, 1000 )
-
-[node name="MachineLine" type="Line2D" parent="."]
-visible = false
-z_index = 99
-default_color = Color( 0.658824, 0, 0.188235, 1 )
-texture_mode = 1069547908
-joint_mode = 2
-begin_cap_mode = 1
-end_cap_mode = 2
 
 [node name="Mechanics" type="Node2D" parent="."]
 
@@ -446,32 +440,32 @@ texture = ExtResource( 35 )
 
 [node name="server-stack" type="Sprite" parent="static_assets"]
 position = Vector2( 1403.19, 866.93 )
-z_index = 18
+z_index = 24
 texture = ExtResource( 36 )
 
 [node name="server-stack3" type="Sprite" parent="static_assets"]
 position = Vector2( 1674.58, 1005.29 )
-z_index = 20
+z_index = 26
 texture = ExtResource( 36 )
 
 [node name="server-stack4" type="Sprite" parent="static_assets"]
 position = Vector2( 1825.25, 876.561 )
-z_index = 18
+z_index = 23
 texture = ExtResource( 36 )
 
 [node name="server-stack7" type="Sprite" parent="static_assets"]
 position = Vector2( 1533.4, 936.16 )
-z_index = 18
+z_index = 25
 texture = ExtResource( 36 )
 
 [node name="server-stack5" type="Sprite" parent="static_assets"]
 position = Vector2( 1696.04, 814.253 )
-z_index = 17
+z_index = 22
 texture = ExtResource( 36 )
 
 [node name="server-stack6" type="Sprite" parent="static_assets"]
 position = Vector2( 1568.62, 749.589 )
-z_index = 16
+z_index = 21
 texture = ExtResource( 36 )
 
 [node name="data-pools" type="Sprite" parent="static_assets"]
@@ -479,20 +473,10 @@ position = Vector2( 1591.4, 377.133 )
 z_index = 9
 texture = ExtResource( 37 )
 
-[node name="door-frame-right" type="Sprite" parent="static_assets"]
-position = Vector2( 300.222, 848.59 )
-z_index = 18
-texture = ExtResource( 38 )
-
 [node name="machine-8-sm-stacks" type="Sprite" parent="static_assets"]
 position = Vector2( 813.624, 626.477 )
 z_index = 14
 texture = ExtResource( 39 )
-
-[node name="machine-2-sm" type="Sprite" parent="static_assets"]
-position = Vector2( 2.60141, 848.741 )
-z_index = 20
-texture = ExtResource( 40 )
 
 [node name="pit" type="Sprite" parent="static_assets"]
 position = Vector2( 945.279, 953.421 )
@@ -511,6 +495,37 @@ texture = ExtResource( 43 )
 
 [node name="connection" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="Fader" type="Area2D" parent="."]
+z_index = 99
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fader"]
+position = Vector2( 180.203, 972.567 )
+scale = Vector2( 11.4272, 10.7987 )
+shape = SubResource( 7 )
+
+[node name="Fade" type="Tween" parent="Fader"]
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+z_index = 50
+points = PoolVector2Array( 207, 355, 185, 654, 388, 774, 818, 602, 945, 364, 1144, 250, 1176, 498, 1258, 857, 1474, 668, 1585, 213 )
+width = 40.0
+default_color = Color( 1, 0.584314, 0, 1 )
+texture_mode = 1
+
+[node name="BreakRoom" type="Node2D" parent="."]
+
+[node name="machine-2-sm" type="Sprite" parent="BreakRoom"]
+position = Vector2( 2.60141, 848.741 )
+z_index = 20
+texture = ExtResource( 40 )
+
+[node name="door-frame-right" type="Sprite" parent="BreakRoom"]
+position = Vector2( 300.222, 848.59 )
+z_index = 18
+texture = ExtResource( 38 )
 [connection signal="timeout" from="boxBelt/box_flow" to="boxBelt" method="_on_flow_timeout"]
 [connection signal="timeout" from="canisterBelt/canister_flow" to="canisterBelt" method="_on_canister_flow_timeout"]
 [connection signal="timeout" from="connection" to="." method="_on_connection_timeout"]
+[connection signal="mouse_entered" from="Fader" to="." method="_on_Fader_mouse_entered"]

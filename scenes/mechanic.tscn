@@ -146,7 +146,7 @@ position = Vector2( 0, -50 )
 texture = ExtResource( 3 )
 vframes = 5
 hframes = 20
-frame = 9
+frame = 14
 
 [node name="anim" type="AnimationPlayer" parent="img"]
 anims/wait-down-left = SubResource( 2 )

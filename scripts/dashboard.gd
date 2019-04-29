@@ -23,22 +23,18 @@ onready var map : = $Navigation2D/TileMap
 
 var path : PoolVector2Array
 var goal : Vector2
+var faded = false
 
 func _init():
 	self._connect()
 
 func _ready():
 	set_process(true)
-	for m in $machines.get_children():
-		$MachineLine.add_point(m.heal_coords if m.get('heal_coords') else m.position)
 	#get_matrix()
 
 func _process(delta: float):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
 		ws.poll()
-	$MachineLine.points = []
-	for m in $machines.get_children():
-		$MachineLine.add_point(m.repair if m.get('repair') else m.position )
 
 func _connect():
 	ws.connect("connection_established", self, "_connection_established")
@@ -48,6 +44,15 @@ func _connect():
 
 	print("Connecting to " + url)
 	ws.connect_to_url(url)
+	
+func fade(opt):
+	$Fader/Fade.remove_all()
+	var nodes = [$machines, $boxBelt, $canisterBelt, $static_assets]
+	var alpha = 1 if !opt else 0.15
+	for node in nodes:
+		$Fader/Fade.interpolate_property(node, "modulate:a", null, alpha, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$Fader/Fade.start()
+	faded = !faded
 	
 func add_mechanic(data):
 	var mechanic = mechanicNode.instance()
@@ -150,3 +155,7 @@ func decode_data(data):
 func _on_connection_timeout():
 	$connection.wait_time *= 2
 	self._connect()
+
+
+func _on_Fader_mouse_entered():
+	fade(!faded)
