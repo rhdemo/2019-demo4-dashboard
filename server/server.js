@@ -5,6 +5,7 @@ const {OUTGOING_MESSAGE_TYPES} = require("./message-types");
 const broadcast = require("./utils/broadcast");
 const {processSocketMessage} = require("./socket-handlers");
 const machines = require("./models/machines");
+require("./datagrid/enable-logging");
 const initData = require("./datagrid/init-data");
 const initPlanner = require("./datagrid/init-planner");
 const pollDatagrid = require("./datagrid/poll-datagrid");
@@ -42,7 +43,7 @@ initData()
       });
     });
     pollDatagrid(10000);
-    pollMachines(500);
+    pollMachines(40);
   });
 
 
