@@ -7,8 +7,9 @@ signal fixed_machine
 
 onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
+onready var pathNode = preload("res://sprites/future-dot.png")
 
-const futureColors = PoolColorArray([Color(.678,.11,.11,1), Color(.2,.6,.2,1), Color(0.18,.396,.604,1), Color(.918,.255,.075,1), Color(.302,.357,.4,1)])
+const futureColors = PoolColorArray([Color(.678,.11,.11,.75), Color(.2,.6,.2,.75), Color(0.18,.396,.604,.75), Color(.918,.255,.075,.75), Color(.302,.357,.4,.75)])
 const focusColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
 const mechanicColors = [Color(2,0,0,1.0), Color(0,1.5,0,1.0),Color(0.6,1.2,2.2,1.0),Color(2.8, 1.05, .2, 1.0),Color(1.05,1.15,1.25,1.0)]
 
@@ -41,27 +42,29 @@ func _ready():
 	Dashboard.connect('dispatch_mechanic', self, "dispatch_mechanic")
 	Dashboard.connect('remove_mechanic', self, "remove_mechanic")
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
+	focusLine.texture = pathNode
+	futureLine.texture = pathNode
 	focusLine.default_color = focusColors[int(key) % 5]
 	futureLine.default_color = futureColors[int(key) % 5]
 	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
-	waypoints = [createWaypoint(2, spawn, spawn, futureColors[int(key) % 5]), createWaypoint(3, spawn, spawn, futureColors[int(key) % 5]), createWaypoint(4, spawn, spawn, futureColors[int(key) % 5])]
-	for wp in waypoints:
-		Dashboard.add_child(wp)
-	focusWaypoint = createWaypoint(1, spawn, spawn, futureColors[int(key) % 5])
+	waypoints = [createWaypoint(2, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(3, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(4, spawn, spawn, mechanicColors[int(key) % 5])]
+	focusWaypoint = createWaypoint(1, spawn, spawn, mechanicColors[int(key) % 5])
 	Dashboard.add_child(focusWaypoint)
 	Dashboard.add_child(focusLine)
 	Dashboard.add_child(futureLine)
 
 func _init():
 	focusLine.z_index = 1
-	focusLine.width = 15
+	focusLine.width = 10
+	focusLine.texture_mode = Line2D.LINE_TEXTURE_TILE
 	focusLine.joint_mode = Line2D.LINE_JOINT_ROUND
 	focusLine.end_cap_mode = Line2D.LINE_CAP_ROUND
 	focusLine.begin_cap_mode = Line2D.LINE_CAP_BOX
 	
-	futureLine.z_index = 50
-	futureLine.width = 5
+	futureLine.z_index = 1
+	futureLine.width = 10
+	futureLine.texture_mode = Line2D.LINE_TEXTURE_TILE
 	futureLine.joint_mode = Line2D.LINE_JOINT_ROUND
 	futureLine.end_cap_mode = Line2D.LINE_CAP_ROUND
 	futureLine.begin_cap_mode = Line2D.LINE_CAP_BOX
@@ -134,14 +137,11 @@ func update_future_visits(data):
 		futureMachineIndexes = data.futureMachineIndexes
 		futurePath = []
 		var p0 = focus
-		for wp in waypoints:
-				wp.hide()
+		for wp in range(waypoints.size()-futureMachineIndexes.size()):
+				waypoints[-wp].hide()
 		for p in range(futureMachineIndexes.size()):
 			var machineIdx = futureMachineIndexes[p]
 			waypoints[p].position = machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position
-				#createWaypoint(p, position, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position, futureColors[int(key) % 5])
-			#waypoints[p].position = machines[machineIdx].offset
-		
 			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position))
 			p0 = machines[machineIdx].repair
 		#print(futurePath)
@@ -152,8 +152,9 @@ func createWaypoint(order, start, goal, color):
 	#wp.get_child(1).text = String(order+1)
 	wp.start = start
 	wp.goal = goal
-	wp.get_child(0).material.set_shader_param("coverall_color", color)
+	wp.color = color
 	wp.z_index = 50
+	Dashboard.add_child(wp)
 	return wp
 
 func remove_mechanic(data):

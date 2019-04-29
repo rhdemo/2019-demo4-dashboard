@@ -4,9 +4,10 @@ export var wp_number = 0
 export (Vector2) var start
 export (Vector2) var goal
 export (float) var timing = 1000
+export (Color) var color = Color(2,0,0,1.0)
 
-onready var waypoint1 = preload("res://sprites/mechanic/1.png")
-onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
+#onready var waypoint1 = preload("res://sprites/mechanic/1.png")
+#onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
 var waypoints = [preload("res://sprites/mechanic/1.png"),preload("res://sprites/mechanic/2.png"),preload("res://sprites/mechanic/3.png"),
 preload("res://sprites/mechanic/4.png"), preload("res://sprites/mechanic/5.png")]
 
@@ -15,14 +16,16 @@ var velocity = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$number.text = String(wp_number)
+#	$number.text = String(wp_number)
+	$sprite.material.set_shader_param("blend_color", color)
 	$sprite.texture =waypoints[wp_number]
 	#path = nav.get_simple_path(start, goal)
 	#velocity = getTotalDistance(self.position, start)/(timing/1000.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$sprite.texture =waypoints[wp_number]
+	pass
+	#$sprite.texture =waypoints[wp_number]
 	
 	#position.linear_interpolate(goal, timing)
 #	if !path:
