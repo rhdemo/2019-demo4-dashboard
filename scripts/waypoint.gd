@@ -5,7 +5,10 @@ export (Vector2) var start
 export (Vector2) var goal
 export (float) var timing = 1000
 
+onready var waypoint1 = preload("res://sprites/mechanic/1.png")
 onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
+var waypoints = [preload("res://sprites/mechanic/1.png"),preload("res://sprites/mechanic/2.png"),preload("res://sprites/mechanic/3.png"),
+preload("res://sprites/mechanic/4.png"), preload("res://sprites/mechanic/5.png")]
 
 var path : PoolVector2Array
 var velocity = 0
@@ -13,12 +16,15 @@ var velocity = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$number.text = String(wp_number)
+	$sprite.texture =waypoints[wp_number]
 	#path = nav.get_simple_path(start, goal)
 	#velocity = getTotalDistance(self.position, start)/(timing/1000.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	position.linear_interpolate(goal, timing)
+	$sprite.texture =waypoints[wp_number]
+	
+	#position.linear_interpolate(goal, timing)
 #	if !path:
 #		$trail.points = []
 #		get_parent().remove_child(self)

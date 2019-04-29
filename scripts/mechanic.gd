@@ -8,7 +8,7 @@ signal fixed_machine
 onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 
-const futureColors = PoolColorArray([Color(.678,.11,.11,.75), Color(.2,.6,.2,.75), Color(0.18,.396,.604,.75), Color(.918,.255,.075,.75), Color(.302,.357,.4,.75)])
+const futureColors = PoolColorArray([Color(.678,.11,.11,1), Color(.2,.6,.2,1), Color(0.18,.396,.604,1), Color(.918,.255,.075,1), Color(.302,.357,.4,1)])
 const focusColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
 const mechanicColors = [Color(2,0,0,1.0), Color(0,1.5,0,1.0),Color(0.6,1.2,2.2,1.0),Color(2.8, 1.05, .2, 1.0),Color(1.05,1.15,1.25,1.0)]
 
@@ -28,6 +28,7 @@ var v = "up"
 var repairing = false
 var velocity = 0
 var waypoints = []
+var focusWaypoint
 
 onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
 onready var map : TileMap = get_node("/root/Dashboard/Navigation2D/TileMap")
@@ -44,7 +45,11 @@ func _ready():
 	futureLine.default_color = futureColors[int(key) % 5]
 	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
-	
+	waypoints = [createWaypoint(2, spawn, spawn, futureColors[int(key) % 5]), createWaypoint(3, spawn, spawn, futureColors[int(key) % 5]), createWaypoint(4, spawn, spawn, futureColors[int(key) % 5])]
+	for wp in waypoints:
+		Dashboard.add_child(wp)
+	focusWaypoint = createWaypoint(1, spawn, spawn, futureColors[int(key) % 5])
+	Dashboard.add_child(focusWaypoint)
 	Dashboard.add_child(focusLine)
 	Dashboard.add_child(futureLine)
 
@@ -76,6 +81,7 @@ func _physics_process(delta):
 
 	if !focusPath:
 		focusLine.hide()
+		focusWaypoint.hide()
 		if $clock.time_left <= 0 and !repairing:
 			$clock.wait_time = focusFixDurationMillis/1000
 			$clock.start()
@@ -93,13 +99,16 @@ func _physics_process(delta):
 		else:
 			focusPath.remove(0)
 			var machine = machines[focusMachineIndex]
-			var mxy = Vector2(-1 if self.position.x - machine.position.x <=0 else 1, -1 if self.position.y - machine.position.y <= 0 else 1)
+			var pos = machine.offset if machine.get('offset') else machine.position
+			var mxy = Vector2(-1 if self.position.x - pos.x <=0 else 1, -1 if self.position.y - pos.y <= 0 else 1)
 			h = "left" if abs(mxy.angle()) < 1 else "right"
 			v = "up" if mxy.angle() > 0 else "down"
 			$img/anim.play("wait-%s-%s" % [v, h])
 			update_future_visits({"mechanicIndex": self.key, "futureMachineIndexes": futureMachineIndexes})
 #	if position == spawn.position:
 #		get_parent().remove_child(self)
+	for wp in range(futureMachineIndexes.size()):
+		waypoints[wp].show()
 	futureLine.points = futurePath
 	futureLine.show()	
 		
@@ -115,6 +124,8 @@ func dispatch_mechanic(data):
 		focusPath = nav.get_simple_path(self.position, focus)
 		focusLine.points = focusPath
 		focusLine.show()
+		focusWaypoint.position = focus
+		focusWaypoint.show()
 		repairing = false
 		emit_signal("fixed_machine", originalMachineIndex)
 
@@ -123,9 +134,12 @@ func update_future_visits(data):
 		futureMachineIndexes = data.futureMachineIndexes
 		futurePath = []
 		var p0 = focus
+		for wp in waypoints:
+				wp.hide()
 		for p in range(futureMachineIndexes.size()):
 			var machineIdx = futureMachineIndexes[p]
-			createWaypoint(p, position, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position, futureColors[int(key) % 5])
+			waypoints[p].position = machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position
+				#createWaypoint(p, position, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position, futureColors[int(key) % 5])
 			#waypoints[p].position = machines[machineIdx].offset
 		
 			self.futurePath.append_array(nav.get_simple_path(p0, machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position))
@@ -134,10 +148,11 @@ func update_future_visits(data):
 
 func createWaypoint(order, start, goal, color):
 	var wp = wayPointNode.instance()
-	wp.get_child(1).text = String(order+1)
+	wp.wp_number = order-1
+	#wp.get_child(1).text = String(order+1)
 	wp.start = start
 	wp.goal = goal
-	wp.get_child(0).modulate = color
+	wp.get_child(0).material.set_shader_param("coverall_color", color)
 	wp.z_index = 50
 	return wp
 
