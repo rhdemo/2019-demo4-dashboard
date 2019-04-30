@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/dashboard.gd" type="Script" id=1]
 [ext_resource path="res://iso_tiles/iso_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://scenes/light.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/machine.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/machines/machine-1-cutout.png" type="Texture" id=4]
 [ext_resource path="res://scenes/health.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/health/A.png" type="Texture" id=6]
@@ -44,7 +44,7 @@
 [ext_resource path="res://sprites/machines/turquoise-machine-cutout-pt-2.png" type="Texture" id=42]
 [ext_resource path="res://sprites/machines/machine-2-cutout.png" type="Texture" id=43]
 [ext_resource path="res://sprites/machines/machine-2-sm-doorway.png" type="Texture" id=44]
-[ext_resource path="res://scenes/machine.tscn" type="PackedScene" id=45]
+[ext_resource path="res://scenes/light.tscn" type="PackedScene" id=45]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 948.992, 364.101, 1581.4, 729.383, 1573.43, 728.815, 944.622, 366.484, 1223.83, 937.448, 1306.1, 881.823, 944.311, 1093.28, 1300.41, 884.667, 1216.44, 941.998, 945.509, 1100.47, 354.704, 1012.53, 183.495, 914.695, 189.752, 913.558, 359.824, 1009.69, 680.076, 521.001, 676.501, 524.179, 169.149, 338.803, -26.0399, 223.845, -18.2563, 219.055, 179.328, 344.191, 1508.24, 1105.24, 1501.98, 1109.79, 583.932, 889.099, 579.381, 886.255, 163.587, 1131.41, 159.036, 1128, 1395.86, 101.938, 1961.5, 427.258, 1957.92, 430.038, 1395.86, 106.307, 584.347, 569.859, 584.347, 574.625, -94.2962, 489.086, -106.271, 489.685 )
@@ -144,7 +144,7 @@ navpoly = SubResource( 1 )
 
 [node name="machines" type="Node2D" parent="."]
 
-[node name="machine-0" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-0" parent="machines" instance=ExtResource( 3 )]
 z_index = 1
 texture = ExtResource( 4 )
 offset = Vector2( 296.249, 269.315 )
@@ -156,13 +156,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 276.854, 126.716 )
 icon = ExtResource( 6 )
 
-[node name="light" parent="machines/machine-0" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-0" instance=ExtResource( 45 )]
 position = Vector2( 284.366, 233.311 )
 
 [node name="repair" type="Position2D" parent="machines/machine-0"]
 position = Vector2( 207, 355 )
 
-[node name="machine-1" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-1" parent="machines" instance=ExtResource( 3 )]
 z_index = 16
 texture = ExtResource( 8 )
 offset = Vector2( 270.344, 564.277 )
@@ -174,13 +174,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 323.921, 416.143 )
 icon = ExtResource( 9 )
 
-[node name="light" parent="machines/machine-1" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-1" instance=ExtResource( 45 )]
 position = Vector2( 270.561, 538.569 )
 
 [node name="repair" type="Position2D" parent="machines/machine-1"]
 position = Vector2( 185, 654 )
 
-[node name="machine-2" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-2" parent="machines" instance=ExtResource( 3 )]
 z_index = 16
 texture = ExtResource( 10 )
 offset = Vector2( 580.551, 691.533 )
@@ -192,13 +192,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 632.605, 563.623 )
 icon = ExtResource( 11 )
 
-[node name="light" parent="machines/machine-2" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-2" instance=ExtResource( 45 )]
 position = Vector2( 647.965, 693.938 )
 
 [node name="repair" type="Position2D" parent="machines/machine-2"]
 position = Vector2( 388, 774 )
 
-[node name="machine-3" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-3" parent="machines" instance=ExtResource( 3 )]
 z_index = 12
 texture = ExtResource( 12 )
 offset = Vector2( 934.359, 509.729 )
@@ -210,13 +210,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 901.274, 382.605 )
 icon = ExtResource( 13 )
 
-[node name="light" parent="machines/machine-3" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-3" instance=ExtResource( 45 )]
 position = Vector2( 872.423, 470.153 )
 
 [node name="repair" type="Position2D" parent="machines/machine-3"]
 position = Vector2( 818, 602 )
 
-[node name="machine-4" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-4" parent="machines" instance=ExtResource( 3 )]
 z_index = 1
 texture = ExtResource( 14 )
 offset = Vector2( 898.348, 289.67 )
@@ -228,13 +228,13 @@ direction = Vector2( -1, -1 )
 position = Vector2( 860.853, 142.85 )
 icon = ExtResource( 15 )
 
-[node name="light" parent="machines/machine-4" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-4" instance=ExtResource( 45 )]
 position = Vector2( 871.665, 248.441 )
 
 [node name="repair" type="Position2D" parent="machines/machine-4"]
 position = Vector2( 945, 364 )
 
-[node name="machine-5" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-5" parent="machines" instance=ExtResource( 3 )]
 z_index = 1
 texture = ExtResource( 16 )
 offset = Vector2( 1078.52, 130.66 )
@@ -246,13 +246,13 @@ direction = Vector2( -1, -1 )
 position = Vector2( 1084.65, 0.266434 )
 icon = ExtResource( 17 )
 
-[node name="light" parent="machines/machine-5" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-5" instance=ExtResource( 45 )]
 position = Vector2( 1084.97, 116.331 )
 
 [node name="repair" type="Position2D" parent="machines/machine-5"]
 position = Vector2( 1144, 250 )
 
-[node name="machine-6" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-6" parent="machines" instance=ExtResource( 3 )]
 z_index = 10
 texture = ExtResource( 18 )
 offset = Vector2( 1282.29, 409.871 )
@@ -264,13 +264,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1264.76, 244.94 )
 icon = ExtResource( 19 )
 
-[node name="light" parent="machines/machine-6" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-6" instance=ExtResource( 45 )]
 position = Vector2( 1316.03, 368.776 )
 
 [node name="repair" type="Position2D" parent="machines/machine-6"]
 position = Vector2( 1176, 498 )
 
-[node name="machine-7" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-7" parent="machines" instance=ExtResource( 3 )]
 position = Vector2( -120, 0 )
 z_index = 12
 texture = ExtResource( 20 )
@@ -283,7 +283,7 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1420.48, 485.763 )
 icon = ExtResource( 21 )
 
-[node name="light" parent="machines/machine-7" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-7" instance=ExtResource( 45 )]
 position = Vector2( 1453.22, 654.881 )
 
 [node name="repair" type="Position2D" parent="machines/machine-7"]
@@ -297,7 +297,7 @@ vframes = 5
 [node name="anim" type="AnimationPlayer" parent="machines/machine-7/screen"]
 anims/move = SubResource( 2 )
 
-[node name="machine-8" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-8" parent="machines" instance=ExtResource( 3 )]
 z_index = 10
 texture = ExtResource( 23 )
 offset = Vector2( 1557.81, 569.943 )
@@ -308,13 +308,13 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1539.72, 400.527 )
 icon = ExtResource( 24 )
 
-[node name="light" parent="machines/machine-8" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-8" instance=ExtResource( 45 )]
 position = Vector2( 1590.93, 526.011 )
 
 [node name="repair" type="Position2D" parent="machines/machine-8"]
 position = Vector2( 1474, 668 )
 
-[node name="machine-9" parent="machines" instance=ExtResource( 45 )]
+[node name="machine-9" parent="machines" instance=ExtResource( 3 )]
 z_index = 1
 texture = ExtResource( 25 )
 offset = Vector2( 1675.32, 132.682 )
@@ -326,7 +326,7 @@ direction = Vector2( 1, -1 )
 position = Vector2( 1658.61, 0.46405 )
 icon = ExtResource( 26 )
 
-[node name="light" parent="machines/machine-9" instance=ExtResource( 3 )]
+[node name="light" parent="machines/machine-9" instance=ExtResource( 45 )]
 position = Vector2( 1662.49, 97.9837 )
 
 [node name="repair" type="Position2D" parent="machines/machine-9"]

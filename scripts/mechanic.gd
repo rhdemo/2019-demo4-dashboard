@@ -44,8 +44,8 @@ func _ready():
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.texture = pathNode
 	futureLine.texture = pathNode
-	focusLine.default_color = focusColors[int(key) % 5]
-	futureLine.default_color = futureColors[int(key) % 5]
+	focusLine.default_color = mechanicColors[int(key) % 5]
+	futureLine.default_color = mechanicColors[int(key) % 5]
 	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
 	waypoints = [createWaypoint(2, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(3, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(4, spawn, spawn, mechanicColors[int(key) % 5])]
@@ -56,14 +56,14 @@ func _ready():
 
 func _init():
 	focusLine.z_index = 1
-	focusLine.width = 10
+	focusLine.width = 30
 	focusLine.texture_mode = Line2D.LINE_TEXTURE_TILE
-	focusLine.joint_mode = Line2D.LINE_JOINT_ROUND
-	focusLine.end_cap_mode = Line2D.LINE_CAP_ROUND
-	focusLine.begin_cap_mode = Line2D.LINE_CAP_BOX
+	focusLine.joint_mode = Line2D.LINE_JOINT_SHARP
+	focusLine.end_cap_mode = Line2D.LINE_CAP_NONE
+	focusLine.begin_cap_mode = Line2D.LINE_CAP_NONE
 	
 	futureLine.z_index = 1
-	futureLine.width = 10
+	futureLine.width = 30
 	futureLine.texture_mode = Line2D.LINE_TEXTURE_TILE
 	futureLine.joint_mode = Line2D.LINE_JOINT_ROUND
 	futureLine.end_cap_mode = Line2D.LINE_CAP_ROUND
