@@ -10,6 +10,8 @@ z_index = 99
 texture = ExtResource( 1 )
 centered = false
 script = ExtResource( 2 )
+IS_HEALTHY = 70
+IS_DAMAGED = 30
 
 [node name="value" type="TextureProgress" parent="."]
 margin_right = 71.0

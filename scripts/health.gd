@@ -8,8 +8,8 @@ onready var healthBGTexture = preload("res://sprites/health/health-bg.png")
 
 signal machine_damaged
 signal machine_repaired
-export var IS_HEALTHY : int = 90
-export var IS_DAMAGED : int = 50
+export var IS_HEALTHY : int = 70
+export var IS_DAMAGED : int = 30
 export (Texture) var icon
 
 export (bool) var repair = false

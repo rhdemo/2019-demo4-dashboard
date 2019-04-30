@@ -109,7 +109,7 @@ func _connection_established(protocol):
 	send('{"type":"init"}')
 	print("Connection established with protocol: ", protocol)
 
-func _connection_closed():
+func _connection_closed(clean):
 	print("Connection closed, retrying in %ds" % retryTimeout)
 	$connection.start()
 

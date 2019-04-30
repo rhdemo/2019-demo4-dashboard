@@ -44,12 +44,12 @@ func _ready():
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.texture = pathNode
 	futureLine.texture = pathNode
-	focusLine.default_color = mechanicColors[int(key) % 5]
-	futureLine.default_color = mechanicColors[int(key) % 5]
+	focusLine.default_color = futureColors[int(key) % 5]
+	futureLine.default_color = futureColors[int(key) % 5]
 	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
-	waypoints = [createWaypoint(2, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(3, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(4, spawn, spawn, mechanicColors[int(key) % 5])]
-	focusWaypoint = createWaypoint(1, spawn, spawn, mechanicColors[int(key) % 5])
+	waypoints = [createWaypoint(1, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(2, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(3, spawn, spawn, mechanicColors[int(key) % 5])]
+	focusWaypoint = createWaypoint(0, spawn, spawn, mechanicColors[int(key) % 5])
 	Dashboard.add_child(focusWaypoint)
 	Dashboard.add_child(focusLine)
 	Dashboard.add_child(futureLine)
@@ -75,7 +75,7 @@ func _physics_process(delta):
 		self.z_index = 19
 	elif global_position.x < 800 and global_position.y > 600:
 		self.z_index = 17
-	elif global_position.y > 500 and (global_position.x > 200 and global_position.x < 1475):
+	elif global_position.y > 500 and (global_position.x < 945 or global_position.y > 680):
 		self.z_index = 13
 	elif global_position.y > 365 and global_position.x > 400:
 		self.z_index = 11
@@ -102,7 +102,7 @@ func _physics_process(delta):
 		else:
 			focusPath.remove(0)
 			var machine = machines[focusMachineIndex]
-			var pos = machine.offset if machine.get('offset') else machine.position
+			var pos = machine.offset if machine.get('offset') else Vector2(machine.position.x+20, machine.position.y+20)
 			var mxy = Vector2(-1 if self.position.x - pos.x <=0 else 1, -1 if self.position.y - pos.y <= 0 else 1)
 			h = "left" if abs(mxy.angle()) < 1 else "right"
 			v = "up" if mxy.angle() > 0 else "down"
