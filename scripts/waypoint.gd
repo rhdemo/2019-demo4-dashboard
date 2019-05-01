@@ -8,7 +8,7 @@ export (Color) var color = Color(2,0,0,1.0)
 
 #onready var waypoint1 = preload("res://sprites/mechanic/1.png")
 #onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
-var waypoints = [preload("res://sprites/mechanic/1.png"),preload("res://sprites/mechanic/2.png"),preload("res://sprites/mechanic/3.png"),
+var waypoints = [preload("res://sprites/mechanic/0.png"),preload("res://sprites/mechanic/1.png"),preload("res://sprites/mechanic/2.png"),preload("res://sprites/mechanic/3.png"),
 preload("res://sprites/mechanic/4.png"), preload("res://sprites/mechanic/5.png")]
 
 var path : PoolVector2Array
@@ -18,7 +18,7 @@ var velocity = 0
 func _ready():
 #	$number.text = String(wp_number)
 	$sprite.material.set_shader_param("blend_color", color)
-	$sprite.texture =waypoints[wp_number]
+	$sprite.texture =waypoints[wp_number+1]
 	#path = nav.get_simple_path(start, goal)
 	#velocity = getTotalDistance(self.position, start)/(timing/1000.0)
 

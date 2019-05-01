@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scripts/waypoint.shader" type="Shader" id=2]
-[ext_resource path="res://sprites/mechanic/1.png" type="Texture" id=3]
-[ext_resource path="res://fonts/overpass_mono.tres" type="DynamicFont" id=4]
+[ext_resource path="res://scripts/waypoint.shader" type="Shader" id=1]
+[ext_resource path="res://sprites/mechanic/1.png" type="Texture" id=2]
+[ext_resource path="res://fonts/overpass_mono.tres" type="DynamicFont" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -15,7 +15,7 @@ export (Color) var color = Color(2,0,0,1.0)
 
 #onready var waypoint1 = preload(\"res://sprites/mechanic/1.png\")
 #onready var nav : Navigation2D = get_node(\"/root/Dashboard/Navigation2D\")
-var waypoints = [preload(\"res://sprites/mechanic/1.png\"),preload(\"res://sprites/mechanic/2.png\"),preload(\"res://sprites/mechanic/3.png\"),
+var waypoints = [preload(\"res://sprites/mechanic/0.png\"),preload(\"res://sprites/mechanic/1.png\"),preload(\"res://sprites/mechanic/2.png\"),preload(\"res://sprites/mechanic/3.png\"),
 preload(\"res://sprites/mechanic/4.png\"), preload(\"res://sprites/mechanic/5.png\")]
 
 var path : PoolVector2Array
@@ -68,7 +68,7 @@ func _process(delta):
 
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
-shader = ExtResource( 2 )
+shader = ExtResource( 1 )
 shader_param/blend_color = Plane( 0, 0, 0, 0 )
 
 [node name="waypoint" type="Node2D"]
@@ -79,7 +79,7 @@ script = SubResource( 1 )
 material = SubResource( 2 )
 position = Vector2( 0, -30.7152 )
 scale = Vector2( 0.8, 0.8 )
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 offset = Vector2( 0, -50 )
 
 [node name="number" type="Label" parent="."]
@@ -88,7 +88,7 @@ margin_left = -31.0
 margin_top = -38.0
 margin_right = 31.0
 margin_bottom = 27.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "1"
 align = 1
