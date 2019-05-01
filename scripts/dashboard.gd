@@ -102,7 +102,9 @@ func _handle_data_received():
 		if res.type == "machine":
 			emit_signal("machine_health", res.data)
 		if res.type == "game":
-			pass # res.data.state = active, paused, lobby, stopped
+			faded = res.data.dashboardTransparent
+			fade(faded)
+			#pass # res.data.state = active, paused, lobby, stopped
 
 func _connection_established(protocol):
 	ws.get_peer(1).set_write_mode(_write_mode)
