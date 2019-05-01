@@ -24,7 +24,16 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if global_position.y > 775:
+		self.z_index = 19
+	elif global_position.x < 800 and global_position.y > 600:
+		self.z_index = 17
+	elif global_position.y > 500 and (global_position.x < 945 or global_position.y > 680):
+		self.z_index = 13
+	elif global_position.y > 365 and global_position.x > 400:
+		self.z_index = 11
+	else:
+		self.z_index = 5
 	#$sprite.texture =waypoints[wp_number]
 	
 	#position.linear_interpolate(goal, timing)
