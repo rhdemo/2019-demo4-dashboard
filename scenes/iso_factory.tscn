@@ -145,6 +145,7 @@ tile_data = PoolIntArray( -917487, 13, 0, -917486, 8, 0, -917485, 8, 0, -917484,
 navpoly = SubResource( 1 )
 
 [node name="machines" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="machine-0" parent="machines" instance=ExtResource( 3 )]
 z_index = 1
@@ -345,6 +346,7 @@ position = Vector2( 338, 1000 )
 position = Vector2( 190, 916 )
 
 [node name="boxBelt" type="Path2D" parent="."]
+editor/display_folded = true
 position = Vector2( 0.976497, 55.6044 )
 curve = SubResource( 3 )
 script = ExtResource( 27 )
@@ -388,6 +390,7 @@ z_index = 12
 texture = ExtResource( 29 )
 
 [node name="canisterBelt" type="Path2D" parent="."]
+editor/display_folded = true
 position = Vector2( -9.103, 65.7451 )
 z_index = 14
 curve = SubResource( 5 )
@@ -431,6 +434,7 @@ polygon = PoolVector2Array( 144.541, 402.826, 920.693, 847.428, 898.734, 859.074
 polygon = PoolVector2Array( 920.693, 878.778, 976.743, 912.028, 1029.94, 881.628, 1029.94, 931.028, 979.585, 960.13, 915.822, 919.603 )
 
 [node name="static_assets" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="pallet-barrel-2" type="Sprite" parent="static_assets"]
 position = Vector2( 1082, 821.548 )
@@ -521,10 +525,13 @@ position = Vector2( 723.632, 721.049 )
 z_index = 14
 texture = ExtResource( 42 )
 
+[node name="waypoints" type="Node2D" parent="."]
+
 [node name="connection" type="Timer" parent="."]
 wait_time = 5.0
 
 [node name="Fader" type="Area2D" parent="."]
+editor/display_folded = true
 z_index = 99
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fader"]

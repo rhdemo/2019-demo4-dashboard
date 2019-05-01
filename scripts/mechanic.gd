@@ -9,7 +9,7 @@ onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 onready var pathNode = preload("res://sprites/future-dot.png")
 
-const futureColors = PoolColorArray([Color(2,0,0,.75), Color(.2,.6,.2,.9), Color(0.18,.396,.604,.9), Color(.918,.255,.075,.9), Color(.302,.357,.4,.9)])
+const futureColors = PoolColorArray([Color(2,0,0,.5), Color(0,1.5,0,.5), Color(0.6,1.2,2.2,.5), Color(2.8, 1.05, .2,.5), Color(1.05,1.15,1.25,.5)])
 const focusColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
 const mechanicColors = [Color(2,0,0,1.0), Color(0,1.5,0,1.0),Color(0.6,1.2,2.2,1.0),Color(2.8, 1.05, .2, 1.0),Color(1.05,1.15,1.25,1.0)]
 
