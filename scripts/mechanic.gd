@@ -149,7 +149,7 @@ func update_future_visits(data):
 
 func createWaypoint(order, start, goal, color):
 	var wp = wayPointNode.instance()
-	wp.wp_number = order-1
+	wp.wp_number = order
 	#wp.get_child(1).text = String(order+1)
 	wp.start = start
 	wp.goal = goal

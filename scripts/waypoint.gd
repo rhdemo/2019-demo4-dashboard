@@ -25,6 +25,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	$sprite.texture =waypoints[wp_number]
 	if global_position.y > 775:
 		self.z_index = 19
 	elif global_position.x < 800 and global_position.y > 600:
