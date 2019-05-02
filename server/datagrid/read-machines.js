@@ -1,4 +1,6 @@
-const axios = require("axios");
+const http = require("http");
+const httpAgent = new http.Agent({ keepAlive: true });
+const axios = require("axios").create({timeout: 5000, httpAgent});
 const log = require("../utils/log")("datagrid/read-machines");
 const {OUTGOING_MESSAGE_TYPES} = require("../message-types");
 const broadcast = require("../utils/broadcast");
