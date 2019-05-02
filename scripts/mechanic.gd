@@ -35,6 +35,7 @@ onready var nav : Navigation2D = get_node("/root/Dashboard/Navigation2D")
 onready var map : TileMap = get_node("/root/Dashboard/Navigation2D/TileMap")
 onready var Dashboard = get_node("/root/Dashboard")
 onready var machines : Array = Dashboard.get_node('machines').get_children()
+onready var waypointNode = get_node("/root/Dashboard/waypoints")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,13 +45,13 @@ func _ready():
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.texture = pathNode
 	futureLine.texture = pathNode
-	focusLine.default_color = futureColors[int(key) % 5]
-	futureLine.default_color = futureColors[int(key) % 5]
+	focusLine.default_color = mechanicColors[int(key) % 5]
+	futureLine.default_color = mechanicColors[int(key) % 5]
 	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
-	waypoints = [createWaypoint(1, spawn, spawn, futureColors[int(key) % 5]), createWaypoint(2, spawn, spawn, futureColors[int(key) % 5]), createWaypoint(3, spawn, spawn, futureColors[int(key) % 5])]
-	focusWaypoint = createWaypoint(0, spawn, spawn, futureColors[int(key) % 5])
-	Dashboard.add_child(focusWaypoint)
+	waypoints = [createWaypoint(1, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(2, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(3, spawn, spawn, mechanicColors[int(key) % 5])]
+	focusWaypoint = createWaypoint(0, spawn, spawn, mechanicColors[int(key) % 5])
+	waypointNode.add_child(focusWaypoint)
 	Dashboard.add_child(focusLine)
 	Dashboard.add_child(futureLine)
 
@@ -154,7 +155,7 @@ func createWaypoint(order, start, goal, color):
 	wp.goal = goal
 	wp.color = color
 	wp.z_index = 50
-	Dashboard.add_child(wp)
+	waypointNode.add_child(wp)
 	return wp
 
 func remove_mechanic(data):

@@ -53,6 +53,7 @@ func fade(opt):
 	var alpha = 1 if !opt else 0.15
 	for node in nodes:
 		$Fader/Fade.interpolate_property(node, "modulate:a", null, alpha, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	$Fader/Fade.interpolate_property($waypoints, "modulate:a", null, 0.25 if !opt else 1, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	$Fader/Fade.start()
 	faded = !faded
 	
