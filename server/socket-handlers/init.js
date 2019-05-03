@@ -12,8 +12,32 @@ async function initHandler(ws, messageObj) {
     send(ws, OUTGOING_MESSAGE_TYPES.MACHINE, {id, value}, "modify");
   }
 
+  await sendOptInit(ws);
+
+  //leaving in for compatibility
   sendOptEvents(ws);
 }
+
+async function sendOptInit(ws) {
+  let optaplannerEvents = [];
+
+  let clientIterator = await global.optClient.iterator(1);
+
+  let entry = {done: true};
+
+  do {
+    entry = await clientIterator.next();
+    if (!entry.done) {
+      optaplannerEvents.push({key: entry.key, value: JSON.parse(entry.value)});
+    }
+
+  } while (!entry.done);
+
+  log.debug(optaplannerEvents);
+
+  send(ws, OUTGOING_MESSAGE_TYPES.OPT_INIT, optaplannerEvents, "modify");
+}
+
 
 async function sendOptEvents(ws) {
   let clientIterator = await global.optClient.iterator(1);
