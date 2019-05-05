@@ -12,10 +12,12 @@ async function initHandler(ws, messageObj) {
     send(ws, OUTGOING_MESSAGE_TYPES.MACHINE, {id, value}, "modify");
   }
 
-  sendOptEvents(ws);
+  sendOptInit(ws);
 }
 
-async function sendOptEvents(ws) {
+async function sendOptInit(ws) {
+  let optaplannerEvents = [];
+
   let clientIterator = await global.optClient.iterator(1);
 
   let entry = {done: true};
@@ -23,11 +25,14 @@ async function sendOptEvents(ws) {
   do {
     entry = await clientIterator.next();
     if (!entry.done) {
-      log.debug(entry.key + ' = ' + entry.value + '\n');
-      send(ws, OUTGOING_MESSAGE_TYPES.OPT_EVENT, {key: entry.key, value: JSON.parse(entry.value)}, "modify");
+      optaplannerEvents.push({key: entry.key, value: JSON.parse(entry.value)});
     }
 
   } while (!entry.done);
+
+  log.debug(optaplannerEvents);
+
+  send(ws, OUTGOING_MESSAGE_TYPES.OPT_INIT, optaplannerEvents, "modify");
 }
 
 module.exports = initHandler;
