@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="RHSummitDemo5"
+config/name="Factory"
 run/main_scene="res://scenes/iso_factory.tscn"
 boot_splash/image="res://sprites/fedora.png"
 config/icon="res://sprites/fedora.png"

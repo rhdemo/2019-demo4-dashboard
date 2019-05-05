@@ -6,7 +6,8 @@ const MECHANIC_OFFSET = 21.5
 var ws = WebSocketClient.new()
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
 var retryTimeout = 5 # seconds
-var urlStr: String = JavaScript.eval("window.location.hostname+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
+#var urlStr: String = JavaScript.eval("window.location.hostname+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
+var urlStr = ""
 
 var url = urlStr if urlStr.length() > 0 else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
 
@@ -49,11 +50,25 @@ func _connect():
 	
 func fade(opt):
 	$Fader/Fade.remove_all()
-	var nodes = [$machines, $boxBelt, $canisterBelt, $static_assets]
+	var nodes = [$boxBelt, $canisterBelt, $static_assets]
 	var alpha = 1 if !opt else 0.15
 	for node in nodes:
 		$Fader/Fade.interpolate_property(node, "modulate:a", null, alpha, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	#$Fader/Fade.interpolate_property($waypoints, "modulate:a", null, 0.25 if !opt else 1, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	for machine in $machines.get_children():
+		$Fader/Fade.interpolate_property(machine, "self_modulate:a", null, alpha, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		if machine.get_node('light'):
+			var light = machine.get_node('light')
+			$Fader/Fade.interpolate_property(light, "modulate:a", null, alpha, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		if machine.get_node('health'):
+			var health = machine.get_node('health')
+			var repair = machine.get_node('repair')
+			var newOffset = Vector2(repair.position.x + 10, repair.position.y - 200)
+			if (health.rect_position != health.originalPosition and !opt) or opt:
+				$Fader/Fade.interpolate_property(health, "rect_position", newOffset if !opt else health.originalPosition, health.originalPosition if !opt else newOffset, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	for waypoint in $waypoints.get_children():
+		#$Fader/Fade.interpolate_property(waypoint, "modulate:a", null, 0.75 if !opt else 1, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		$Fader/Fade.interpolate_property(waypoint.get_node("sprite").material, "shader_param/fade_amount", null, 1if !opt else 0, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		$Fader/Fade.interpolate_property(waypoint.get_node("sprite"), "position:y", null, 170 if !opt else 0, 1,  Tween.TRANS_LINEAR, Tween.EASE_IN)
 	$Fader/Fade.start()
 	faded = !faded
 	
@@ -89,12 +104,25 @@ func dispatch_mechanic(data):
 func _handle_data_received():
 	var res = JSON.parse(decode_data(ws.get_peer(1).get_packet())).result
 	if res['type'] != "heartbeat":
+		if res.type == "optaplannerInit":
+			var mechs = []
+			var futures = []
+			for resp in res.data:
+				print(resp.value.responseType)
+				if resp.value.responseType == "UPDATE_FUTURE_VISITS":
+					futures.append(resp.value)
+				elif resp.value.responseType == "ADD_MECHANIC" or resp.value.responseType == "DISPATCH_MECHANIC":
+					add_mechanic(resp)
+			for future in futures:
+				emit_signal("update_future_visits", future)
 		if res.type == "optaplanner":
 			if res.action == "modify":
 				if res.data.value.responseType == "DISPATCH_MECHANIC":
 					dispatch_mechanic(res.data)
 				if res.data.value.responseType == "UPDATE_FUTURE_VISITS":
 					emit_signal("update_future_visits", res.data.value)
+				if res.data.value.responseType == "ADD_MECHANIC":
+					add_mechanic(res.data)
 			if res.action == "create":
 				if res.data.value.responseType == "ADD_MECHANIC":
 					add_mechanic(res.data)

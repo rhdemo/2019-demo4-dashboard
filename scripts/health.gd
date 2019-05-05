@@ -1,4 +1,4 @@
-extends Sprite
+extends CenterContainer
 
 onready var healthyTexture = preload("res://sprites/health/health-green.png")
 onready var damagedTexture = preload("res://sprites/health/health-orange.png")
@@ -14,10 +14,12 @@ export (Texture) var icon
 
 export (bool) var repair = false
 export (float) var health = 100.0;
+export (Vector2) var originalPosition
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _init():
 	pass
+func _ready():
+	originalPosition = rect_position
 	
 func _process(delta):
 	if !repair:

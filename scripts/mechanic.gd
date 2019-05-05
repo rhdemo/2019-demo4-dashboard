@@ -9,7 +9,7 @@ onready var wayPointNode = preload("res://scenes/waypoint.tscn")
 onready var spawn : Position2D = get_node("/root/Dashboard/mechanic_spawn")
 onready var pathNode = preload("res://sprites/future-dot.png")
 
-const futureColors = PoolColorArray([Color(2,0,0,.5), Color(0,1.5,0,.5), Color(0.6,1.2,2.2,.5), Color(2.8, 1.05, .2,.5), Color(1.05,1.15,1.25,.5)])
+const futureColors = PoolColorArray([Color(255,0,0,1.0), Color(0,1,0,1.0), Color(0.5,.75,1.0,1), Color(1.75, 0.75, 0.1, 1.0), Color(.5,.5,.5,1.0)])
 const focusColors = PoolColorArray([Color(.678,.11,.11,.5), Color(.2,.6,.2,.5), Color(0.18,.396,.604,.5), Color(.918,.255,.075,.5), Color(.302,.357,.4,.5)])
 const mechanicColors = [Color(2,0,0,1.0), Color(0,1.5,0,1.0),Color(0.6,1.2,2.2,1.0),Color(2.8, 1.05, .2, 1.0),Color(1.05,1.15,1.25,1.0)]
 
@@ -39,14 +39,15 @@ onready var waypointNode = get_node("/root/Dashboard/waypoints")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var pathColor = futureColors[int(key) % 5]
 	set_physics_process(true)
 	Dashboard.connect('dispatch_mechanic', self, "dispatch_mechanic")
 	Dashboard.connect('remove_mechanic', self, "remove_mechanic")
 	Dashboard.connect('update_future_visits', self, "update_future_visits")
 	focusLine.texture = pathNode
 	futureLine.texture = pathNode
-	focusLine.default_color = mechanicColors[int(key) % 5]
-	futureLine.default_color = mechanicColors[int(key) % 5]
+	focusLine.default_color = pathColor
+	futureLine.default_color = pathColor
 	$img.material = $img.material.duplicate()
 	$img.material.set_shader_param("coverall_color", mechanicColors[int(key) % 5])
 	waypoints = [createWaypoint(1, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(2, spawn, spawn, mechanicColors[int(key) % 5]), createWaypoint(3, spawn, spawn, mechanicColors[int(key) % 5])]
@@ -86,6 +87,8 @@ func _physics_process(delta):
 	if !focusPath:
 		focusLine.hide()
 		focusWaypoint.hide()
+		if key == "99":
+			get_parent().remove_child(self)
 		if $clock.time_left <= 0 and !repairing:
 			$clock.wait_time = focusFixDurationMillis/1000
 			$clock.start()
@@ -100,6 +103,9 @@ func _physics_process(delta):
 			$img/anim.play("walk-%s-%s" % [v, h])
 			self.position = self.position.linear_interpolate(focusPath[0], (velocity * delta)/d)
 			focusTravelDurationMillis -= delta
+			var focusLineArray = focusPath
+			focusLineArray.insert(0, position)
+			focusLine.points = focusLineArray
 		else:
 			focusPath.remove(0)
 			var machine = machines[focusMachineIndex]
@@ -109,10 +115,9 @@ func _physics_process(delta):
 			v = "up" if mxy.angle() > 0 else "down"
 			$img/anim.play("wait-%s-%s" % [v, h])
 			update_future_visits({"mechanicIndex": self.key, "futureMachineIndexes": futureMachineIndexes})
-#	if position == spawn.position:
-#		get_parent().remove_child(self)
 	for wp in range(futureMachineIndexes.size()):
 		waypoints[wp].show()
+	
 	futureLine.points = futurePath
 	futureLine.show()	
 		
@@ -167,7 +172,7 @@ func remove_mechanic(data):
 		Dashboard.remove_child(futureLine)
 		Dashboard.remove_child(focusLine)
 		for wp in waypoints:
-			wp.hide()
+			wp.get_parent().remove_child(wp)
 		futureMachineIndexes = []
 
 func getTotalDistance(start:Vector2, goal:Vector2):
