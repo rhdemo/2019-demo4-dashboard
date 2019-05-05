@@ -6,8 +6,7 @@ const MECHANIC_OFFSET = 21.5
 var ws = WebSocketClient.new()
 var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
 var retryTimeout = 5 # seconds
-#var urlStr: String = JavaScript.eval("window.location.hostname+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
-var urlStr = ""
+var urlStr: String = JavaScript.eval("window.location.hostname+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
 
 var url = urlStr if urlStr.length() > 0 else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
 
