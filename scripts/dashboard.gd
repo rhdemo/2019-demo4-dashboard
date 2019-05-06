@@ -31,7 +31,6 @@ func _init():
 
 func _ready():
 	set_process(true)
-	print(urlStr)
 	#get_matrix()
 
 func _process(delta: float):
@@ -107,7 +106,6 @@ func _handle_data_received():
 			var mechs = []
 			var futures = []
 			for resp in res.data:
-				print(resp.value.responseType)
 				if resp.value.responseType == "UPDATE_FUTURE_VISITS":
 					futures.append(resp.value)
 				elif resp.value.responseType == "ADD_MECHANIC" or resp.value.responseType == "DISPATCH_MECHANIC":
