@@ -143,8 +143,8 @@ func update_future_visits(data):
 		futureMachineIndexes = data.futureMachineIndexes
 		futurePath = []
 		var p0 = focus
-		for wp in range(waypoints.size()-futureMachineIndexes.size()):
-				waypoints[-wp].hide()
+		for wp in range(waypoints.size()):
+			waypoints[wp].hide()
 		for p in range(futureMachineIndexes.size()):
 			var machineIdx = futureMachineIndexes[p]
 			waypoints[p].position = machines[machineIdx].repair if machines[machineIdx].get('repair') else machines[machineIdx].position
