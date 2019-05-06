@@ -8,8 +8,8 @@ var _write_mode = WebSocketPeer.WRITE_MODE_TEXT
 var retryTimeout = 5 # seconds
 var urlStr: String = JavaScript.eval("window.location.hostname+'/dashboard-socket'") if OS.has_feature('JavaScript') else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
 
-var url = urlStr if urlStr.length() > 0 and !urlStr.match("*localhost*") else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
-
+#var url = urlStr if urlStr.length() > 0  else "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
+var url = "ws://dashboard-web-game-demo.apps.live.openshift.redhatkeynote.com/dashboard-socket"
 signal add_mechanic
 signal dispatch_mechanic
 signal update_future_visits
