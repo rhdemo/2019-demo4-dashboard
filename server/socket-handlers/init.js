@@ -30,6 +30,8 @@ async function sendOptInit(ws) {
 
   } while (!entry.done);
 
+  await clientIterator.close();
+
   log.debug(optaplannerEvents);
 
   send(ws, OUTGOING_MESSAGE_TYPES.OPT_INIT, optaplannerEvents, "modify");
