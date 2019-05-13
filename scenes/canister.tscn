@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/containers/sprite-containers.png" type="Texture" id=1]
+[ext_resource path="res://scripts/canisterImg.gd" type="Script" id=2]
+
+[node name="canister" type="PathFollow2D"]
+rotate = false
+
+[node name="canisterImg" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -14.97 )
+hframes = 2
+script = ExtResource( 2 )
